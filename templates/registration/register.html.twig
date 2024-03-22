@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}S'inscrire{% endblock %}
+
+{% block body %}
+<section class="container my-3">
+    <div class="row">
+        <div class="col">
+            <h1>S'inscrire</h1>
+
+            {{ form_errors(registrationForm) }}
+
+            {{ form_start(registrationForm) }}
+
+            <div class="my-3">
+                {{ form_row(registrationForm.first_name) }}
+                {{ form_row(registrationForm.last_name) }}
+            </div>
+            <div class="my-3">
+                {{ form_row(registrationForm.username) }}
+                {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.plainPassword, {
+                    label: 'Password'
+                }) }}
+            </div>
+                
+                {{ form_row(registrationForm.RGPDConsent) }}
+
+                <button type="submit" class="btn btn-primary my-3">S'inscrire</button>
+                <a href="{{ path('app_login') }}" class="btn btn-secondary">Se connecter</a>
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+</section
+{% endblock %}
