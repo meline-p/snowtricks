@@ -10,5 +10,8 @@
 	"php-cs-fixer.formatHtml": true,
 	"php-cs-fixer.onsave": true,
 	"php-cs-fixer.config": ".vscode/.php-cs-fixer.php",
-	"php.suggest.basic": false
+	"php.suggest.basic": false,
+	"emmet.includeLanguages": {
+		"twig": "html"
+	  }
 }
