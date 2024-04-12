@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Page non trouvée{% endblock %}
+
+{% block body %}
+    <main class="container">
+		<section class="row">
+			<div class="col-12">
+				<div class="jumbotron">
+                    <h1 class="display-4">Oops</h1>
+                    <p class="lead">La page que vous recherchez n'a pas été trouvée</p>
+                    <img style="height: 50vh" src="https://http.cat/images/404.jpg">
+                    <hr class="my-4">
+                    <p class="lead">
+                        <a class="btn btn-primary" href="{{ path('app_main') }}" role="button">Revenir sur la page d'accueil</a>
+                    </p>
+                </div>
+			</div>
+		</section>
+	</main>
+{% endblock %}
