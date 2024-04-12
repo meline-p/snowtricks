@@ -24,7 +24,7 @@ class UserTrick
 
     #[ORM\Column(type: 'string', columnDefinition: "ENUM('create', 'update', 'delete')")]
     private $operation;
-    
+
     public function getUser(): ?User
     {
         return $this->user;
@@ -69,6 +69,7 @@ class UserTrick
     public function setOperation($operation)
     {
         $this->operation = $operation;
+
         return $this;
     }
 }

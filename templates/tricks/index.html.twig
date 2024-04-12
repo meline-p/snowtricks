@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Toutes les Figures{% endblock %}
+
+{% block body %}
+    <main class="container">
+		<section class="row">
+			<div class="col-12">
+				<h1 class="text-3xl font-bold">Toutes les figures</h1>
+                {% include "categories/list.html.twig"  %}
+			</div>
+		</section>
+
+        <section class="row">
+            <div class="col-12">
+                {% include "tricks/list.html.twig"  %}
+            </div>
+        </section>
+	</main>
+{% endblock %}

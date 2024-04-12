@@ -21,5 +21,4 @@ trait SoftDeleteTrait
 
         return $this;
     }
-
 }

@@ -21,6 +21,9 @@ class Category
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\Column]
+    private ?int $categoryOrder = null;
+
     #[ORM\OneToMany(targetEntity: Trick::class, mappedBy: 'category')]
     private Collection $tricks;
 
@@ -42,6 +45,18 @@ class Category
     public function setName(string $name): static
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getCategoryOrder(): ?int
+    {
+        return $this->categoryOrder;
+    }
+
+    public function setCategoryOrder(int $categoryOrder): static
+    {
+        $this->categoryOrder = $categoryOrder;
 
         return $this;
     }

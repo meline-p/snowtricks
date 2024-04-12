@@ -8,7 +8,6 @@ use App\Entity\Trait\UpdatedAtTrait;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -58,6 +57,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $picture_slug = null;
+
+    #[ORM\Column(length: 255)]
+    private ?bool $is_verified = false;
 
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'user')]
     private Collection $comments;
@@ -206,6 +208,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastName(string $last_name): static
     {
         $this->last_name = $last_name;
+
+        return $this;
+    }
+
+    public function getIsVerified(): ?bool
+    {
+        return $this->is_verified;
+    }
+
+    public function setIsVerified(bool $is_verified): static
+    {
+        $this->is_verified = $is_verified;
 
         return $this;
     }
