@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Trick;
 use App\Entity\UserTrick;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -20,6 +21,37 @@ class UserTrickRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, UserTrick::class);
     }
+
+    public function getCreatedAtDate(Trick $trick)
+    {
+        $trickId = $trick->getId();
+
+        return $this->createQueryBuilder('ut')
+            ->select('ut.date')
+            ->where('ut.trick = :trickId')
+            ->andWhere('ut.operation = :operation')
+            ->setParameter('trickId', $trickId)
+            ->setParameter('operation', 'create')
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function getUpdatedAtDate(Trick $trick)
+    {
+        $trickId = $trick->getId();
+
+        return $this->createQueryBuilder('ut')
+            ->select('ut.date')
+            ->where('ut.trick = :trickId')
+            ->andWhere('ut.operation = :operation')
+            ->setParameter('trickId', $trickId)
+            ->setParameter('operation', 'update')
+            ->orderBy('ut.date', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
 
     //    /**
     //     * @return UserTrick[] Returns an array of UserTrick objects

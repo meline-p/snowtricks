@@ -7,7 +7,7 @@
 					<span class="badge bg-secondary" style="width: fit-content">{{ trick.category.name}}</span>
 					<h5 class="card-title">{{ trick.name }}</h5>
 					<p class="card-text">{{ trick.description }}</p>
-					<a href="#" class="btn btn-primary">Voir la figure</a>
+					<a href="{{ path('app_tricks_details', {"slug": trick.slug}) }}" class="btn btn-primary">Voir la figure</a>
 					<a href="#" class="btn btn-secondary"><i class="fa-solid fa-pen"></i></a>
 					<a href="#" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
 				</div>
