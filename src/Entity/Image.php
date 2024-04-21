@@ -60,4 +60,9 @@ class Image
 
         return $this;
     }
+
+    public function getFullName()
+    {
+        return $this->id.'_'.$this->trick->getId().'.'.$this->extension;
+    }
 }

@@ -1,6 +1,6 @@
 <div class="btn-group" role="group" aria-label="Basic example">
-    <a href="{{ path('app_tricks_index') }}" class="btn {{ app.request.attributes.get('_route') == 'app_tricks_index' ? 'btn-success' : 'btn-secondary' }}">Tout</a>
+    <a href="{{ path('app_tricks_index', {'category_slug': 'all'}) }}" class="btn {% if app.request.attributes.get('_route_params').category_slug == 'all' %}btn-success{% else %}btn-secondary{% endif %}">Tout</a>
     {% for category in categories %}
-        <a href="{{ path('app_categories_index', {slug: category.slug}) }}" class="btn {{ category.slug == app.request.attributes.get('_route_params').slug|default('') ? 'btn-success' : 'btn-secondary' }}">{{ category.name }}</a>
+        <a href="{{ path('app_tricks_index', {'category_slug': category.slug}) }}" class="btn {% if app.request.attributes.get('_route_params').category_slug == category.slug %}btn-success{% else %}btn-secondary{% endif %}">{{ category.name }}</a>
     {% endfor %}
 </div>
