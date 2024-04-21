@@ -1,12 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Toutes les Figures{% endblock %}
+{% block title %} 
+    {% if categories is defined %}
+        {% for category in categories %}
+            {{ category.name }}
+        {% endfor %}
+    {% else %}
+        Toutes les Figures
+    {% endif %}
+{% endblock %}
 
 {% block body %}
     <main class="container">
 		<section class="row">
-			<div class="col-12">
-				<h1 class="text-3xl font-bold">Toutes les figures</h1>
+			<div class="col-12 mx-auto text-center" style="width:fit-content;">
+				<h1 class="text-3xl font-bold">
+                    {% if categories is defined %}
+                        {% if app.request.attributes.get('_route_params').category_slug == 'all' %}
+                            Toutes les Figures
+                        {% else %}
+                            {% for category in categories %}
+                                {% if app.request.attributes.get('_route_params').category_slug == category.slug %}
+                                    {{ category.name }}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% else %}
+                        Toutes les Figures
+                    {% endif %}
+                </h1>
+
                 {% include "categories/list.html.twig"  %}
 			</div>
 		</section>

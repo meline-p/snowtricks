@@ -1,21 +1,43 @@
-<div class="btn-group flex flex-wrap" role="group" aria-label="Basic example">
-	{% if tricks|length > 0 %}
-		{% for trick in tricks %}
-			<div class="card m-2 mt-4" style="width: 18rem;">
-				<img class="card-img-top" style="height: 200px; background-color: grey;" src="" alt="Card image cap">
-				<div class="card-body">
-					<span class="badge bg-secondary" style="width: fit-content">{{ trick.category.name}}</span>
-					<h5 class="card-title">{{ trick.name }}</h5>
-					<p class="card-text">{{ trick.description }}</p>
-					<a href="{{ path('app_tricks_details', {"slug": trick.slug}) }}" class="btn btn-primary">Voir la figure</a>
-					<a href="#" class="btn btn-secondary"><i class="fa-solid fa-pen"></i></a>
-					<a href="#" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
-				</div>
-			</div>
-		{% endfor %}
-	{% else %}
-		<div class="mt-4">
-			<p>Il n'y a aucune figure dans cette catégorie.</p>
+<div class="btn-group d-flex flex-wrap justify-content-center" role="group" aria-label="Basic example">
+    {% if tricks|length > 0 %}
+        {% for trick in tricks.data %}
+            <div class="card m-2 mt-4" style="width: 18rem;">
+                {% set promoteImage = promoteImages[trick.getId()] %}
+                <img class="card-img-top" style="height: 200px; object-fit:cover; background-color: grey;" 
+                    src="/assets/img/{{ promoteImage != null ? promoteImage.fullname : "img.png" }}" 
+                    alt="Card image cap">
+                <div class="card-body">
+                    <span class="badge bg-secondary" style="width: fit-content">{{ trick.category.name }}</span>
+                    <h5 class="card-title">{{ trick.name }}</h5>
+                    <p class="card-text">{{ trick.description }}</p>
+                    <a href="{{ path('app_tricks_details', {"slug": trick.slug}) }}" class="btn btn-primary">Voir la figure</a>
+                    <a href="#" class="btn btn-secondary"><i class="fa-solid fa-pen"></i></a>
+                    <a href="#" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                </div>
+            </div>
+        {% endfor %}
+        
+    {% else %}
+        <div class="mt-4">
+            <p>Il n'y a aucune figure dans cette catégorie.</p>
+        </div>
+    {% endif %}
+</div>
+{% if tricks|length > 0 %}
+	{% set pages = tricks.pages %}
+	{% if pages > 1 %}
+		<div class="mx-auto" style="width:fit-content;">  
+			{% if category_slug is defined %}
+				{% set slug = category_slug %}
+				{% set path = "app_tricks_index" %}
+			{% else %}
+				{% set slug = "all" %}
+				{% set path = "app_main" %}
+			{% endif %}
+
+			{% set currentPage = tricks.page %}
+			{% include '_partials/_pagination.html.twig' %}
 		</div>
 	{% endif %}
-</div>
+{% endif %}
+

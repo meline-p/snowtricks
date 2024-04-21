@@ -4,33 +4,35 @@
 
 {% block body %}
 
-
-		<section class="row">
-			<div class="col-12">
+		<section>
                 <img style="width: 100%;height: 90vh;object-fit: cover;" 
-                    src="/assets/img/8_33.jpg">
+                    src="/assets/img/{{ promoteImage != null ? promoteImage.fullname : "img.png" }}">
 				<div class="position-absolute top-50 start-50 translate-middle bg-light rounded p-5" style="--bs-bg-opacity: .8;">
                     <h1>{{ trick.name }}</h1>
-                    <p>{{ promote_image.id }}_{{ trick.id }}.{{ promote_image.extension }}</p>
                 </div>
-			</div>
 		</section>
 
-        <section class="row">
-            <div class="col-12 d-flex align-content-start overflow-scroll ">
-            {% for img in images %}
-                <div>
-                    <p>{{ img.id }}_{{ trick.id }}.{{ img.extension }}</p>
-                    <img src="/assets/img/{{ img.id }}_{{ trick.id }}.{{ img.extension }}"
-                        alt="{{ img.id }}_{{ trick.id }}.{{ img.extension }}">
+
+        <section>
+            <div class="d-flex flex-wrap justify-content-center m-2">
+            {% if images|length > 0 %}
+                {% for img in images %}
+                    <div class="m-2">
+                        <img src="/assets/img/{{ img.fullName }}"
+                            style="height:300px; width:400px; object-fit:cover;"
+                            alt="{{ img.fullName }}">
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="d-flex flex-column justify-content-center">
+                    <p> Il n'y a pas encore d'images pour ce trick !</p>
+                    <a href="#" class="btn btn-primary m-auto" style="width:fit-content">Ajouter une image</a>
                 </div>
-            {% endfor %}
-
-
+            {% endif %}
             </div>
         </section>
 
-        <main class="container">
+        {# <main class="container">
             <section class="row">
                 <div class="col-12">
                     <p>{{ trick.description }}</p>
@@ -52,6 +54,6 @@
                     {% endif %}
                 </div>
             </section>
-        </main>
+        </main> #}
 
 {% endblock %}

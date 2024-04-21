@@ -29,13 +29,17 @@ class Trick
     #[ORM\ManyToOne(inversedBy: 'tricks')]
     private ?Category $category = null;
 
+    #[ORM\ManyToOne(inversedBy: 'tricks')]
+    private ?Image $promoteImage = null;
+
     #[ORM\OneToMany(targetEntity: UserTrick::class, mappedBy: 'trick')]
     private Collection $userTricks;
 
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'trick')]
     private Collection $comments;
 
-    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'trick')]
+    // #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'trick', fetch: 'EAGER')]
+    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'trick', fetch: 'EAGER')]
     private Collection $images;
 
     #[ORM\OneToMany(targetEntity: Video::class, mappedBy: 'trick')]
@@ -86,6 +90,18 @@ class Trick
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getPromoteImage(): ?Image
+    {
+       return $this->promoteImage;
+    }
+
+    public function setPromoteImage(?Image $promoteImage): static
+    {
+        $this->promoteImage = $promoteImage;
 
         return $this;
     }

@@ -23,9 +23,6 @@ class Image
     #[ORM\Column(length: 255)]
     private ?string $extension = null;
 
-    #[ORM\Column]
-    private ?bool $promoteImage = false;
-
     #[ORM\ManyToOne(inversedBy: 'images')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Trick $trick = null;
@@ -52,18 +49,6 @@ class Image
         return $this;
     }
 
-    public function getPromoteImage(): ?int
-    {
-        return $this->promoteImage;
-    }
-
-    public function setPromoteImage(int $promoteImage): static
-    {
-        $this->promoteImage = $promoteImage;
-
-        return $this;
-    }
-
     public function getTrick(): ?Trick
     {
         return $this->trick;
@@ -74,5 +59,10 @@ class Image
         $this->trick = $trick;
 
         return $this;
+    }
+
+    public function getFullName()
+    {
+        return $this->id.'_'.$this->trick->getId().'.'.$this->extension;
     }
 }
