@@ -59,4 +59,31 @@ class TricksController extends AbstractController
             'images' => $images,
         ]);
     }
+
+    #[Route('/details/ajouter', name: 'add')]
+    public function add(
+        Trick $trick,
+        ImageRepository $imageRepository
+    ): Response {
+        // On vérifie si l'utilisteur peut éditer avec le voter
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        return $this->render('tricks/add.html.twig');
+    }
+
+    #[Route('/details/{slug}/modifier', name: 'edit')]
+    public function edit(
+        Trick $trick,
+        ImageRepository $imageRepository
+    ): Response {
+        // On vérifie si l'utilisteur peut éditer avec le voter
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        $images = $imageRepository->findBy(['trick' => $trick]);
+
+        return $this->render('tricks/edit.html.twig', [
+            'trick' => $trick,
+            'images' => $images,
+        ]);
+    }
 }
