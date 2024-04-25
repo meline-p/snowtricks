@@ -29,7 +29,7 @@ class Trick
     #[ORM\ManyToOne(inversedBy: 'tricks')]
     private ?Category $category = null;
 
-    #[ORM\ManyToOne(inversedBy: 'tricks')]
+    #[ORM\OneToOne]
     private ?Image $promoteImage = null;
 
     #[ORM\OneToMany(targetEntity: UserTrick::class, mappedBy: 'trick')]
@@ -96,7 +96,14 @@ class Trick
 
     public function getPromoteImage(): ?Image
     {
-       return $this->promoteImage;
+        if ($this->promoteImage) {
+            return $this->promoteImage;
+        }
+        if (count($this->images) > 0) {
+            return $this->images[0];
+        }
+
+        return new Image();
     }
 
     public function setPromoteImage(?Image $promoteImage): static

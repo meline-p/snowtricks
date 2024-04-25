@@ -34,18 +34,18 @@ class TrickRepository extends ServiceEntityRepository
             ->join('t.category', 'c');
 
         // If the category slug is not 'all', filter by category
-        if ($slug !== 'all') {
+        if ('all' !== $slug) {
             $queryBuilder->where("c.slug = '$slug'");
         }
 
         $queryBuilder->setMaxResults($limit)
-            ->setFirstResult(($page * $limit) - $limit);    
+            ->setFirstResult(($page * $limit) - $limit);
 
         $paginator = new Paginator($queryBuilder);
         $data = $paginator->getQuery()->getResult();
 
         // Check if there is no data
-        if(empty($data)){
+        if (empty($data)) {
             return $result;
         }
 
@@ -60,7 +60,6 @@ class TrickRepository extends ServiceEntityRepository
 
         return $result;
     }
-
 
     //    /**
     //     * @return Trick[] Returns an array of Trick objects
