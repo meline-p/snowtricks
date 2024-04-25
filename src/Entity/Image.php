@@ -63,6 +63,11 @@ class Image
 
     public function getFullName()
     {
+        // default image (empty entity image)
+        if (!$this->trick) {
+            return 'img.png';
+        }
+
         return $this->id.'_'.$this->trick->getId().'.'.$this->extension;
     }
 }

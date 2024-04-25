@@ -2,9 +2,8 @@
     {% if tricks|length > 0 %}
         {% for trick in tricks.data %}
             <div class="card m-2 mt-4" style="width: 18rem;">
-                {% set promoteImage = promoteImages[trick.getId()] %}
                 <img class="card-img-top" style="height: 200px; object-fit:cover; background-color: grey;" 
-                    src="/assets/img/{{ promoteImage != null ? promoteImage.fullname : "img.png" }}" 
+                    src="/assets/img/{{ trick.promoteImage.fullname }}" 
                     alt="Card image cap">
                 <div class="card-body">
                     <span class="badge bg-secondary" style="width: fit-content">{{ trick.category.name }}</span>
@@ -36,7 +35,7 @@
 			{% endif %}
 
 			{% set currentPage = tricks.page %}
-			{% include '_partials/_pagination.html.twig' %}
+			{% include '_partials/_pagination.html.twig' with {'slug': slug, 'path': path, 'currentPage': currentPage} %}
 		</div>
 	{% endif %}
 {% endif %}
