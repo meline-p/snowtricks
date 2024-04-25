@@ -1,3 +1,7 @@
+<div>
+    <a href="{{ path('app_tricks_add')}}">Ajouter</a>
+</div>
+
 <div class="btn-group d-flex flex-wrap justify-content-center" role="group" aria-label="Basic example">
     {% if tricks|length > 0 %}
         {% for trick in tricks.data %}

@@ -10,11 +10,14 @@ use Doctrine\ORM\Mapping as ORM;
 class UserTrick
 {
     #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
     #[ORM\ManyToOne(inversedBy: 'userTricks')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\Id]
     #[ORM\ManyToOne(inversedBy: 'userTricks')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Trick $trick = null;
@@ -24,6 +27,12 @@ class UserTrick
 
     #[ORM\Column(type: 'string', columnDefinition: "ENUM('create', 'update', 'delete')")]
     private $operation;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
 
     public function getUser(): ?User
     {

@@ -29,7 +29,7 @@ class Trick
     #[ORM\ManyToOne(inversedBy: 'tricks')]
     private ?Category $category = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\OneToOne]
     private ?Image $promoteImage = null;
 
     #[ORM\OneToMany(targetEntity: UserTrick::class, mappedBy: 'trick')]
