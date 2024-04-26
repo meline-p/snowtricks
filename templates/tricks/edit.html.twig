@@ -6,3 +6,7 @@
     <h1>Modifier une figure</h1>
     {% include 'tricks/_form.html.twig' with {'button_label':'Modifier'} %}
 {% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/images.js') }}" defer></script>
+{% endblock %}

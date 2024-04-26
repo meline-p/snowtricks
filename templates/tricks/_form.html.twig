@@ -10,16 +10,42 @@
 
 
         <section class="container">
-            <p class="text-center mt-4"> Il n'y a pas encore d'images ni de vidéos pour ce trick !</p>
-            <div class="d-flex justify-content-center align-items-center">
-                <div class="">
-                    <a href="#" class="btn btn-primary mx-2" style="width:fit-content" >Ajouter une image</a>
-                </div>
-                <div class="">
-                    <input class="form-control" name="video_url" placeholder="Ajouter une vidéo">
-                </div>
 
+            {# on affiche les images si on est en édition #}
+            {% if app.request.attributes.get('_route') == 'app_tricks_edit' %}
+            <div class="d-flex flex-wrap justify-content-center m-2">
+                {% if images|length > 0 %}
+                    {% for img in images %}
+                        <div class="m-2 d-flex flex-column">
+                            <img src="/assets/img/tricks/{{ img.name }}"
+                                style="height:300px; width:400px; object-fit:cover;"
+                                alt="{{ img.name }}">
+                                <div>      
+                                    <a href="#" class="btn btn-secondary"><i class="fa-solid fa-pen"></i></a>
+                                    <a href="{{ path('app_tricks_delete_image', {id: img.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ img.id) }}" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                                    <a href="#" class="btn btn-success">Mettre à la une</a>
+                                </div>
+                          </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="d-flex flex-column justify-content-center">
+                        <p> Il n'y a pas encore d'images pour ce trick !</p>
+                    </div>
+                {% endif %}
+                </div>
+            {% endif %}
+             <div class="col-12 mt-4">
+                {{ form_label(trickForm.images) }}
+                {{ form_widget(trickForm.images) }}
             </div>
+            
+
+            {# <div class="d-flex justify-content-center align-items-center">
+                <div class="col-12 mt-4">
+                    {{ form_label(trickForm.videoUrl) }}
+                    {{ form_widget(trickForm.videoUrl) }}                
+                </div>
+            </div> #}
         </section>
 
         <hr class="m-5">

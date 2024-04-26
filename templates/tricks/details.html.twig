@@ -6,7 +6,7 @@
 
 		<section>
                 <img style="width: 100%;height: 90vh;object-fit: cover;" 
-                    src="/assets/img/{{ trick.promoteImage.fullname }}">
+                    src="/assets/img/tricks/{{ trick.promoteImage.name }}">
 				<div class="position-absolute top-50 start-50 translate-middle bg-light rounded p-5" style="--bs-bg-opacity: .8;">
                     <h1>{{ trick.name }}</h1>
                 </div>
@@ -18,9 +18,9 @@
             {% if images|length > 0 %}
                 {% for img in images %}
                     <div class="m-2">
-                        <img src="/assets/img/{{ img.fullName }}"
+                        <img src="/assets/img/tricks/{{ img.name }}"
                             style="height:300px; width:400px; object-fit:cover;"
-                            alt="{{ img.fullName }}">
+                            alt="{{ img.name }}">
                     </div>
                 {% endfor %}
             {% else %}

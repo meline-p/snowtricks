@@ -21,6 +21,9 @@ class Image
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    private ?string $name = null;
+
+    #[ORM\Column(length: 255)]
     private ?string $extension = null;
 
     #[ORM\ManyToOne(inversedBy: 'images')]
@@ -35,6 +38,18 @@ class Image
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+
+        return $this;
     }
 
     public function getExtension(): ?string
@@ -68,6 +83,16 @@ class Image
             return 'img.png';
         }
 
-        return $this->id.'_'.$this->trick->getId().'.'.$this->extension;
+        return $this->name.'_'.$this->trick->getId().'.'.$this->extension;
+    }
+
+    public function getMiniName()
+    {
+        // default image (empty entity image)
+        if (!$this->trick) {
+            return 'img.png';
+        }
+
+        return '300x300_'.$this->name;
     }
 }
