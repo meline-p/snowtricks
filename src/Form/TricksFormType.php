@@ -8,10 +8,12 @@ use App\Entity\Trick;
 use App\Repository\CategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType as TypeTextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Url;
 
 class TricksFormType extends AbstractType
 {
@@ -46,6 +48,25 @@ class TricksFormType extends AbstractType
             //     'class' => Image::class,
             //     'choice_label' => 'id',
             // ])
+            ->add('images', FileType::class, [
+                'label' => false,
+                'multiple' => true,
+                'mapped' => false,
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
+            // ->add('videoUrl', TypeTextType::class, [
+            //     'label' => 'Lien de la vidéo',
+            //     'required' => false,
+            //     'constraints' => [
+            //         new Url(['message' => 'Veuillez saisir une URL valide.']),
+            //     ],
+            //     'attr' => [
+            //         'class' => 'form-control',
+            //     ],
+            // ]);
         ;
     }
 

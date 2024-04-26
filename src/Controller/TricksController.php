@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Image;
 use App\Entity\Trick;
 use App\Entity\User;
 use App\Entity\UserTrick;
@@ -9,8 +10,10 @@ use App\Form\TricksFormType;
 use App\Repository\CategoryRepository;
 use App\Repository\ImageRepository;
 use App\Repository\TrickRepository;
+use App\Service\PictureService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -42,7 +45,7 @@ class TricksController extends AbstractController
         $page = $request->query->getInt('page', 1);
 
         // Retrieve paginated tricks based on the selected category
-        $tricks = $trickRepository->findTricksPaginated($page, $category_slug, 3);
+        $tricks = $trickRepository->findTricksPaginated($page, $category_slug, 10);
 
         return $this->render('tricks/index.html.twig', [
             'categories' => $categoryRepository->findBy([], ['categoryOrder' => 'asc']),
@@ -71,6 +74,7 @@ class TricksController extends AbstractController
         Request $request, 
         EntityManagerInterface $em, 
         SluggerInterface $slugger,
+        PictureService $pictureService
     ): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
@@ -101,6 +105,30 @@ class TricksController extends AbstractController
             $em->persist($trick);
             $em->flush();
 
+            // Retrieve the images
+            $images = $trickForm->get('images')->getData();
+
+            foreach ($images as $image){
+                // Define the destination folder
+                $folder = 'tricks';
+            
+                $img = new Image();
+                // Generate a unique file name
+                $fileName = uniqid() . '_' . $trick->getId() . '.' . $image->getClientOriginalExtension();
+    
+                // Call the add service with the specific file name
+                $fichier = $pictureService->add($image, $folder, 300, 300, $fileName);
+                $extension = pathinfo($fichier, PATHINFO_EXTENSION);
+
+                $img->setName($fileName);
+                $img->setExtension($extension);
+                $trick->addImage($img);
+            }
+            
+            // Persist and flush
+            $em->persist($trick);
+            $em->flush();
+
             $userTrick->setOperation('create');
             $userTrick->setDate(new \DateTime());
             $userTrick->setUser($user);
@@ -127,13 +155,12 @@ class TricksController extends AbstractController
         Request $request, 
         EntityManagerInterface $em, 
         SluggerInterface $slugger,
+        PictureService $pictureService
     ): Response {
 
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         $images = $imageRepository->findBy(['trick' => $trick]);
-
-        $this->denyAccessUnlessGranted('ROLE_USER');
 
         /** @var User $user */
         $user = $this->getUser();
@@ -156,6 +183,30 @@ class TricksController extends AbstractController
             $em->persist($trick);
             $em->flush();
 
+            // retrieve the images
+            $images = $trickForm->get('images')->getData();
+
+            foreach ($images as $image){
+                // define the destination folder
+                $folder = 'tricks';
+             
+                $img = new Image();
+                // Generate a unique file name
+                $fileName = uniqid() . '_' . $trick->getId() . '.' . $image->getClientOriginalExtension();
+     
+                // Call the add service with the specific file name
+                $fichier = $pictureService->add($image, $folder, 300, 300, $fileName);
+                $extension = pathinfo($fichier, PATHINFO_EXTENSION);
+ 
+                $img->setName($fileName);
+                $img->setExtension($extension);
+                $trick->addImage($img);
+            }
+             
+             // Persist and flush
+             $em->persist($trick);
+             $em->flush();
+
             $userTrick = new UserTrick();
             $userTrick->setOperation('update');
             $userTrick->setDate(new \DateTime());
@@ -175,5 +226,47 @@ class TricksController extends AbstractController
             'images' => $images,
             'trickForm' => $trickForm->createView(),
         ]);
+    }
+
+    #[Route('/supprimer/{slug}', name: 'delete')]
+    public function delete(Trick $trick,): Response {
+
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        return $this->render('tricks/edit.html.twig', [
+            'trick' => $trick,
+        ]);
+    }
+
+    #[Route('/supprimer/image/{id}', name: 'delete_image', methods:['DELETE'])]
+    public function deleteImage(
+        Image $image, 
+        Request $request, 
+        EntityManagerInterface $em,
+        PictureService $pictureService
+        ): Response {
+
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        // Retrieve request content
+        $data = json_decode($request->getContent(), true);
+
+        if($this->isCsrfTokenValid('delete' . $image->getId(), $data['_token'])){
+            // CSRF token is valid
+            // Retrieve image name
+            $name = $image->getName();
+
+            if($pictureService->delete($name, 'tricks', 300, 300)){
+                // Delete image from database
+                $em->remove($image);
+                $em->flush();
+
+                return new JsonResponse(['success' => true], 200);
+            }
+            // Deletion failed
+            return new JsonResponse(['error' => 'Erreur de suppression'], 400);
+        }
+        
+        return new JsonResponse(['error' => 'Token invalide'], 400);
     }
 }
