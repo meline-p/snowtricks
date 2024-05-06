@@ -12,27 +12,41 @@
                 </div>
 		</section>
 
-
+        {# {% if is_granted('ROLE_ADMIN') %}
+            <a href="...">Delete</a>
+        {% endif %} #}
         <section>
             <div class="d-flex flex-wrap justify-content-center m-2">
-            {% if images|length > 0 %}
-                {% for img in images %}
-                    <div class="m-2">
-                        <img src="/assets/img/tricks/{{ img.name }}"
-                            style="height:300px; width:400px; object-fit:cover;"
-                            alt="{{ img.name }}">
-                    </div>
-                {% endfor %}
+            {% if images is not empty or videos is not empty %}
+
+                {% if images|length > 0 %}
+                    {% for img in images %}
+                        <div class="m-2">
+                            <img src="/assets/img/tricks/{{ img.name }}"
+                                style="height:300px; width:400px; object-fit:cover;"
+                                alt="{{ img.name }}">
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if videos|length > 0 %}
+                    {% for vdo in videos %}
+                        <div class="m-2">
+                            <iframe height="300px" width="400px" src="{{ vdo.url|replace({'watch?v=': 'embed/'}) }}" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
             {% else %}
                 <div class="d-flex flex-column justify-content-center">
-                    <p> Il n'y a pas encore d'images pour ce trick !</p>
+                    <p> Il n'y a pas encore d'images ni de vidéos pour ce trick !</p>
                     <a href="#" class="btn btn-primary m-auto" style="width:fit-content">Ajouter une image</a>
                 </div>
             {% endif %}
             </div>
         </section>
 
-        {# <main class="container">
+        <main class="container">
             <section class="row">
                 <div class="col-12">
                     <p>{{ trick.description }}</p>
@@ -44,16 +58,16 @@
                     <p class="border rounded p-3" style="width:fit-content">
                         Catégorie : {{ trick.category.name }}
                     </p>
-                    <p class="border rounded p-3" style="width:fit-content">
+                    {# <p class="border rounded p-3" style="width:fit-content">
                         Création : {{ created_at|date('d/m/Y à H:i') }}
-                    </p>
-                    {% if(updated_at != null) %}
+                    </p> #}
+                    {# {% if(updated_at != null) %}
                     <p class="border rounded p-3" style="width:fit-content">
                         Dernière modification : {{ updated_at|date('d/m/Y à H:i') }}
                     </p>
-                    {% endif %}
+                    {% endif %} #}
                 </div>
             </section>
-        </main> #}
+        </main>
 
 {% endblock %}

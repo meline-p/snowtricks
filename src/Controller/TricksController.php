@@ -6,10 +6,12 @@ use App\Entity\Image;
 use App\Entity\Trick;
 use App\Entity\User;
 use App\Entity\UserTrick;
+use App\Entity\Video;
 use App\Form\TricksFormType;
 use App\Repository\CategoryRepository;
 use App\Repository\ImageRepository;
 use App\Repository\TrickRepository;
+use App\Repository\VideoRepository;
 use App\Service\PictureService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,6 +19,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/tricks', name: 'app_tricks_')]
@@ -59,42 +62,44 @@ class TricksController extends AbstractController
     public function details(
         Trick $trick,
         ImageRepository $imageRepository,
+        VideoRepository $videoRepository
     ): Response {
         $images = $imageRepository->findBy(['trick' => $trick]);
+        $videos = $videoRepository->findBy(['trick' => $trick]);
 
         return $this->render('tricks/details.html.twig', [
             'trick' => $trick,
             'images' => $images,
+            'videos' => $videos,
         ]);
     }
 
     #[Route('/ajouter', name: 'add')]
     public function add(
-        CategoryRepository $categoryRepository, 
-        Request $request, 
-        EntityManagerInterface $em, 
+        CategoryRepository $categoryRepository,
+        Request $request,
+        EntityManagerInterface $em,
         SluggerInterface $slugger,
         PictureService $pictureService
-    ): Response
-    {
+    ): Response {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         // Create new instances of Trick and UserTrick
         $trick = new Trick();
         $userTrick = new UserTrick();
-       
+
         /** @var User $user */
         $user = $this->getUser();
-   
+
         // Create the form for adding a trick
         $trickForm = $this->createForm(TricksFormType::class, $trick);
 
         // Handle form submission
+        // $trickForm->handleRequest($request);
         $trickForm->handleRequest($request);
-        
-        // Check if form is submitted and valid
-        if($trickForm->isSubmitted() && $trickForm->isValid()){
 
+        // Check if form is submitted and valid
+        if ($trickForm->isSubmitted() && $trickForm->isValid()) {
             // Generate slug for the trick's name
             $slug = strtolower($slugger->slug($trick->getName()));
             $trick->setSlug($slug);
@@ -108,14 +113,14 @@ class TricksController extends AbstractController
             // Retrieve the images
             $images = $trickForm->get('images')->getData();
 
-            foreach ($images as $image){
+            foreach ($images as $image) {
                 // Define the destination folder
                 $folder = 'tricks';
-            
+
                 $img = new Image();
                 // Generate a unique file name
-                $fileName = uniqid() . '_' . $trick->getId() . '.' . $image->getClientOriginalExtension();
-    
+                $fileName = uniqid().'_'.$trick->getId().'.'.$image->getClientOriginalExtension();
+
                 // Call the add service with the specific file name
                 $fichier = $pictureService->add($image, $folder, 300, 300, $fileName);
                 $extension = pathinfo($fichier, PATHINFO_EXTENSION);
@@ -124,7 +129,15 @@ class TricksController extends AbstractController
                 $img->setExtension($extension);
                 $trick->addImage($img);
             }
-            
+
+            // Retrieve the videos
+            $videosData = $request->get('videos');
+            foreach ($videosData as $videoData) {
+                $video = new Video();
+                $video->setUrl($videoData);
+                $trick->addVideo($video);
+            }
+
             // Persist and flush
             $em->persist($trick);
             $em->flush();
@@ -140,7 +153,6 @@ class TricksController extends AbstractController
             $this->addFlash('success', 'Figure ajoutée avec succès');
 
             return $this->redirectToRoute('app_tricks_details', ['slug' => $slug]);
-
         }
 
         return $this->render('tricks/add.html.twig', [
@@ -152,15 +164,16 @@ class TricksController extends AbstractController
     public function edit(
         Trick $trick,
         ImageRepository $imageRepository,
-        Request $request, 
-        EntityManagerInterface $em, 
+        VideoRepository $videoRepository,
+        Request $request,
+        EntityManagerInterface $em,
         SluggerInterface $slugger,
         PictureService $pictureService
     ): Response {
-
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         $images = $imageRepository->findBy(['trick' => $trick]);
+        $videos = $videoRepository->findBy(['trick' => $trick]);
 
         /** @var User $user */
         $user = $this->getUser();
@@ -170,9 +183,9 @@ class TricksController extends AbstractController
 
         // Handle form submission
         $trickForm->handleRequest($request);
-        
+
         // Check if form is submitted and valid
-        if($trickForm->isSubmitted() && $trickForm->isValid()){
+        if ($trickForm->isSubmitted() && $trickForm->isValid()) {
             // Generate slug for the trick's name
             $slug = strtolower($slugger->slug($trick->getName()));
             $trick->setSlug($slug);
@@ -186,26 +199,34 @@ class TricksController extends AbstractController
             // retrieve the images
             $images = $trickForm->get('images')->getData();
 
-            foreach ($images as $image){
+            foreach ($images as $image) {
                 // define the destination folder
                 $folder = 'tricks';
-             
+
                 $img = new Image();
                 // Generate a unique file name
-                $fileName = uniqid() . '_' . $trick->getId() . '.' . $image->getClientOriginalExtension();
-     
+                $fileName = uniqid().'_'.$trick->getId().'.'.$image->getClientOriginalExtension();
+
                 // Call the add service with the specific file name
                 $fichier = $pictureService->add($image, $folder, 300, 300, $fileName);
                 $extension = pathinfo($fichier, PATHINFO_EXTENSION);
- 
+
                 $img->setName($fileName);
                 $img->setExtension($extension);
                 $trick->addImage($img);
             }
-             
-             // Persist and flush
-             $em->persist($trick);
-             $em->flush();
+
+            // Retrieve the videos
+            $videosData = $request->get('videos');
+            foreach ($videosData as $videoData) {
+                $video = new Video();
+                $video->setUrl($videoData);
+                $trick->addVideo($video);
+            }
+
+            // Persist and flush
+            $em->persist($trick);
+            $em->flush();
 
             $userTrick = new UserTrick();
             $userTrick->setOperation('update');
@@ -224,13 +245,15 @@ class TricksController extends AbstractController
         return $this->render('tricks/edit.html.twig', [
             'trick' => $trick,
             'images' => $images,
+            'videos' => $videos,
             'trickForm' => $trickForm->createView(),
         ]);
     }
 
     #[Route('/supprimer/{slug}', name: 'delete')]
-    public function delete(Trick $trick,): Response {
-
+    #[IsGranted('ROLE_USER')]
+    public function delete(Trick $trick): Response
+    {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         return $this->render('tricks/edit.html.twig', [
@@ -238,35 +261,35 @@ class TricksController extends AbstractController
         ]);
     }
 
-    #[Route('/supprimer/image/{id}', name: 'delete_image', methods:['DELETE'])]
+    #[Route('/supprimer/image/{id}', name: 'delete_image', methods: ['DELETE'])]
     public function deleteImage(
-        Image $image, 
-        Request $request, 
+        Image $image,
+        Request $request,
         EntityManagerInterface $em,
         PictureService $pictureService
-        ): Response {
-
+    ): Response {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         // Retrieve request content
         $data = json_decode($request->getContent(), true);
 
-        if($this->isCsrfTokenValid('delete' . $image->getId(), $data['_token'])){
+        if ($this->isCsrfTokenValid('delete'.$image->getId(), $data['_token'])) {
             // CSRF token is valid
             // Retrieve image name
             $name = $image->getName();
 
-            if($pictureService->delete($name, 'tricks', 300, 300)){
+            if ($pictureService->delete($name, 'tricks', 300, 300)) {
                 // Delete image from database
                 $em->remove($image);
                 $em->flush();
 
                 return new JsonResponse(['success' => true], 200);
             }
+
             // Deletion failed
             return new JsonResponse(['error' => 'Erreur de suppression'], 400);
         }
-        
+
         return new JsonResponse(['error' => 'Token invalide'], 400);
     }
 }

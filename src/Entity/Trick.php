@@ -39,10 +39,10 @@ class Trick
     private Collection $comments;
 
     // #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'trick', fetch: 'EAGER')]
-    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'trick', fetch: 'EAGER', cascade:['persist'])]
+    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'trick', fetch: 'EAGER', cascade: ['persist'])]
     private Collection $images;
 
-    #[ORM\OneToMany(targetEntity: Video::class, mappedBy: 'trick')]
+    #[ORM\OneToMany(targetEntity: Video::class, mappedBy: 'trick', cascade: ['persist'])]
     private Collection $videos;
 
     public function __construct()
