@@ -58,73 +58,72 @@ class PictureService
         $imageHeight = $picture_infos[1];
 
         // Check the orientation of the image
-        switch($imageWidth <=> $imageHeight){
+        switch ($imageWidth <=> $imageHeight) {
             // Portrait
             case -1:
                 $squareSize = $imageWidth;
                 $src_x = 0;
-                $src_y =  ($imageHeight - $squareSize) / 2;
+                $src_y = ($imageHeight - $squareSize) / 2;
                 break;
-            // Square
+                // Square
             case 0:
                 $squareSize = $imageWidth;
                 $src_x = 0;
                 $src_y = 0;
                 break;
-            // Landscape
+                // Landscape
             case 1:
                 $squareSize = $imageWidth;
                 $src_x = ($imageWidth - $squareSize) / 2;
-                $src_y =  0;
+                $src_y = 0;
                 break;
         }
 
         // Create a new blank image
         $resized_picture = imagecreatetruecolor($width, $height);
         imagecopyresampled($resized_picture, $picture_source, 0, 0, $src_x, $src_y, $width, $height, $squareSize, $squareSize);
-    
-        $path = $this->params->get('images_directory') . $folder;
+
+        $path = $this->params->get('images_directory').$folder;
 
         // Create the destination folder if it does not exist
-        if(!file_exists($path . '/mini/')){
-            mkdir($path . '/mini/' , 0755, true);
+        if (!file_exists($path.'/mini/')) {
+            mkdir($path.'/mini/', 0755, true);
         }
 
         // Store the cropped image
-        imagejpeg($resized_picture, $path . '/mini/' . $width . 'x' . $height . '_' . $fichier);
+        imagejpeg($resized_picture, $path.'/mini/'.$width.'x'.$height.'_'.$fichier);
 
-        $picture->move($path . '/', $fichier);
+        $picture->move($path.'/', $fichier);
 
         return $fichier;
     }
 
     public function delete(
-        string $fichier, 
+        string $fichier,
         ?string $folder = '',
         ?int $width = 250,
         ?int $height = 250
-        )
-        {
-            if($fichier !== 'default.webp'){
-                $success = false;
-                $path = $this->params->get('images_directory') . $folder;
+    ) {
+        if ('default.webp' !== $fichier) {
+            $success = false;
+            $path = $this->params->get('images_directory').$folder;
 
-                $mini = $path . '/mini/' . $width . 'x' . $height . '-' . $fichier;
-            
-                if(file_exists($mini)){
-                    unlink($mini);
-                    $success = true;
-                }
+            $mini = $path.'/mini/'.$width.'x'.$height.'_'.$fichier;
 
-                $original = $path . '/' . $fichier;
-                if(file_exists($original)){
-                    unlink($original);
-                    $success = true;
-                }
-
-                return $success;
+            if (file_exists($mini)) {
+                unlink($mini);
+                $success = true;
             }
 
-            return false;
+            $original = $path.'/'.$fichier;
+            if (file_exists($original)) {
+                unlink($original);
+                $success = true;
+            }
+
+            return $success;
         }
+
+        return false;
+    }
 }

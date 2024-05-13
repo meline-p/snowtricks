@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Category;
-use App\Entity\Image;
 use App\Entity\Trick;
 use App\Repository\CategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -29,6 +28,7 @@ class TricksFormType extends AbstractType
             ->add('description', TextareaType::class, [
                 'attr' => [
                     'class' => 'form-control',
+                    'style' => 'min-height: 50vh;',
                 ],
                 'label' => 'Description',
             ])
@@ -44,10 +44,15 @@ class TricksFormType extends AbstractType
                         ->orderBy('c.name', 'ASC');
                 },
             ])
-            // ->add('promoteImage', EntityType::class, [
-            //     'class' => Image::class,
-            //     'choice_label' => 'id',
-            // ])
+            ->add('promoteImage', FileType::class, [
+                'label' => 'Ajouter une image à la une',
+                'multiple' => false,
+                'mapped' => false,
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
             ->add('images', FileType::class, [
                 'label' => 'Ajouter des images',
                 'multiple' => true,

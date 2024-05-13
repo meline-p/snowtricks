@@ -1,17 +1,21 @@
 {{ form_start(trickForm) }}
         <section>
                 <img style="width: 100%;height: 90vh;object-fit: cover;" 
-                    src="/assets/img/img.png">
+                    src="/assets/img//tricks/{{ trick.promoteImage.name ?? img.png }}">
                 <div class="position-absolute top-50 start-50 translate-middle bg-light rounded p-5" style="--bs-bg-opacity: .8;">
                     {{ form_label(trickForm.name) }}
                     {{ form_widget(trickForm.name) }}
+                    <div class="col-12 mt-4">
+                        {{ form_label(trickForm.promoteImage) }}
+                        {{ form_widget(trickForm.promoteImage) }}
+                    </div>
                 </div>
         </section>
 
 
         <section class="container">
 
-            {# on affiche les images si on est en édition #}
+            {# on affiche les images et les vidéos si on est en édition #}
             {% if app.request.attributes.get('_route') == 'app_tricks_edit' %}
                 <div class="d-flex flex-wrap justify-content-center m-2">
 
@@ -21,28 +25,28 @@
                             {% for img in images %}
                                 <div class="m-2 d-flex flex-column">
                                     <img src="/assets/img/tricks/{{ img.name }}"
-                                        style="height:300px; width:400px; object-fit:cover;"
+                                        style="height:200px; width:300px; object-fit:cover;"
                                         alt="{{ img.name }}">
-                                        <div>      
-                                            <a href="#" class="btn btn-secondary"><i class="fa-solid fa-pen"></i></a>
-                                            <a href="{{ path('app_tricks_delete_image', {id: img.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ img.id) }}" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
-                                            <a href="#" class="btn btn-success">Mettre à la une</a>
-                                        </div>
+                                    <div>      
+                                        <a href="#" class="btn btn-secondary"><i class="fa-solid fa-pen"></i></a>
+                                        <a href="{{ path('delete_image', {id: img.id, trick_slug: trick.slug}) }}" data-delete data-token="{{ csrf_token('delete' ~ img.id) }}" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                                        <a href="#" class="btn btn-success">Mettre à la une</a>
+                                    </div>
                                 </div>
                             {% endfor %}
                         {% endif %}
 
-                        {% if videos|length > 0 %}
+                        {# {% if videos|length > 0 %}
                             {% for vdo in videos %}
                                 <div class="m-2">
-                                    <iframe height="300px" width="400px" src="{{ vdo.url|replace({'watch?v=': 'embed/'}) }}" frameborder="0" allowfullscreen></iframe>
+                                    <iframe height="200px" width="300px" src="{{ vdo.url|replace({'watch?v=': 'embed/'}) }}" frameborder="0" allowfullscreen></iframe>
                                     <div>    
                                         <a href="#" class="btn btn-secondary"><i class="fa-solid fa-pen"></i></a>
                                         <a href="" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
                                     </div>    
                                 </div>
                             {% endfor %}
-                        {% endif %}
+                        {% endif %} #}
 
                     {% else %}
                         <div class="d-flex flex-column justify-content-center">
@@ -58,32 +62,26 @@
                 {{ form_label(trickForm.images) }}
                 {{ form_widget(trickForm.images) }}
             </div>
-            
-            <div class="col-12 mt-4">
-            <label>Ajouter des vidéos</label>
-                <div id="videos-container">
-                    <div class="video-input mb-2">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text rounded-0">https://</span>
-                            </div>
-                            <input type="text"
-                                id="videos[]"
-                                name="videos[]"
-                                value=""
-                                placeholder="Entrez une url"
-                                class="form-control video-url">
-                            <div class="input-group-append">
-                                <button type="button" id="delete-btn" class="btn btn-danger delete-video">Supprimer</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button id="add-video" class="btn btn-primary mt-3">Ajouter une autre vidéo</button>
 
-                <div class="d-none">{{ form_widget(trickForm.videos) }}</div> 
+
+            <label class="mt-4">Vidéos</label>
+            <div class="videos d-flex flex-wrap gap-2"
+                data-index="{{ trickForm.videos|length > 0 ? trickForm.videos|last.vars.name + 1 : 0 }}"
+                data-prototype="{{ form_widget(trickForm.videos.vars.prototype)|e('html_attr') }}">
+            {% for videoForm in trickForm.videos %}
+                <div class="mb-2">
+                    <input type="hidden" id="videoUrl_{{ loop.index }}" value="{{ videoForm.url.vars.value }}">
+                    <iframe id="videoIframe_{{ loop.index }}" height="200px" width="300px" frameborder="0" allowfullscreen style="display: none;"></iframe>
+                    <div class="mt-2">{{ form_row(videoForm.url) }}</div>
+                    <div>    
+                        <button type="button" class="btn btn-danger mt-2 delete-video" data-collection-holder-class="videos">Supprimer une vidéo</button>
+                    </div>    
+                </div>
+            {% endfor %}
+
             </div>
-        </section>
+            <button type="button" class="add_item_link btn btn-primary" data-collection-holder-class="videos">Ajouter une vidéo</button>
+            {# <button type="button" class="add_item_link" data-collection-holder-class="videos">Delete a video</button> #}
 
         <hr class="m-5">
 
@@ -109,46 +107,72 @@
     {{ form_end(trickForm) }}
 
  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var addVideoButton = document.getElementById('add-video');
-        var videosContainer = document.getElementById('videos-container');
-
-        addVideoButton.addEventListener('click', function (event) {
-            event.preventDefault();
-            var lastInput = videosContainer.querySelector('.video-input:last-child');
-            var clone = lastInput.cloneNode(true);
-            var lastInputId = lastInput.querySelector('.video-url').id;
-            var newId = lastInputId.replace(/\d+/g, function(match) {
-                return parseInt(match) + 1;
-            });
-            clone.querySelector('.video-url').id = newId;
-            clone.querySelector('.video-url').name = newId;
-            clone.querySelector('.video-url').value = '';
-            clone.querySelector('.video-url').disabled = false;
-            videosContainer.appendChild(clone);
-
-            var deleteButton = clone.querySelector('.delete-video');
-            deleteButton.textContent = 'Supprimer';
-            deleteButton.classList.remove('btn-success');
-            deleteButton.classList.add('btn-danger');
+    document
+        .querySelectorAll('.add_item_link')
+        .forEach(btn => {
+            btn.addEventListener("click", addFormToCollection)
         });
 
-        videosContainer.addEventListener('click', function (event) {
-            event.preventDefault();
-            if (event.target.classList.contains('delete-video')) {
-                var videoInput = event.target.closest('.video-input');
-                var videoUrlInput = videoInput.querySelector('.video-url');
-                if (videoUrlInput.disabled) {
-                    videoUrlInput.disabled = false;
-                    event.target.textContent = 'Supprimer';
-                    event.target.classList.remove('btn-success');
-                    event.target.classList.add('btn-danger');
-                } else {
-                    videoUrlInput.disabled = true;
-                    event.target.textContent = 'Restaurer';
-                    event.target.classList.remove('btn-danger');
-                    event.target.classList.add('btn-success');
-                }
+    document
+        .querySelectorAll('ul.videos li')
+        .forEach((tag) => {
+            addTagFormDeleteLink(tag)
+        })
+
+    function addFormToCollection(e) {
+    const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
+
+    const item = document.createElement('p');
+
+    item.innerHTML = collectionHolder
+        .dataset
+        .prototype
+        .replace(
+        /__name__/g,
+        collectionHolder.dataset.index
+        );
+
+    collectionHolder.appendChild(item);
+
+    collectionHolder.dataset.index++;
+
+    addTagFormDeleteLink(item);
+    };
+
+    function addTagFormDeleteLink(item) {
+        const removeFormButton = document.createElement('button');
+        removeFormButton.innerText = 'Supprimer cette vidéo';
+        removeFormButton.classList.add('btn', 'btn-danger', 'mt-2');
+
+        item.append(removeFormButton);
+
+        removeFormButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            item.remove();
+        });
+    }
+
+    // Videos ifram 
+    document.addEventListener('DOMContentLoaded', function() {
+        var deleteButtons = document.querySelectorAll('.delete-video');
+
+        deleteButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                // 
+            });
+        });
+
+        var inputs = document.querySelectorAll('[id^=videoUrl]');
+
+        inputs.forEach(function(input) {
+            var iframeId = input.getAttribute('id').replace('videoUrl', 'videoIframe');
+            var url = input.value;
+
+            if (url) {
+                var iframe = document.getElementById(iframeId);
+                iframe.src = url.replace('watch?v=', 'embed/');
+                iframe.style.display = 'block';
             }
         });
     });

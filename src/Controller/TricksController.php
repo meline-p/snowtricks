@@ -6,16 +6,15 @@ use App\Entity\Image;
 use App\Entity\Trick;
 use App\Entity\User;
 use App\Entity\UserTrick;
-use App\Entity\Video;
 use App\Form\TricksFormType;
 use App\Repository\CategoryRepository;
 use App\Repository\ImageRepository;
 use App\Repository\TrickRepository;
+use App\Repository\UserTrickRepository;
 use App\Repository\VideoRepository;
 use App\Service\PictureService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -62,16 +61,47 @@ class TricksController extends AbstractController
     public function details(
         Trick $trick,
         ImageRepository $imageRepository,
-        VideoRepository $videoRepository
+        VideoRepository $videoRepository,
+        UserTrickRepository $userTrickRepository
     ): Response {
         $images = $imageRepository->findBy(['trick' => $trick]);
         $videos = $videoRepository->findBy(['trick' => $trick]);
+
+        $userTrickCreatedAt = $userTrickRepository->findOneBy(['trick' => $trick, 'operation' => 'create']);
+        $created_at = $userTrickCreatedAt ? $userTrickCreatedAt->getDate() : null;
+
+        $userTrickUpdatedAt = $userTrickRepository->findOneBy(['trick' => $trick, 'operation' => 'update'], ['date' => 'DESC']);
+        $updated_at = $userTrickUpdatedAt ? $userTrickUpdatedAt->getDate() : null;
 
         return $this->render('tricks/details.html.twig', [
             'trick' => $trick,
             'images' => $images,
             'videos' => $videos,
+            'created_at' => $created_at,
+            'updated_at' => $updated_at,
         ]);
+    }
+
+    public function processImage($image, $trick, $pictureService, $folder, $width = 300, $height = 300)
+    {
+        if (null != $image) {
+            $img = new Image();
+
+            // Generate a unique file name
+            $fileName = uniqid().'_'.$trick->getId().'.'.$image->getClientOriginalExtension();
+
+            // Call the add service with the specific file name
+            $fichier = $pictureService->add($image, $folder, $width, $height, $fileName);
+            $extension = pathinfo($fichier, PATHINFO_EXTENSION);
+
+            $img->setName($fileName);
+            $img->setExtension($extension);
+            $trick->addImage($img);
+
+            return $img;
+        }
+
+        return null;
     }
 
     #[Route('/ajouter', name: 'add')]
@@ -113,30 +143,18 @@ class TricksController extends AbstractController
             // Retrieve the images
             $images = $trickForm->get('images')->getData();
 
+            // Define the destination folder
+            $folder = 'tricks';
+
             foreach ($images as $image) {
-                // Define the destination folder
-                $folder = 'tricks';
-
-                $img = new Image();
-                // Generate a unique file name
-                $fileName = uniqid().'_'.$trick->getId().'.'.$image->getClientOriginalExtension();
-
-                // Call the add service with the specific file name
-                $fichier = $pictureService->add($image, $folder, 300, 300, $fileName);
-                $extension = pathinfo($fichier, PATHINFO_EXTENSION);
-
-                $img->setName($fileName);
-                $img->setExtension($extension);
-                $trick->addImage($img);
+                $img = $this->processImage($image, $trick, $pictureService, $folder);
             }
 
-            // Retrieve the videos
-            $videosData = $request->get('videos');
-            foreach ($videosData as $videoData) {
-                $video = new Video();
-                $video->setUrl($videoData);
-                $trick->addVideo($video);
-            }
+            // Retrive the promote image
+            $promoteImage = $trickForm->get('promoteImage')->getData();
+
+            $promoteImg = $this->processImage($promoteImage, $trick, $pictureService, $folder);
+            $trick->setPromoteImage($promoteImg);
 
             // Persist and flush
             $em->persist($trick);
@@ -186,6 +204,8 @@ class TricksController extends AbstractController
 
         // Check if form is submitted and valid
         if ($trickForm->isSubmitted() && $trickForm->isValid()) {
+            // dd($trick);
+
             // Generate slug for the trick's name
             $slug = strtolower($slugger->slug($trick->getName()));
             $trick->setSlug($slug);
@@ -196,33 +216,21 @@ class TricksController extends AbstractController
             $em->persist($trick);
             $em->flush();
 
-            // retrieve the images
+            // Retrieve the images
             $images = $trickForm->get('images')->getData();
 
+            // Define the destination folder
+            $folder = 'tricks';
+
             foreach ($images as $image) {
-                // define the destination folder
-                $folder = 'tricks';
-
-                $img = new Image();
-                // Generate a unique file name
-                $fileName = uniqid().'_'.$trick->getId().'.'.$image->getClientOriginalExtension();
-
-                // Call the add service with the specific file name
-                $fichier = $pictureService->add($image, $folder, 300, 300, $fileName);
-                $extension = pathinfo($fichier, PATHINFO_EXTENSION);
-
-                $img->setName($fileName);
-                $img->setExtension($extension);
-                $trick->addImage($img);
+                $img = $this->processImage($image, $trick, $pictureService, $folder);
             }
 
-            // Retrieve the videos
-            $videosData = $request->get('videos');
-            foreach ($videosData as $videoData) {
-                $video = new Video();
-                $video->setUrl($videoData);
-                $trick->addVideo($video);
-            }
+            // Retrive the promote image
+            $promoteImage = $trickForm->get('promoteImage')->getData();
+
+            $promoteImg = $this->processImage($promoteImage, $trick, $pictureService, $folder);
+            $trick->setPromoteImage($promoteImg);
 
             // Persist and flush
             $em->persist($trick);
@@ -259,37 +267,5 @@ class TricksController extends AbstractController
         return $this->render('tricks/edit.html.twig', [
             'trick' => $trick,
         ]);
-    }
-
-    #[Route('/supprimer/image/{id}', name: 'delete_image', methods: ['DELETE'])]
-    public function deleteImage(
-        Image $image,
-        Request $request,
-        EntityManagerInterface $em,
-        PictureService $pictureService
-    ): Response {
-        $this->denyAccessUnlessGranted('ROLE_USER');
-
-        // Retrieve request content
-        $data = json_decode($request->getContent(), true);
-
-        if ($this->isCsrfTokenValid('delete'.$image->getId(), $data['_token'])) {
-            // CSRF token is valid
-            // Retrieve image name
-            $name = $image->getName();
-
-            if ($pictureService->delete($name, 'tricks', 300, 300)) {
-                // Delete image from database
-                $em->remove($image);
-                $em->flush();
-
-                return new JsonResponse(['success' => true], 200);
-            }
-
-            // Deletion failed
-            return new JsonResponse(['error' => 'Erreur de suppression'], 400);
-        }
-
-        return new JsonResponse(['error' => 'Token invalide'], 400);
     }
 }
