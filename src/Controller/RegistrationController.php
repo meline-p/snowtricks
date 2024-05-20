@@ -43,6 +43,10 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            $user->setLastName(strtoupper($user->getLastName()));
+            $user->setFirstName(ucfirst(strtolower($user->getFirstName())));
+            $user->setUsername(strtolower($user->getUsername()));
+
             $entityManager->persist($user);
             $entityManager->flush();
 

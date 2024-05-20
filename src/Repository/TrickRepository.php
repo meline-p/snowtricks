@@ -31,7 +31,10 @@ class TrickRepository extends ServiceEntityRepository
         $queryBuilder = $this->getEntityManager()->createQueryBuilder()
             ->select('c', 't')
             ->from('App\Entity\Trick', 't')
-            ->join('t.category', 'c');
+            ->join('t.category', 'c')
+            ->leftJoin('App\Entity\UserTrick', 'ut', 'WITH', 't.id = ut.trick AND ut.operation = :operation')
+            ->andWhere('ut.id IS NULL')
+            ->setParameter('operation', 'delete');
 
         // If the category slug is not 'all', filter by category
         if ('all' !== $slug) {

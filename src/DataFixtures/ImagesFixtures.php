@@ -17,20 +17,21 @@ class ImagesFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        $faker = Faker\Factory::create('fr_FR');
+        // $faker = Faker\Factory::create('fr_FR');
 
-        for ($img = 1; $img <= 5; $img++) {
-            $image = new Image();
-            $image->setExtension($faker->fileExtension());
+        // for ($img = 1; $img <= 5; $img++) {
+        //     $image = new Image();
+        //     $image->setName($faker->regexify('[A-Za-z0-9]{20}'));
+        //     $image->setExtension($faker->fileExtension());
 
-            // on va chercher une reference de trick
-            $trick = $this->getReference('trk-'.rand(1, 5));
-            $image->setTrick($trick);
+        //     // on va chercher une reference de trick
+        //     $trick = $this->getReference('trk-'.rand(1, 5));
+        //     $image->setTrick($trick);
 
-            $manager->persist($image);
-        }
+        //     $manager->persist($image);
+        // }
 
-        $manager->flush();
+        // $manager->flush();
     }
 
     public function getDependencies()

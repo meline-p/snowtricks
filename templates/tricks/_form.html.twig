@@ -1,12 +1,21 @@
 {{ form_start(trickForm) }}
         <section>
                 <img style="width: 100%;height: 90vh;object-fit: cover;" 
-                    src="/assets/img//tricks/{{ trick.promoteImage.name ?? img.png }}">
+                    src="/assets/img//tricks/{{ trick.promoteImage.name ?? 'img.png' }}">
                 <div class="position-absolute top-50 start-50 translate-middle bg-light rounded p-5" style="--bs-bg-opacity: .8;">
-                    {{ form_label(trickForm.name) }}
+                    <div class="text-center mb-4">
+                        <h2>
+                            {% if app.request.attributes.get('_route') == 'app_tricks_edit' %}
+                                Modifier la figure
+                            {% else %}
+                                Ajouter une figure
+                            {% endif %}
+                        </h2>
+                    </div>
+                    <h5 class="">{{ form_label(trickForm.name) }}</h5>
                     {{ form_widget(trickForm.name) }}
                     <div class="col-12 mt-4">
-                        {{ form_label(trickForm.promoteImage) }}
+                       <h5 class=""> {{ form_label(trickForm.promoteImage) }}</h5>
                         {{ form_widget(trickForm.promoteImage) }}
                     </div>
                 </div>
@@ -26,30 +35,17 @@
                                 <div class="m-2 d-flex flex-column">
                                     <img src="/assets/img/tricks/{{ img.name }}"
                                         style="height:200px; width:300px; object-fit:cover;"
+                                        class="rounded"
                                         alt="{{ img.name }}">
-                                    <div>      
-                                        <a href="#" class="btn btn-secondary"><i class="fa-solid fa-pen"></i></a>
-                                        <a href="{{ path('delete_image', {id: img.id, trick_slug: trick.slug}) }}" data-delete data-token="{{ csrf_token('delete' ~ img.id) }}" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
-                                        <a href="#" class="btn btn-success">Mettre à la une</a>
+                                    <div class="mt-2 text-center">      
+                                        <a href="{{ path('delete_image', {id: img.id, trick_slug: trick.slug}) }}" data-delete data-token="{{ csrf_token('delete' ~ img.id) }}" class="btn btn-dark"><i class="fa-solid fa-trash"></i> Supprimer cette image</a>
                                     </div>
                                 </div>
                             {% endfor %}
                         {% endif %}
 
-                        {# {% if videos|length > 0 %}
-                            {% for vdo in videos %}
-                                <div class="m-2">
-                                    <iframe height="200px" width="300px" src="{{ vdo.url|replace({'watch?v=': 'embed/'}) }}" frameborder="0" allowfullscreen></iframe>
-                                    <div>    
-                                        <a href="#" class="btn btn-secondary"><i class="fa-solid fa-pen"></i></a>
-                                        <a href="" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
-                                    </div>    
-                                </div>
-                            {% endfor %}
-                        {% endif %} #}
-
                     {% else %}
-                        <div class="d-flex flex-column justify-content-center">
+                        <div class="text-center mt-4">
                             <p> Il n'y a pas encore d'images ou de vidéos pour ce trick !</p>
                         </div>
 
@@ -59,47 +55,47 @@
             {% endif %}
             
              <div class="col-12 mt-4">
-                {{ form_label(trickForm.images) }}
+                <h5>{{ form_label(trickForm.images) }}</h5>
                 {{ form_widget(trickForm.images) }}
             </div>
 
 
-            <label class="mt-4">Vidéos</label>
+            <h5 class="mt-4">Gérer les vidéos</h5>
             <div class="videos d-flex flex-wrap gap-2"
                 data-index="{{ trickForm.videos|length > 0 ? trickForm.videos|last.vars.name + 1 : 0 }}"
                 data-prototype="{{ form_widget(trickForm.videos.vars.prototype)|e('html_attr') }}">
             {% for videoForm in trickForm.videos %}
-                <div class="mb-2">
-                    <input type="hidden" id="videoUrl_{{ loop.index }}" value="{{ videoForm.url.vars.value }}">
-                    <iframe id="videoIframe_{{ loop.index }}" height="200px" width="300px" frameborder="0" allowfullscreen style="display: none;"></iframe>
-                    <div class="mt-2">{{ form_row(videoForm.url) }}</div>
-                    <div>    
-                        <button type="button" class="btn btn-danger mt-2 delete-video" data-collection-holder-class="videos">Supprimer une vidéo</button>
-                    </div>    
+                <div class="mb-2 video-container">
+                    <iframe 
+                        class="video-iframe"
+                        height="200px" width="300px" frameborder="0" allowfullscreen 
+                        style="display: none;"
+                        data-url="{{ videoForm.url.vars.value }}"
+                    ></iframe>
+                    <div class="mt-2">{{ form_row(videoForm.url) }}</div>  
                 </div>
             {% endfor %}
 
             </div>
-            <button type="button" class="add_item_link btn btn-primary" data-collection-holder-class="videos">Ajouter une vidéo</button>
-            {# <button type="button" class="add_item_link" data-collection-holder-class="videos">Delete a video</button> #}
+            <button type="button" class="add_item_link btn btn-light" data-collection-holder-class="videos">Ajouter une vidéo</button>
 
-        <hr class="m-5">
+        <hr class="my-5">
 
         <section class="container">
-            <section class="row mb-4">
+            <section class="row">
+                <div class="col-6 mb-4">
+                    <h5>{{ form_label(trickForm.category) }}</h5>
+                    {{ form_widget(trickForm.category) }}
+                </div>
                 <div class="col-12">
-                    {{ form_label(trickForm.description) }}
+                    <h5>{{ form_label(trickForm.description) }}</h5>
                     {{ form_widget(trickForm.description) }}
                 </div>
             </section>
 
             <section class="row">
-                <div class="col-6">
-                    {{ form_label(trickForm.category) }}
-                    {{ form_widget(trickForm.category) }}
-                </div>
                 <div class="d-flex justify-content-center mt-5">
-                    <button type="submit" class="btn btn-primary">{{ button_label|default('Ajouter') }}</button>                
+                    <button type="submit" class="btn btn-dark">{{ button_label|default('Ajouter') }}</button>                
                 </div>
             </section>
         </section>
@@ -107,6 +103,9 @@
     {{ form_end(trickForm) }}
 
  <script>
+
+    const deletedVideos = [];
+
     document
         .querySelectorAll('.add_item_link')
         .forEach(btn => {
@@ -122,9 +121,11 @@
     function addFormToCollection(e) {
     const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
 
-    const item = document.createElement('p');
-
-    item.innerHTML = collectionHolder
+    const item = document.createElement('div');
+    item.id = `video-${collectionHolder.dataset.index}`
+    item.classList.add('mb-2', 'video-container');
+    
+    const itemHtml = collectionHolder
         .dataset
         .prototype
         .replace(
@@ -132,17 +133,41 @@
         collectionHolder.dataset.index
         );
 
+    item.innerHTML =`<iframe class="video-iframe" 
+        height="200px" width="300px" 
+        frameborder="0" 
+        allowfullscreen="" 
+        style="display: none;"
+        data-url="" 
+        src="">
+    </iframe>
+    <div class="mt-2">
+        ${itemHtml}
+    </div>
+    `
+
     collectionHolder.appendChild(item);
 
     collectionHolder.dataset.index++;
+
+    const input = item.querySelector('input')
+
+    input.addEventListener('change', (event) => {
+        const url = event.target.value
+        const iframe = event.target.closest('.video-container').querySelector('iframe')
+        iframe.src = url.replace('watch?v=', 'embed/');
+        iframe.style.display = 'block';
+
+
+    })
 
     addTagFormDeleteLink(item);
     };
 
     function addTagFormDeleteLink(item) {
         const removeFormButton = document.createElement('button');
-        removeFormButton.innerText = 'Supprimer cette vidéo';
-        removeFormButton.classList.add('btn', 'btn-danger', 'mt-2');
+        removeFormButton.innerHTML = `<i class="fa-solid fa-trash"></i> Supprimer cette vidéo`;
+        removeFormButton.classList.add('btn', 'btn-dark', 'mt-2');
 
         item.append(removeFormButton);
 
@@ -152,25 +177,19 @@
         });
     }
 
-    // Videos ifram 
+    // Videos iframe 
     document.addEventListener('DOMContentLoaded', function() {
-        var deleteButtons = document.querySelectorAll('.delete-video');
+        var videoContainers = document.querySelectorAll('.video-container');
 
-        deleteButtons.forEach(function(button) {
-            button.addEventListener('click', function(event) {
-                event.preventDefault();
-                // 
-            });
-        });
+        videoContainers.forEach(function(video) {
 
-        var inputs = document.querySelectorAll('[id^=videoUrl]');
+            addTagFormDeleteLink(video)
 
-        inputs.forEach(function(input) {
-            var iframeId = input.getAttribute('id').replace('videoUrl', 'videoIframe');
-            var url = input.value;
+            const iframe = video.querySelector('iframe')
+
+            const url = iframe.dataset.url
 
             if (url) {
-                var iframe = document.getElementById(iframeId);
                 iframe.src = url.replace('watch?v=', 'embed/');
                 iframe.style.display = 'block';
             }

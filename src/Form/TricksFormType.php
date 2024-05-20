@@ -45,7 +45,7 @@ class TricksFormType extends AbstractType
                 },
             ])
             ->add('promoteImage', FileType::class, [
-                'label' => 'Ajouter une image à la une',
+                'label' => "Modifier l'image à la une",
                 'multiple' => false,
                 'mapped' => false,
                 'required' => false,

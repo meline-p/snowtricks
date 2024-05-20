@@ -34,13 +34,13 @@ class RegistrationFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                'label' => 'Nom',
+                'label' => 'Prénom',
             ])
             ->add('last_name', TypeTextType::class, [
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                'label' => 'Prénom',
+                'label' => 'Nom',
             ])
             ->add('RGPDConsent', CheckboxType::class, [
                 'mapped' => false,

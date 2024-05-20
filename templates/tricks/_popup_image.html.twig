@@ -1,0 +1,37 @@
+<section>
+    <div class="modal fade" id="openPopUp" tabindex="-1" aria-labelledby="openPopUpLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img id="modalImage" src="" alt="Image" style="max-width: 100%; max-height: 100%; display: block; margin: auto;">
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var openPopUpLinks = document.querySelectorAll('.openPopUp');
+        
+        openPopUpLinks.forEach(function(link) {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                // Catch the image's URL to display
+                var imageUrl = this.getAttribute('data-image'); 
+                var modalImage = document.getElementById('modalImage');
+
+                // Update the image source in the modal window
+                modalImage.setAttribute('src', imageUrl); 
+                var dataModal = document.getElementById('dataModal');
+
+                console.log(imageUrl);
+            });
+        });
+    });
+</script>

@@ -30,6 +30,7 @@ class CategoriesFixtures extends Fixture
         $category = new Category();
         $category->setName($name);
         $category->setSlug($this->slugger->slug($name)->lower());
+        $category->setCategoryOrder($this->counter);
         $manager->persist($category);
 
         // ajouter une référence categorie

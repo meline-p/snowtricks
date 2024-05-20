@@ -1,6 +1,18 @@
-<div class="btn-group" role="group" aria-label="Basic example">
-    <a href="{{ path('app_tricks_index', {'category_slug': 'all'}) }}" class="btn {% if app.request.attributes.get('_route_params').category_slug == 'all' %}btn-success{% else %}btn-secondary{% endif %}">Tout</a>
-    {% for category in categories %}
-        <a href="{{ path('app_tricks_index', {'category_slug': category.slug}) }}" class="btn {% if app.request.attributes.get('_route_params').category_slug == category.slug %}btn-success{% else %}btn-secondary{% endif %}">{{ category.name }}</a>
-    {% endfor %}
+<div class="d-flex">
+
+    {% if is_granted('ROLE_USER') %}
+        <div class="mx-3">
+            <a href="{{ path('app_tricks_add')}}" class="btn btn-primary">
+            <i class="fa-solid fa-plus"></i> Ajouter une figure
+            </a>
+        </div>
+    {% endif %}
+
+    <div class="btn-group" role="group" aria-label="Basic example">
+        
+        <a href="{{ path('app_tricks_index', {'category_slug': 'all'}) }}" class="btn {% if app.request.attributes.get('_route_params').category_slug == 'all' %}btn-dark{% else %}btn-light{% endif %}">Tout</a>
+        {% for category in categories %}
+            <a href="{{ path('app_tricks_index', {'category_slug': category.slug}) }}" class="btn {% if app.request.attributes.get('_route_params').category_slug == category.slug %}btn-dark{% else %}btn-light{% endif %}">{{ category.name }}</a>
+        {% endfor %}
+    </div>
 </div>

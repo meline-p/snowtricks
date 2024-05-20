@@ -2,8 +2,10 @@
 
 namespace App\Service;
 
+use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
 
 class PictureService
 {
@@ -32,24 +34,28 @@ class PictureService
         }
 
         // Check the image format
-        switch ($picture_infos['mime']) {
-            case 'image/png':
-                $picture_source = \imagecreatefrompng($picture);
-                break;
-            case 'image/jpg':
-                $picture_source = \imagecreatefromjpeg($picture);
-                break;
-            case 'image/jpeg':
-                $picture_source = \imagecreatefromjpeg($picture);
-                break;
-            case 'image/webp':
-                $picture_source = \imagecreatefromwebp($picture);
-                break;
-            case 'image/avif':
-                $picture_source = \imagecreatefromavif($picture);
-                break;
-            default:
-                throw new \Exception('Format d\'image incorrect');
+        try {
+            switch ($picture_infos['mime']) {
+                case 'image/png':
+                    $picture_source = \imagecreatefrompng($picture);
+                    break;
+                case 'image/jpg':
+                    $picture_source = \imagecreatefromjpeg($picture);
+                    break;
+                case 'image/jpeg':
+                    $picture_source = \imagecreatefromjpeg($picture);
+                    break;
+                case 'image/webp':
+                    $picture_source = \imagecreatefromwebp($picture);
+                    break;
+                case 'image/avif':
+                    $picture_source = \imagecreatefromavif($picture);
+                    break;
+                default:
+                    throw new \Exception('Format d\'image incorrect');
+            }
+        } catch (\Exception) {
+            throw new \Exception('Format d\'image incorrect');
         }
 
         // Crop the image
@@ -85,13 +91,13 @@ class PictureService
 
         $path = $this->params->get('images_directory').$folder;
 
-        // Create the destination folder if it does not exist
-        if (!file_exists($path.'/mini/')) {
-            mkdir($path.'/mini/', 0755, true);
-        }
+        // // Create the destination folder if it does not exist
+        // if (!file_exists($path.'/mini/')) {
+        //     mkdir($path.'/mini/', 0755, true);
+        // }
 
-        // Store the cropped image
-        imagejpeg($resized_picture, $path.'/mini/'.$width.'x'.$height.'_'.$fichier);
+        // // Store the cropped image
+        // imagejpeg($resized_picture, $path.'/mini/'.$width.'x'.$height.'_'.$fichier);
 
         $picture->move($path.'/', $fichier);
 
@@ -108,12 +114,12 @@ class PictureService
             $success = false;
             $path = $this->params->get('images_directory').$folder;
 
-            $mini = $path.'/mini/'.$width.'x'.$height.'_'.$fichier;
+            // $mini = $path.'/mini/'.$width.'x'.$height.'_'.$fichier;
 
-            if (file_exists($mini)) {
-                unlink($mini);
-                $success = true;
-            }
+            // if (file_exists($mini)) {
+            //     unlink($mini);
+            //     $success = true;
+            // }
 
             $original = $path.'/'.$fichier;
             if (file_exists($original)) {

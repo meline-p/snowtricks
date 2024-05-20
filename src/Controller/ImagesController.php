@@ -37,6 +37,10 @@ class ImagesController extends AbstractController
             // Delete image from database
             $em->remove($image);
             $em->flush();
+
+            $this->addFlash('success', 'image supprimée avec succès');
+        } else {
+            $this->addFlash('danger', 'Erreur : impossible de supprimer cette image');
         }
 
         $route = $request->headers->get('referer');

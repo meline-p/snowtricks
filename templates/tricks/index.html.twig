@@ -13,8 +13,10 @@
 {% block body %}
     <main class="container">
 		<section class="row">
-			<div class="col-12 mx-auto text-center" style="width:fit-content;">
-				<h1 class="text-3xl font-bold">
+			<div class="col-12 mx-auto text-center mt-4" style="width:fit-content;">
+                {% include "categories/list.html.twig"  %}
+
+				<h1 class="text-3xl font-bold mt-4">
                     {% if categories is defined %}
                         {% if app.request.attributes.get('_route_params').category_slug == 'all' %}
                             Toutes les Figures
@@ -29,8 +31,6 @@
                         Toutes les Figures
                     {% endif %}
                 </h1>
-
-                {% include "categories/list.html.twig"  %}
 			</div>
 		</section>
 

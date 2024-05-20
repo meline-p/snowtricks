@@ -35,14 +35,14 @@ class Trick
     #[ORM\OneToMany(targetEntity: UserTrick::class, mappedBy: 'trick')]
     private Collection $userTricks;
 
-    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'trick')]
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'trick', fetch: 'EAGER')]
     private Collection $comments;
 
     // #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'trick', fetch: 'EAGER')]
     #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'trick', fetch: 'EAGER', cascade: ['persist'])]
     private Collection $images;
 
-    #[ORM\OneToMany(targetEntity: Video::class, mappedBy: 'trick', cascade: ['persist'])]
+    #[ORM\OneToMany(targetEntity: Video::class, mappedBy: 'trick', fetch: 'EAGER', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $videos;
 
     public function __construct()
@@ -141,6 +141,17 @@ class Trick
         }
 
         return $this;
+    }
+
+    public function isDeleted(): bool
+    {
+        foreach ($this->userTricks as $userTrick) {
+            if ('delete' === $userTrick->getOperation()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

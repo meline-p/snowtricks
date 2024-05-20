@@ -1,0 +1,32 @@
+<section>
+    <div class="modal fade" id="deleteTrick{{ trick.id }}" tabindex="-1" aria-labelledby="deleteTrickLabel{{ trick.id }}" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{ form_start(deleteForms[trick.id], {'action': path('app_tricks_delete', {'slug': trick.slug}), 'method': 'POST'}) }}
+                        <h5 class="font-normal text-center">Voulez-vous supprimer définitivement la figure <strong>{{ trick.name }}</strong> ?</h5>
+                        <div class="text-center my-4">
+                            <button type="submit" class="btn btn-dark">Supprimer</button>
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal" aria-label="Close">Annuler</button>
+                        </div>
+                    {{ form_end(deleteForms[trick.id]) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var deleteTrickLinks = document.querySelectorAll('.deleteTrick');
+        
+        deleteTrickLinks.forEach(function(link) {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+            });
+        });
+    });
+</script>
