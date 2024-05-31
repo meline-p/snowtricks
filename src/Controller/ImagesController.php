@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Filesystem\Filesystem;
+
 
 class ImagesController extends AbstractController
 {
@@ -34,9 +36,28 @@ class ImagesController extends AbstractController
         }
 
         if ($pictureService->delete($name, 'tricks', 300, 300)) {
-            // Delete image from database
-            $em->remove($image);
-            $em->flush();
+
+            $em->getConnection()->beginTransaction();
+
+            try{
+                // Delete image from database
+                $em->remove($image);
+                $em->flush();
+
+                // Delete image from folder
+                $filesystem = new Filesystem();
+                $pathToImage = 'assets/img/tricks/' . $image->getName();
+
+                if ($filesystem->exists($pathToImage)) {
+                    $filesystem->remove($pathToImage);
+                } 
+
+                $em->getConnection()->commit();
+
+            }catch (\Exception $e) {
+                $em->getConnection()->rollBack();
+                throw $e;
+            }
 
             $this->addFlash('success', 'image supprimée avec succès');
         } else {

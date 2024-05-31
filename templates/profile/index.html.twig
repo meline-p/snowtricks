@@ -28,7 +28,7 @@
                     <div class="m-4 ">
                         <div class="d-flex justify-content-between">
                             <h4><i class="fa-solid fa-user"></i> Mes informations</h4>
-                            <button class="btn btn-light btn-sm">Modifier mes informations</button>
+                            <a href="{{ path('app_profile_edit_infos', {'user_username': user.username}) }}" class="btn btn-light btn-sm">Modifier mes informations</a>
                         </div>
                         <hr class="my-2">
                         <table class="table table-borderless">
@@ -51,7 +51,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <button class="btn btn-dark btn-sm">Modifier mon mot de passe</button>
+                        <a href="{{ path('app_profile_edit_password', {'user_username': user.username})}}" class="btn btn-dark btn-sm">Modifier mon mot de passe</a>
                     </div>
                 </div>
             </div>

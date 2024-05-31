@@ -1,38 +1,91 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Snowtricks</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{ path('app_main') }}">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ path('app_tricks_index', {'category_slug': 'all'}) }}">Figures</a>
-        </li>
-      </ul>
+<div id='menu'>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary d-none d-md-block">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ path('app_main') }}">Snowtricks</a>
+            <div class="">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="text-dark nav-link active" aria-current="page" href="{{ path('app_main') }}">
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="text-dark nav-link" href="{{ path('app_tricks_index', {'category_slug': 'all'}) }}">
+                            Figures
+                        </a> 
+                    </li>
+                    {% if app.user %}
+                        <li class="nav-item">
+                            <a class="text-dark nav-link active" aria-current="page" href="{{ path('app_profile_index', {'user_username': app.user.username }) }}">
+                                Mon Compte
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="text-dark nav-link active" aria-current="page" href="{{ path('app_logout') }}">
+                                Se déconnecter
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="text-dark nav-link active" aria-current="page" href="{{ path('app_register') }}">
+                                S'inscrire
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="text-dark nav-link active" aria-current="page" href="{{ path('app_login') }}">
+                                Se connecter
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-      {% if app.user %}
-        <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{ path('app_profile_index', {'user_username': app.user.username }) }}">Mon Compte</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{ path('app_logout') }}">Se déconnecter</a>
-        </li>
-      {% else %}
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{ path('app_register') }}">S'inscrire</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{ path('app_login') }}">Se connecter</a>
-        </li>
-      {% endif %}
-      </ul>
-      
+    <div class="d-md-none d-flex justify-content-around align-items-center bg-light p-3 shadow-lg w-100">
+        <div>
+            <a class="text-dark" aria-current="page" href="{{ path('app_main') }}">
+                <i class="fa-solid fa-house fs-3"></i>
+            </a>
+        </div>
+        <div> 
+            <a class="text-dark" href="{{ path('app_tricks_index', {'category_slug': 'all'}) }}">
+                <i class="fa-solid fa-person-snowboarding fs-3"></i>
+            </a>
+        </div>
+        <div>
+          <a class="text-dark nav-link" aria-current="page" href="{{ path('app_profile_index', {'user_username': app.user.username }) }}">
+              <i class="fa-solid fa-user fs-3"></i>
+          </a>
+        </div>
+        <div>
+            {% if app.user %}
+                <a class="text-dark " aria-current="page" href="{{ path('app_logout') }}">
+                    <i class="fa-solid fa-right-from-bracket fs-3"></i>
+                </a>
+            {% else %}
+                <a class="text-dark " aria-current="page" href="{{ path('app_login') }}">
+                    <i class="fa-solid fa-user fs-3"></i>
+                </a>
+            {% endif %}
+        </div>
     </div>
-  </div>
-</nav>
+</div>
+
+<script>
+    function updateNavPosition() {
+        var width = window.innerWidth;
+        var nav = document.getElementById('menu');
+        if (width < 768) {
+            nav.classList.remove("sticky-top");
+            nav.classList.add("fixed-bottom");
+        } else {
+            nav.classList.remove("fixed-bottom");
+            nav.classList.add('sticky-top');
+        }
+    }
+
+    updateNavPosition();
+
+    window.addEventListener('resize', updateNavPosition);
+</script>

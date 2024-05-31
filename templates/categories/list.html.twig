@@ -1,4 +1,4 @@
-<div class="d-flex">
+<div class="d-flex flex-wrap justify-content-center flex-md-row flex-column gap-2">
 
     {% if is_granted('ROLE_USER') %}
         <div class="mx-3">
@@ -8,11 +8,35 @@
         </div>
     {% endif %}
 
-    <div class="btn-group" role="group" aria-label="Basic example">
+    <div class="btn-group d-flex flex-wrap flex-md-row flex-column" role="group" id='tricks'>
         
-        <a href="{{ path('app_tricks_index', {'category_slug': 'all'}) }}" class="btn {% if app.request.attributes.get('_route_params').category_slug == 'all' %}btn-dark{% else %}btn-light{% endif %}">Tout</a>
+        <div>
+            <a href="{{ path('app_tricks_index', {'category_slug': 'all'}) }}" 
+            style="display:flex;justify-content:center;align-items:center;"
+            class="btn
+            {% if app.request.attributes.get('_route_params').category_slug == 'all' %}
+                btn-dark
+            {% else %}
+                btn-light
+            {% endif %}"
+            >
+            Tout
+            </a>
+        </div>
         {% for category in categories %}
-            <a href="{{ path('app_tricks_index', {'category_slug': category.slug}) }}" class="btn {% if app.request.attributes.get('_route_params').category_slug == category.slug %}btn-dark{% else %}btn-light{% endif %}">{{ category.name }}</a>
+        <div>
+            <a href="{{ path('app_tricks_index', {'category_slug': category.slug}) }}" 
+            style="display:flex;justify-content:center;align-items:center;"
+            class="btn
+            {% if app.request.attributes.get('_route_params').category_slug == category.slug %}
+                btn-dark
+            {% else %}
+                btn-light
+            {% endif %}"
+            >
+                {{ category.name }}
+            </a>
+        </div>
         {% endfor %}
     </div>
 </div>

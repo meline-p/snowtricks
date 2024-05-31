@@ -20,6 +20,7 @@ use App\Repository\VideoRepository;
 use App\Service\PictureService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -29,7 +30,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/tricks', name: 'app_tricks_')]
 class TricksController extends AbstractController
 {
-    Use ProcessImageTrait;
+    use ProcessImageTrait;
 
     #[Route('/categories/{category_slug}', name: 'index')]
     public function index(
@@ -53,7 +54,7 @@ class TricksController extends AbstractController
         $page = $request->query->getInt('page', 1);
 
         // Retrieve paginated tricks based on the selected category
-        $tricks = $trickRepository->findTricksPaginated($page, $category_slug, 10);
+        $tricks = $trickRepository->findTricksPaginated($page, $category_slug, 6);
 
         $deleteForms = [];
         if (count($tricks) > 0) {
@@ -81,10 +82,13 @@ class TricksController extends AbstractController
         Request $request,
         EntityManagerInterface $em
     ): Response {
-
         $images = $imageRepository->findBy(['trick' => $trick]);
         $videos = $videoRepository->findBy(['trick' => $trick]);
         $comments = $commentRepository->findBy(['trick' => $trick], ['created_at' => 'DESC']);
+
+        // Get the page number from the URL query parameters
+        $page = $request->query->getInt('page', 1);
+        $comments = $commentRepository->findCommentsPaginated($page, $trick->getId(), 3);
 
         $userTrickCreatedAt = $userTrickRepository->findOneBy(['trick' => $trick, 'operation' => 'create']);
         $created_at = $userTrickCreatedAt ? $userTrickCreatedAt->getDate() : null;
@@ -104,17 +108,16 @@ class TricksController extends AbstractController
         $commentForm->handleRequest($request);
 
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
-            
             $comment->setContent($comment->getContent());
             $comment->setUser($user);
             $comment->setTrick($trick);
-    
+
             $em->persist($comment);
             $em->flush();
 
             $route = $request->headers->get('referer');
 
-            return $this->redirect($route);
+            return $this->redirect($route.'#comments');
         }
 
         return $this->render('tricks/details.html.twig', [
@@ -125,7 +128,7 @@ class TricksController extends AbstractController
             'created_at' => $created_at,
             'updated_at' => $updated_at,
             'deleteForms' => $deleteForms,
-            'commentForm' => $commentForm->createView()
+            'commentForm' => $commentForm->createView(),
         ]);
     }
 
@@ -320,16 +323,32 @@ class TricksController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if (!$trick) {
                 $this->addFlash('danger', 'Aucune figure correspondante');
+
+                return $this->redirectToRoute('app_tricks_index', ['category_slug' => 'all']);
             }
 
-            $userTrick = new UserTrick();
-            $userTrick->setOperation('delete');
-            $userTrick->setDate(new \DateTime());
-            $userTrick->setUser($user);
-            $userTrick->setTrick($trick);
+            $em->getConnection()->beginTransaction();
+            $filesystem = new Filesystem();
 
-            $em->persist($userTrick);
-            $em->flush();
+            try {
+                $images = $trick->getImages();
+
+                $em->remove($trick);
+                $em->flush();
+
+                foreach ($images as $image) {
+                    $pathToImage = 'assets/img/users/' . $image->getName();
+                    
+                    if ($filesystem->exists($pathToImage)) {
+                        $filesystem->remove($pathToImage);
+                    } 
+                }
+
+                $em->getConnection()->commit();
+            } catch (\Exception $e) {
+                $em->getConnection()->rollBack();
+                throw $e;
+            }
 
             $this->addFlash('success', 'Figure supprimée avec succès');
         }

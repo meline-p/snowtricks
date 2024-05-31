@@ -5,17 +5,21 @@
 {% block body %}
 
 		<section>
-                <img style="width: 100%;height: 90vh;object-fit: cover;" 
+                <img style="width: 100%;height: 100vh;object-fit: cover;" 
                     src="/assets/img/tricks/{{ trick.promoteImage.name }}">
-				<div class="position-absolute top-50 start-50 translate-middle bg-light rounded p-5 text-center" style="--bs-bg-opacity: .8;">
-                    <h1>{{ trick.name }}</h1>
+                <div class="row">
+                    <div class="col-lg-6 p-4 position-absolute top-50 start-50 translate-middle" >
+                        <div class="w-100 bg-light rounded p-5 text-center" style="--bs-bg-opacity: .8;">
+                            <h1>{{ trick.name }}</h1>
 
-                    {% if is_granted('ROLE_USER') %}
-                        <div class="mx-2">
-                            <a href="{{ path('app_tricks_edit', {'slug' : trick.slug})}}" class="btn btn-light"><i class="fa-solid fa-pen-to-square"></i> Modifier</a>
-                            <a href="#" data-slug="{{ trick.slug }}" data-bs-toggle="modal" data-bs-target="#deleteTrick{{ trick.id }}" class="btn btn-light"><i class="fa-solid fa-trash deleteTrick"></i> Supprimer</a>
+                            {% if is_granted('ROLE_USER') %}
+                                <div class="mx-2 d-flex gap-2">
+                                    <a href="{{ path('app_tricks_edit', {'slug' : trick.slug})}}" class="btn btn-light"><i class="fa-solid fa-pen-to-square"></i> Modifier</a>
+                                    <a href="#" data-slug="{{ trick.slug }}" data-bs-toggle="modal" data-bs-target="#deleteTrick{{ trick.id }}" class="btn btn-light"><i class="fa-solid fa-trash deleteTrick"></i> Supprimer</a>
+                                </div>
+                            {% endif %}
                         </div>
-                    {% endif %}
+                    </div>
                 </div>
 		</section>
 
@@ -55,9 +59,10 @@
         </section>
 
         <main class="container">
-            <section class="row">
-                <div class="col-lg-6 col-md-8 mx-auto">
-                    <p>{{ trick.description }}</p>
+            <section class="row my-4">
+                <div class="col-lg-6 col-md-8 mx-auto rounded bg-light p-4 m-2">
+                    <h4 class="text-center mb-4">Description</h4>
+                    <p class="">{{ trick.description }}</p>
                 </div>
             </section>
 
@@ -95,9 +100,26 @@
 
         {% if comments|length > 0 %}
             <section class="col-md-8 col-lg-6 mx-auto">
-            <h4 class="text-center mb-4">Commentaires</h4>
-                {% for comment in comments %}
-                    <div class="d-flex gap-2 my-3 mx-4">
+            <h4 class="text-center mb-4" id="comments">Commentaires</h4>
+                {% for comment in comments.data %}
+                    {% if app.user.username is defined and app.user.username == comment.user.username %}
+                        <div class="d-flex gap-2 my-3 w-75 ms-auto  mx-4">
+                            
+                            <div class="bg-light px-4 py-3 rounded flex-grow-1">
+                                <div>
+                                    <small>
+                                        <span class="fw-bold">@{{ comment.user.username }}</span><br>
+                                        <span class="fw-light">{{ comment.createdAt|date('d/m/Y à H:i') }}</span><br>
+                                    </small>
+                                </div>
+                                <div class="mt-2">{{ comment.content }}</div>
+                            </div>
+                            <div>
+                                <img src="/assets/img/users/{{comment.user.pictureslug ?? 'img.png' }}" style="width:50px; height:50px; object-fit:cover; border-radius:50%;">
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="d-flex gap-2 my-3 w-75 mx-4">
                         <div>
                             <img src="/assets/img/users/{{comment.user.pictureslug ?? 'img.png' }}" style="width:50px; height:50px; object-fit:cover; border-radius:50%;">
                         </div>
@@ -111,8 +133,20 @@
                             <div class="mt-2">{{ comment.content }}</div>
                         </div>
                     </div>
+                    {% endif %}
                 {% endfor %}
             </section>
+
+            {% if comments|length > 0 %}
+                {% set pages = comments.pages %}
+                {% if pages > 1 %}
+                    <div class="mx-auto" style="width:fit-content;">  
+                        {% set currentPage = comments.page %}
+                        {% include '_partials/_comments_pagination.html.twig' with {'slug': trick.slug, 'path': 'app_tricks_details' , 'currentPage': currentPage} %}
+                    </div>
+                {% endif %}
+            {% endif %}
+
         {% else %}
               <p class="text-center">Il n'y aucun commentaires pour cette figure.</p>  
         {% endif %}

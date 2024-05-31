@@ -6,12 +6,12 @@
 
 <div class="position-relative" style="height:50vh">
     <div>
-        <img src="assets/img/register.avif" style="height:50vh;width:100%;object-fit:cover;object-position:50% 20%">
+        <img src="/assets/img/edit_infos.avif" style="height:50vh;width:100%;object-fit:cover;object-position:50% 30%">
     </div>
     <div class=" bg-warning" >
         <div class=" position-absolute top-50 start-50 translate-middle" >
             <div class="w-100 bg-light p-5 rounded text-center" style="--bs-bg-opacity: .8;">
-                <h1 class="">Bienvenue sur SnowTricks!</h1>
+                <h1 class="">Modifier mes informations</h1>
             </div>
         </div>
     </div>
@@ -19,43 +19,35 @@
 <section class="container my-3">
     <div class="row">
         <div class="col">
-        <h2 class="">S'inscrire</h2>
-        <p>Rejoignez notre communauté et commencez à partager vos figures de snowboard dès aujourd'hui.</p>
-            {{ form_errors(registrationForm) }}
+            {{ form_errors(editInfosForm) }}
 
-            {{ form_start(registrationForm) }}
+            {{ form_start(editInfosForm) }}
 
             <div class="my-3">
                 <div class="d-flex gap-3 flex-column flex-md-row">
                     <div class="flex-grow-1">
-                    {{ form_row(registrationForm.first_name) }}
+                    {{ form_row(editInfosForm.first_name) }}
                     </div>
                     <div class="flex-grow-1">
-                    {{ form_row(registrationForm.last_name) }}
+                    {{ form_row(editInfosForm.last_name) }}
                     </div>
                 </div>
             </div>
-            <div class="my-3">
-            {{ form_row(registrationForm.username) }}
-            </div>
+
             <div class="my-3">
                 <div class="d-flex gap-3 flex-column flex-md-row">
                     <div class="flex-grow-1">
-                        {{ form_row(registrationForm.email) }}
+                        {{ form_row(editInfosForm.username) }}
                     </div>
                     <div class="flex-grow-1">
-                        {{ form_row(registrationForm.plainPassword, {
-                            label: 'Password'
-                        }) }}
+                        {{ form_row(editInfosForm.email) }}
                     </div>
                 </div>
             </div>
-                
-                {{ form_row(registrationForm.RGPDConsent) }}
-
-                <button type="submit" class="btn btn-primary my-3">S'inscrire</button>
+        
+                <button type="submit" class="btn btn-primary my-3">Modifier mes informations</button>
                 <a href="{{ path('app_login') }}" class="btn btn-secondary">Se connecter</a>
-            {{ form_end(registrationForm) }}
+            {{ form_end(editInfosForm) }}
         </div>
     </div>
 </section

@@ -5,23 +5,29 @@
 
 {% block body %}
 
-	<main class="container">
-		<section class="row">
-			<div class="col-12">
-				<h1 class="text-3xl font-bold underline">Snowtricks</h1>
-				<iframe
-                        height="500px" width="100%" frameborder="0" allowfullscreen 
-                        src="https://www.youtube.com/embed/BqDWZ_z4GQw"
-                    ></iframe>
-				
+	<div>
+		<img src="assets/img/home.avif" class="w-100" 
+			style="object-fit:cover; height:100vh; object-position:75% 50%">
+		<div class="row">
+			<div class="col-md-6 p-4 position-absolute top-50 start-50 translate-middle">
+				<div class="w-100 bg-light rounded p-5 text-center" style="--bs-bg-opacity: .5;">
+					<h1 class="">SnowTricks</h1>
+					<br>
+					<p class="fw-normal">
+						Le rendez-vous incontournable des passionnés de snowboard pour partager, apprendre et repousser les limites des figures sur neige!
+					</p>
+				</div>
 			</div>
-		</section>
+		</div>
 
-        <section class="row">
-			<div class="col-12">
-                {% include "tricks/list.html.twig"  %}
-			</div>
-		</section>
-	</main>
+		<div class="p-5 mb-5 mb-md-0 position-absolute bottom-0 end-0">
+			<a href='{{ path('app_main')}}#tricks'><i class="fa-solid fa-arrow-down fs-3 text-dark"></i></a>
+		</div>
 
+
+		<div id="tricks">
+			{% include "tricks/list.html.twig"  %}
+		</div>
+	</div>
+               
 {% endblock %}

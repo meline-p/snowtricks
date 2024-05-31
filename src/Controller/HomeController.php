@@ -17,7 +17,7 @@ class HomeController extends AbstractController
         Request $request,
     ): Response {
         $page = $request->query->getInt('page', 1);
-        $tricks = $trickRepository->findTricksPaginated($page, 'all', 3);
+        $tricks = $trickRepository->findTricksPaginated($page, 'all', 6);
 
         $deleteForms = [];
         if (count($tricks) > 0) {

@@ -3,6 +3,19 @@
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
+
+<div class="position-relative" style="height:50vh">
+    <div>
+        <img src="assets/img/login.avif" style="height:50vh;width:100%;object-fit:cover;object-position:50% 60%">
+    </div>
+    <div class=" bg-warning" >
+        <div class=" position-absolute top-50 start-50 translate-middle" >
+            <div class="w-100 bg-light p-5 rounded text-center" style="--bs-bg-opacity: .8;">
+                <h1 class="">Heureux de vous revoir!</h1>
+            </div>
+        </div>
+    </div>
+</div>
 <section class="container my-3">
     <div class="row">
         <div class="col">
@@ -18,6 +31,7 @@
                 {% endif %}
 
                 <h1 class="h3 mb-3 font-weight-normal">Se connecter</h1>
+                <p>Connectez-vous pour continuer à explorer et partager vos exploits sur SnowTricks.</p>
                 <label for="inputEmail">Email</label>
                 <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
                 <label for="inputPassword">Mot de passe</label>

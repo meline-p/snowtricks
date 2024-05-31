@@ -1,25 +1,32 @@
 {{ form_start(trickForm) }}
-        <section>
-                <img style="width: 100%;height: 90vh;object-fit: cover;" 
-                    src="/assets/img//tricks/{{ trick.promoteImage.name ?? 'img.png' }}">
-                <div class="position-absolute top-50 start-50 translate-middle bg-light rounded p-5" style="--bs-bg-opacity: .8;">
-                    <div class="text-center mb-4">
-                        <h2>
-                            {% if app.request.attributes.get('_route') == 'app_tricks_edit' %}
-                                Modifier la figure
-                            {% else %}
-                                Ajouter une figure
+        <div >
+            <img style="width: 100%;height: 90vh;object-fit: cover;" 
+                src="/assets/img//tricks/{{ trick.promoteImage.name ?? 'img.png' }}">
+            <div class="row">
+                <div class="col-md-6 p-4 position-absolute top-50 start-50 translate-middle " >
+                    <div class=' bg-light rounded p-5' style="--bs-bg-opacity: .8;">
+                        <div class="w-100 text-center mb-4 " >
+                            <h2>
+                                {% if app.request.attributes.get('_route') == 'app_tricks_edit' %}
+                                    Modifier la figure
+                                {% else %}
+                                    Ajouter une figure
+                                {% endif %}
+                            </h2>
+                        </div>
+                        <h5 class="">{{ form_label(trickForm.name) }}</h5>
+                        {{ form_widget(trickForm.name) }}
+                        <div class="col-12 mt-4">
+                            <h5 class=""> {{ form_label(trickForm.promoteImage) }}</h5>
+                            {{ form_widget(trickForm.promoteImage) }}
+                            {% if trick.promoteImage is not null and trick.promoteImage.id is not null %}
+                                <a href="{{ path('delete_image', {id: trick.promoteImage.id, trick_slug: trick.slug}) }}" data-delete data-token="{{ csrf_token('delete' ~ trick.promoteImage.id) }}" class="mt-2 btn btn-light"><i class="fa-solid fa-trash"></i> Supprimer l'image à la une</a>
                             {% endif %}
-                        </h2>
-                    </div>
-                    <h5 class="">{{ form_label(trickForm.name) }}</h5>
-                    {{ form_widget(trickForm.name) }}
-                    <div class="col-12 mt-4">
-                       <h5 class=""> {{ form_label(trickForm.promoteImage) }}</h5>
-                        {{ form_widget(trickForm.promoteImage) }}
+                        </div>
                     </div>
                 </div>
-        </section>
+            </div>
+        </div>
 
 
         <section class="container">
@@ -38,7 +45,7 @@
                                         class="rounded"
                                         alt="{{ img.name }}">
                                     <div class="mt-2 text-center">      
-                                        <a href="{{ path('delete_image', {id: img.id, trick_slug: trick.slug}) }}" data-delete data-token="{{ csrf_token('delete' ~ img.id) }}" class="btn btn-dark"><i class="fa-solid fa-trash"></i> Supprimer cette image</a>
+                                        <a href="{{ path('delete_image', {id: img.id, trick_slug: trick.slug}) }}" data-delete data-token="{{ csrf_token('delete' ~ img.id) }}" class="btn btn-light"><i class="fa-solid fa-trash"></i> Supprimer cette image</a>
                                     </div>
                                 </div>
                             {% endfor %}
@@ -77,7 +84,7 @@
             {% endfor %}
 
             </div>
-            <button type="button" class="add_item_link btn btn-light" data-collection-holder-class="videos">Ajouter une vidéo</button>
+            <button type="button" class="add_item_link btn btn-dark" data-collection-holder-class="videos"><i class="fa-solid fa-plus"></i> Ajouter une vidéo</button>
 
         <hr class="my-5">
 
@@ -167,7 +174,7 @@
     function addTagFormDeleteLink(item) {
         const removeFormButton = document.createElement('button');
         removeFormButton.innerHTML = `<i class="fa-solid fa-trash"></i> Supprimer cette vidéo`;
-        removeFormButton.classList.add('btn', 'btn-dark', 'mt-2');
+        removeFormButton.classList.add('btn', 'btn-light', 'mt-2');
 
         item.append(removeFormButton);
 
