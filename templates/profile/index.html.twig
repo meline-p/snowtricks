@@ -1,20 +1,115 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProfileController!{% endblock %}
+{% block title %} {% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <main class="container mt-4">
+		<section class="row">
+			<div class="col-12 text-center">
+                <h1>Bonjour, {{ user.firstname }}</h1>
+                <small>membre depuis le {{ user.createdAt|date('d/m/Y') }}</small>
+            </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+            <div class="mt-2 d-flex justify-content-center flex-column flex-md-row flex-wrap align-items-center">
+                <div class="col-lg-3 mx-auto d-flex flex-column align-items-center text-center">
+                    <img src="/assets/img/users/{{ user.pictureslug ?? 'img.png'}}" class="mb-4" style="width:200px; height:200px; object-fit:cover; border-radius:50%;">
+                    <button type="button" id='btnEdit' class="btn btn-light mt-2">Modifier ma photo de profil</button>
+                    
+                    <div id='editPictureProfil' style="display:none;">
+                        {{ form_start(profilPictureForm) }}
+                            {{ form_widget(profilPictureForm.profilPicture) }}
+                            <button type="submit" class="btn btn-dark mt-2">Valider</button>
+                            <button id="cancelBtn" type="button" class="btn btn-light mt-2">Annuler</button>
+                        {{ form_end(profilPictureForm) }}
+                    </div>
+                </div>
+                
+                <div class="mt-4 col-lg-6 mx-auto">
+                    <div class="m-4 ">
+                        <div class="d-flex justify-content-between">
+                            <h4><i class="fa-solid fa-user"></i> Mes informations</h4>
+                            <a href="{{ path('app_profile_edit_infos', {'user_username': user.username}) }}" class="btn btn-light btn-sm">Modifier mes informations</a>
+                        </div>
+                        <hr class="my-2">
+                        <table class="table table-borderless">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Pseudo</th>
+                                    <td>{{user.username}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Prénom</th>
+                                    <td>{{user.firstname}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Nom</th>
+                                    <td>{{user.lastname}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Email</th>
+                                    <td>{{user.email}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <a href="{{ path('app_profile_edit_password', {'user_username': user.username})}}" class="btn btn-dark btn-sm">Modifier mon mot de passe</a>
+                    </div>
+                </div>
+            </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>E:/App/xampp/htdocs/snowtricks/src/Controller/ProfileController.php</code></li>
-        <li>Your template at <code>E:/App/xampp/htdocs/snowtricks/templates/profile/index.html.twig</code></li>
-    </ul>
-</div>
+            <hr class="my-4">
+
+            <div>
+                <h4 class="text-center m-4"><i class="fa-solid fa-chart-simple"></i> Mes stats</h4>
+                <div class="d-flex flew-wrap gap-3 text-center">
+                    <div class="card flex-grow-1">
+                        <div class="card-body">
+                            <h5 class="card-title">{{countTricksCreated}}</h5>
+                            <p class="card-text">
+                                {{countTricksCreated > 2 ? 'Figures créées' : 'Figure créée'}}
+                            </p>
+                        </div>
+                    </div> 
+                    <div class="card flex-grow-1">
+                        <div class="card-body">
+                            <h5 class="card-title">{{countTricksUpdated}}</h5>
+                            <p class="card-text">
+                                {{countTricksUpdated > 2 ? 'Figures misent à jour' : 'Figure mise à jour'}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card flex-grow-1">
+                        <div class="card-body">
+                            <h5 class="card-title">{{countComments}}</h5>
+                            <p class="card-text">
+                                {{countComments > 2 ? 'commentaires' : 'commentaire'}}
+                            </p>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var btnEdit = document.getElementById('btnEdit');
+        var form = document.getElementById('editPictureProfil');
+        var btnCancel = document.getElementById('cancelBtn');
+       
+            btnEdit.addEventListener('click', function(event) {
+                event.preventDefault();
+                form.style.display = "block";
+                btnEdit.style.display = "none";
+            });
+
+            btnCancel.addEventListener('click', function(event) {
+                event.preventDefault();
+                form.style.display = "none";
+                btnEdit.style.display = "block";
+            });
+
+        });
+    </script>
+
 {% endblock %}

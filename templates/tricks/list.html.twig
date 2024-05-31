@@ -1,8 +1,4 @@
-<div>
-    <a href="{{ path('app_tricks_add')}}">Ajouter</a>
-</div>
-
-<div class="btn-group d-flex flex-wrap justify-content-center" role="group" aria-label="Basic example">
+<div class="btn-group d-flex flex-wrap justify-content-center" role="group">
     {% if tricks|length > 0 %}
         {% for trick in tricks.data %}
             <div class="card m-2 mt-4" style="width: 18rem;">
@@ -12,12 +8,17 @@
                 <div class="card-body">
                     <span class="badge bg-secondary" style="width: fit-content">{{ trick.category.name }}</span>
                     <h5 class="card-title">{{ trick.name }}</h5>
-                    <p class="card-text">{{ trick.description }}</p>
-                    <a href="{{ path('app_tricks_details', {"slug": trick.slug}) }}" class="btn btn-primary">Voir la figure</a>
-                    <a href="#" class="btn btn-secondary"><i class="fa-solid fa-pen"></i></a>
-                    <a href="#" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                    {# <p class="card-text">{{ trick.description }}</p> #}
+                    <a href="{{ path('app_tricks_details', {"slug": trick.slug}) }}" class="btn btn-dark">Voir la figure</a>
+                    
+                    {% if is_granted('ROLE_USER') %}
+                        <a href="{{ path('app_tricks_edit', {'slug' : trick.slug})}}" class="btn btn-light"><i class="fa-solid fa-pen"></i></a>
+                        <a href="#" data-slug="{{ trick.slug }}" data-bs-toggle="modal" data-bs-target="#deleteTrick{{ trick.id }}" class="btn btn-light"><i class="fa-solid fa-trash deleteTrick"></i></a>
+                    {% endif %}
                 </div>
             </div>
+
+            {% include 'tricks/_delete_trick.html.twig' with {'trick': trick, 'deleteForms': deleteForms} %}
         {% endfor %}
         
     {% else %}
@@ -43,4 +44,3 @@
 		</div>
 	{% endif %}
 {% endif %}
-

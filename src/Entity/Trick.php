@@ -8,9 +8,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
-#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_NAME', fields: ['name'])]
+#[UniqueEntity('name')]
 class Trick
 {
     use SlugTrait;
@@ -32,17 +33,17 @@ class Trick
     #[ORM\OneToOne]
     private ?Image $promoteImage = null;
 
-    #[ORM\OneToMany(targetEntity: UserTrick::class, mappedBy: 'trick')]
+    #[ORM\OneToMany(targetEntity: UserTrick::class, mappedBy: 'trick', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $userTricks;
 
-    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'trick')]
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'trick', fetch: 'EAGER', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $comments;
 
     // #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'trick', fetch: 'EAGER')]
-    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'trick', fetch: 'EAGER', cascade:['persist'])]
+    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'trick', fetch: 'EAGER', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $images;
 
-    #[ORM\OneToMany(targetEntity: Video::class, mappedBy: 'trick')]
+    #[ORM\OneToMany(targetEntity: Video::class, mappedBy: 'trick', fetch: 'EAGER', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $videos;
 
     public function __construct()
@@ -141,6 +142,17 @@ class Trick
         }
 
         return $this;
+    }
+
+    public function isDeleted(): bool
+    {
+        foreach ($this->userTricks as $userTrick) {
+            if ('delete' === $userTrick->getOperation()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
