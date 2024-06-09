@@ -30,7 +30,7 @@ class Trick
     #[ORM\ManyToOne(inversedBy: 'tricks')]
     private ?Category $category = null;
 
-    #[ORM\OneToOne]
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Image $promoteImage = null;
 
     #[ORM\OneToMany(targetEntity: UserTrick::class, mappedBy: 'trick', cascade: ['persist', 'remove'], orphanRemoval: true)]

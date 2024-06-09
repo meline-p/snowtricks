@@ -13,7 +13,7 @@
                             <h1>{{ trick.name }}</h1>
 
                             {% if is_granted('ROLE_USER') %}
-                                <div class="mx-2 d-flex gap-2">
+                                <div class="mx-2 d-flex gap-2 justify-content-center">
                                     <a href="{{ path('app_tricks_edit', {'slug' : trick.slug})}}" class="btn btn-light"><i class="fa-solid fa-pen-to-square"></i> Modifier</a>
                                     <a href="#" data-slug="{{ trick.slug }}" data-bs-toggle="modal" data-bs-target="#deleteTrick{{ trick.id }}" class="btn btn-light"><i class="fa-solid fa-trash deleteTrick"></i> Supprimer</a>
                                 </div>

@@ -19,8 +19,10 @@
                         <div class="col-12 mt-4">
                             <h5 class=""> {{ form_label(trickForm.promoteImage) }}</h5>
                             {{ form_widget(trickForm.promoteImage) }}
-                            {% if trick.promoteImage is not null and trick.promoteImage.id is not null %}
-                                <a href="{{ path('delete_image', {id: trick.promoteImage.id, trick_slug: trick.slug}) }}" data-delete data-token="{{ csrf_token('delete' ~ trick.promoteImage.id) }}" class="mt-2 btn btn-light"><i class="fa-solid fa-trash"></i> Supprimer l'image à la une</a>
+                            {% if app.request.attributes.get('_route') == 'app_tricks_edit' %}
+                                {% if trick.promoteImage is not null and trick.promoteImage.id is not null %}
+                                    <a href="{{ path('delete_image', {id: trick.promoteImage.id, trick_slug: trick.slug}) }}" data-delete data-token="{{ csrf_token('delete' ~ trick.promoteImage.id) }}" class="mt-2 btn btn-light"><i class="fa-solid fa-trash"></i> Supprimer l'image à la une</a>
+                                {% endif %}
                             {% endif %}
                         </div>
                     </div>
@@ -85,6 +87,10 @@
 
             </div>
             <button type="button" class="add_item_link btn btn-dark" data-collection-holder-class="videos"><i class="fa-solid fa-plus"></i> Ajouter une vidéo</button>
+            {% if trickForm.videos|length == 0 %}
+            <div class="d-none">{{ form_widget(trickForm.videos) }}</div>
+            {% endif %}
+
 
         <hr class="my-5">
 

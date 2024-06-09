@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Entity\Image;
-use App\Entity\Trait\ProcessImageTrait;
 use App\Entity\Trick;
 use App\Entity\User;
 use App\Entity\UserTrick;
@@ -30,31 +29,57 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/tricks', name: 'app_tricks_')]
 class TricksController extends AbstractController
 {
-    use ProcessImageTrait;
+    private $slugger;
+    private $em;
+    private $pictureService;
+    private $categoryRepository;
+    private $trickRepository;
+    private $imageRepository;
+    private $videoRepository;
+    private $userTrickRepository;
+    private $commentRepository;
 
-    #[Route('/categories/{category_slug}', name: 'index')]
-    public function index(
-        ?string $category_slug,
+    public function __construct(
+        SluggerInterface $slugger, 
+        EntityManagerInterface $em, 
+        PictureService $pictureService,
         CategoryRepository $categoryRepository,
         TrickRepository $trickRepository,
-        Request $request
-    ): Response {
+        ImageRepository $imageRepository,
+        VideoRepository $videoRepository,
+        UserTrickRepository $userTrickRepository,
+        CommentRepository $commentRepository,
+        )
+    {
+        $this->slugger = $slugger;
+        $this->em = $em;
+        $this->pictureService = $pictureService;
+        $this->categoryRepository = $categoryRepository;
+        $this->trickRepository = $trickRepository;
+        $this->imageRepository = $imageRepository;
+        $this->videoRepository = $videoRepository;
+        $this->userTrickRepository = $userTrickRepository;
+        $this->commentRepository = $commentRepository;
+    }
+
+    #[Route('/categories/{category_slug}', name: 'index')]
+    public function index(?string $category_slug,Request $request): Response {
         // Check if the category_slug parameter is present
         if ('all' === $category_slug) {
-            $tricks = $trickRepository->findAll();
+            $tricks = $this->trickRepository->findAll();
             $category_slug = 'all';
         } else {
-            $categorySelected = $categoryRepository->findOneBy(['slug' => $category_slug]);
+            $categorySelected = $this->categoryRepository->findOneBy(['slug' => $category_slug]);
             $category_slug = $category_slug;
-            $tricks = $trickRepository->findByCategory($categorySelected);
+            $tricks = $this->trickRepository->findByCategory($categorySelected);
         }
-        $categories = $categoryRepository->findAll();
+        $categories = $this->categoryRepository->findAll();
 
         // Get the page number from the URL query parameters
         $page = $request->query->getInt('page', 1);
 
         // Retrieve paginated tricks based on the selected category
-        $tricks = $trickRepository->findTricksPaginated($page, $category_slug, 6);
+        $tricks = $this->trickRepository->findTricksPaginated($page, $category_slug, 6);
 
         $deleteForms = [];
         if (count($tricks) > 0) {
@@ -64,7 +89,7 @@ class TricksController extends AbstractController
         }
 
         return $this->render('tricks/index.html.twig', [
-            'categories' => $categoryRepository->findBy([], ['categoryOrder' => 'asc']),
+            'categories' => $this->categoryRepository->findBy([], ['categoryOrder' => 'asc']),
             'tricks' => $tricks,
             'categories' => $categories,
             'category_slug' => $category_slug,
@@ -73,27 +98,19 @@ class TricksController extends AbstractController
     }
 
     #[Route('/details/{slug}', name: 'details')]
-    public function details(
-        Trick $trick,
-        ImageRepository $imageRepository,
-        VideoRepository $videoRepository,
-        UserTrickRepository $userTrickRepository,
-        CommentRepository $commentRepository,
-        Request $request,
-        EntityManagerInterface $em
-    ): Response {
-        $images = $imageRepository->findBy(['trick' => $trick]);
-        $videos = $videoRepository->findBy(['trick' => $trick]);
-        $comments = $commentRepository->findBy(['trick' => $trick], ['created_at' => 'DESC']);
+    public function details(Trick $trick,Request $request): Response {
+        $images = $this->imageRepository->findBy(['trick' => $trick]);
+        $videos = $this->videoRepository->findBy(['trick' => $trick]);
+        $comments = $this->commentRepository->findBy(['trick' => $trick], ['created_at' => 'DESC']);
 
         // Get the page number from the URL query parameters
         $page = $request->query->getInt('page', 1);
-        $comments = $commentRepository->findCommentsPaginated($page, $trick->getId(), 3);
+        $comments = $this->commentRepository->findCommentsPaginated($page, $trick->getId(), 3);
 
-        $userTrickCreatedAt = $userTrickRepository->findOneBy(['trick' => $trick, 'operation' => 'create']);
+        $userTrickCreatedAt = $this->userTrickRepository->findOneBy(['trick' => $trick, 'operation' => 'create']);
         $created_at = $userTrickCreatedAt ? $userTrickCreatedAt->getDate() : null;
 
-        $userTrickUpdatedAt = $userTrickRepository->findOneBy(['trick' => $trick, 'operation' => 'update'], ['date' => 'DESC']);
+        $userTrickUpdatedAt = $this->userTrickRepository->findOneBy(['trick' => $trick, 'operation' => 'update'], ['date' => 'DESC']);
         $updated_at = $userTrickUpdatedAt ? $userTrickUpdatedAt->getDate() : null;
 
         $deleteForms[$trick->getId()] = $this->createForm(DeleteTrickType::class)->createView();
@@ -112,8 +129,8 @@ class TricksController extends AbstractController
             $comment->setUser($user);
             $comment->setTrick($trick);
 
-            $em->persist($comment);
-            $em->flush();
+            $this->em->persist($comment);
+            $this->em->flush();
 
             $route = $request->headers->get('referer');
 
@@ -132,41 +149,78 @@ class TricksController extends AbstractController
         ]);
     }
 
-    // public function processImage($image, $trick, $pictureService, $folder, $width = 300, $height = 300)
-    // {
-    //     if (null != $image) {
-    //         $img = new Image();
+    public function handleSubmittedForms(
+        Trick $trick,
+        User $user,
+        $trickForm,
+        $operation
+    ) {
+        $this->em->getConnection()->beginTransaction();
 
-    //         // Generate a unique file name
-    //         $fileName = uniqid().'_'.$trick->getId().'.'.$image->getClientOriginalExtension();
+        try {
 
-    //         // Call the add service with the specific file name
-    //         $fichier = $pictureService->add($image, $folder, $width, $height, $fileName);
-    //         $extension = pathinfo($fichier, PATHINFO_EXTENSION);
+            // ----- TRICK -------
+            // Generate slug for the trick's name
+            $slug = strtolower($this->slugger->slug($trick->getName()));
+            $trick->setSlug($slug);
 
-    //         $img->setName($fileName);
-    //         $img->setExtension($extension);
-    //         $trick->addImage($img);
+            $description = $trick->getDescription();
+            $trick->setDescription($description);
 
-    //         return $img;
-    //     }
+            // ----- IMAGES -------
+            // Retrieve the images
+            $images = $trickForm->get('images')->getData();
 
-    //     return null;
-    // }
+            // Define the destination folder
+            $folder = 'tricks';
+
+            foreach ($images as $image) {
+                $img = $this->pictureService->processImage($image, $folder);
+                $trick->addImage($img);
+            }
+
+            // ----- PROMOTE IMAGE -------
+            // Retrive the promote image
+            $promoteImage = $trickForm->get('promoteImage')->getData();
+
+            if ($promoteImage) {
+                $promoteImg = $this->pictureService->processImage($promoteImage, $folder);
+                $trick->addImage($promoteImg);
+                $trick->setPromoteImage($promoteImg);
+            }
+
+            // Persist the trick with all its changes (including images)
+            $this->em->persist($trick);
+
+            // ----- USERTRICKS -------
+            $userTrick = new UserTrick();
+            $userTrick->setOperation($operation);
+            $userTrick->setDate(new \DateTime());
+            $userTrick->setUser($user);
+            $userTrick->setTrick($trick);
+
+            $this->em->persist($userTrick);
+
+            // Flush all changes at once
+            $this->em->flush();
+
+            $this->em->getConnection()->commit();
+
+            return $slug;
+        } catch (\Exception $e) {
+            // Rollback the transaction
+            $this->em->getConnection()->rollBack();
+            throw $e;
+            $this->addFlash('danger', 'Une erreur a eu lieu lors de la soumission du formulaire.');
+        }
+    }
 
     #[Route('/ajouter', name: 'add')]
-    public function add(
-        CategoryRepository $categoryRepository,
-        Request $request,
-        EntityManagerInterface $em,
-        SluggerInterface $slugger,
-        PictureService $pictureService
-    ): Response {
+    public function add(Request $request): Response {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
-        // Create new instances of Trick and UserTrick
+        // Create new instances of Trick
         $trick = new Trick();
-        $userTrick = new UserTrick();
 
         /** @var User $user */
         $user = $this->getUser();
@@ -175,48 +229,11 @@ class TricksController extends AbstractController
         $trickForm = $this->createForm(TricksFormType::class, $trick);
 
         // Handle form submission
-        // $trickForm->handleRequest($request);
         $trickForm->handleRequest($request);
 
         // Check if form is submitted and valid
         if ($trickForm->isSubmitted() && $trickForm->isValid()) {
-            // Generate slug for the trick's name
-            $slug = strtolower($slugger->slug($trick->getName()));
-            $trick->setSlug($slug);
-
-            $description = $trick->getDescription();
-            $trick->setDescription($description);
-
-            $em->persist($trick);
-            $em->flush();
-
-            // Retrieve the images
-            $images = $trickForm->get('images')->getData();
-
-            // Define the destination folder
-            $folder = 'tricks';
-
-            foreach ($images as $image) {
-                $img = $this->processImage($image, $trick, $pictureService, $folder);
-            }
-
-            // Retrive the promote image
-            $promoteImage = $trickForm->get('promoteImage')->getData();
-
-            $promoteImg = $this->processImage($promoteImage, $trick, $pictureService, $folder);
-            $trick->setPromoteImage($promoteImg);
-
-            // Persist and flush
-            $em->persist($trick);
-            $em->flush();
-
-            $userTrick->setOperation('create');
-            $userTrick->setDate(new \DateTime());
-            $userTrick->setUser($user);
-            $userTrick->setTrick($trick);
-
-            $em->persist($userTrick);
-            $em->flush();
+            $slug = $this->handleSubmittedForms($trick, $user, $trickForm, 'create');
 
             $this->addFlash('success', 'Figure ajoutée avec succès');
 
@@ -229,19 +246,11 @@ class TricksController extends AbstractController
     }
 
     #[Route('/modifier/{slug}', name: 'edit')]
-    public function edit(
-        Trick $trick,
-        ImageRepository $imageRepository,
-        VideoRepository $videoRepository,
-        Request $request,
-        EntityManagerInterface $em,
-        SluggerInterface $slugger,
-        PictureService $pictureService
-    ): Response {
+    public function edit(Trick $trick,Request $request): Response {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
-        $images = $imageRepository->findBy(['trick' => $trick]);
-        $videos = $videoRepository->findBy(['trick' => $trick]);
+        $images = $this->imageRepository->findBy(['trick' => $trick]);
+        $videos = $this->videoRepository->findBy(['trick' => $trick]);
 
         /** @var User $user */
         $user = $this->getUser();
@@ -254,46 +263,7 @@ class TricksController extends AbstractController
 
         // Check if form is submitted and valid
         if ($trickForm->isSubmitted() && $trickForm->isValid()) {
-            // dd($trick);
-
-            // Generate slug for the trick's name
-            $slug = strtolower($slugger->slug($trick->getName()));
-            $trick->setSlug($slug);
-
-            $description = $trick->getDescription();
-            $trick->setDescription($description);
-
-            $em->persist($trick);
-            $em->flush();
-
-            // Retrieve the images
-            $images = $trickForm->get('images')->getData();
-
-            // Define the destination folder
-            $folder = 'tricks';
-
-            foreach ($images as $image) {
-                $img = $this->processImage($image, $trick, $pictureService, $folder);
-            }
-
-            // Retrive the promote image
-            $promoteImage = $trickForm->get('promoteImage')->getData();
-
-            $promoteImg = $this->processImage($promoteImage, $trick, $pictureService, $folder);
-            $trick->setPromoteImage($promoteImg);
-
-            // Persist and flush
-            $em->persist($trick);
-            $em->flush();
-
-            $userTrick = new UserTrick();
-            $userTrick->setOperation('update');
-            $userTrick->setDate(new \DateTime());
-            $userTrick->setUser($user);
-            $userTrick->setTrick($trick);
-
-            $em->persist($userTrick);
-            $em->flush();
+            $slug = $this->handleSubmittedForms($trick, $user, $trickForm, 'update');
 
             $this->addFlash('success', 'Figure modifiée avec succès');
 
@@ -310,7 +280,7 @@ class TricksController extends AbstractController
 
     #[Route('/supprimer/{slug}', name: 'delete')]
     #[IsGranted('ROLE_USER')]
-    public function delete(Request $request, Trick $trick, EntityManagerInterface $em): Response
+    public function delete(Request $request, Trick $trick): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -327,26 +297,32 @@ class TricksController extends AbstractController
                 return $this->redirectToRoute('app_tricks_index', ['category_slug' => 'all']);
             }
 
-            $em->getConnection()->beginTransaction();
+            $this->em->getConnection()->beginTransaction();
             $filesystem = new Filesystem();
 
             try {
                 $images = $trick->getImages();
 
-                $em->remove($trick);
-                $em->flush();
+                $promoteImage = $trick->getPromoteImage();
 
-                foreach ($images as $image) {
-                    $pathToImage = 'assets/img/users/' . $image->getName();
-                    
-                    if ($filesystem->exists($pathToImage)) {
-                        $filesystem->remove($pathToImage);
-                    } 
+                if ($promoteImage !== null) {
+                    $this->em->remove($promoteImage);
                 }
 
-                $em->getConnection()->commit();
+                $this->em->remove($trick);
+                $this->em->flush();
+
+                foreach ($images as $image) {
+                    $pathToImage = 'assets/img/tricks/'.$image->getName();
+
+                    if ($filesystem->exists($pathToImage)) {
+                        $filesystem->remove($pathToImage);
+                    }
+                }
+
+                $this->em->getConnection()->commit();
             } catch (\Exception $e) {
-                $em->getConnection()->rollBack();
+                $this->em->getConnection()->rollBack();
                 throw $e;
             }
 
