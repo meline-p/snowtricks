@@ -21,7 +21,7 @@
                             {{ form_widget(trickForm.promoteImage) }}
                             {% if app.request.attributes.get('_route') == 'app_tricks_edit' %}
                                 {% if trick.promoteImage is not null and trick.promoteImage.id is not null %}
-                                    <a href="{{ path('delete_image', {id: trick.promoteImage.id, trick_slug: trick.slug}) }}" data-delete data-token="{{ csrf_token('delete' ~ trick.promoteImage.id) }}" class="mt-2 btn btn-light"><i class="fa-solid fa-trash"></i> Supprimer l'image à la une</a>
+                                    <a href="{{ path('delete_promote_image', {id: trick.promoteImage.id, trick_slug: trick.slug}) }}" data-delete data-token="{{ csrf_token('delete' ~ trick.promoteImage.id) }}" class="mt-2 btn btn-light"><i class="fa-solid fa-trash"></i> Supprimer l'image à la une</a>
                                 {% endif %}
                             {% endif %}
                         </div>
@@ -37,10 +37,10 @@
             {% if app.request.attributes.get('_route') == 'app_tricks_edit' %}
                 <div class="d-flex flex-wrap justify-content-center m-2">
 
-                    {% if images is not empty or videos is not empty %}
+                    {% if trick.images is not empty or trick.videos is not empty %}
 
-                        {% if images|length > 0 %}
-                            {% for img in images %}
+                        {% if trick.images|length > 0 %}
+                            {% for img in trick.images %}
                                 <div class="m-2 d-flex flex-column">
                                     <img src="/assets/img/tricks/{{ img.name }}"
                                         style="height:200px; width:300px; object-fit:cover;"

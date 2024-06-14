@@ -13,7 +13,6 @@ use App\Repository\UserTrickRepository;
 use App\Service\PictureService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -31,21 +30,47 @@ class ProfileController extends AbstractController
     private $commentRepository;
     private $userRepository;
 
-  
-
     public function __construct(
-        EntityManagerInterface $em, 
+        EntityManagerInterface $em,
         PictureService $pictureService,
         UserTrickRepository $userTrickRepository,
         CommentRepository $commentRepository,
         UserRepository $userRepository,
-        )
-    {
+    ) {
         $this->em = $em;
-        $this->pictureService = $pictureService;
         $this->userTrickRepository = $userTrickRepository;
         $this->commentRepository = $commentRepository;
         $this->userRepository = $userRepository;
+        $this->pictureService = $pictureService;
+    }
+
+    public function getUserByUsername(string $username): User
+    {
+        /** @var User $currentUser */
+        $currentUser = $this->getUser();
+
+        $user = $this->userRepository->findOneBy(['username' => $username]);
+
+        if ($currentUser !== $user) {
+            $this->addFlash('danger', 'Vous ne pouvez accéder qu\'à votre propre profil.');
+
+            return $this->redirectToRoute('app_main');
+        }
+
+        return $user;
+    }
+
+    private function getStatistics(User $user)
+    {
+        $countTricksCreated = $this->userTrickRepository->count(['user' => $user, 'operation' => 'create']);
+        $countTricksUpdated = $this->userTrickRepository->count(['user' => $user, 'operation' => 'update']);
+        $countComments = $this->commentRepository->count(['user' => $user]);
+
+        return [
+            'tricksCreated' => $countTricksCreated,
+            'tricksUpdated' => $countTricksUpdated,
+            'comments' => $countComments,
+        ];
     }
 
     /**
@@ -54,27 +79,14 @@ class ProfileController extends AbstractController
      * @return Response a response object containing the rendered profile view
      */
     #[Route('/profil/{user_username}', name: 'index')]
-    public function index(string $user_username,Request $request,): Response {
-        // Retrieve the currently logged-in user
-        /** @var User $currentUser */
-        $currentUser = $this->getUser();
+    public function index(string $user_username, Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
-        // Retrieve the user whose profile is being viewed
-        $user = $this->userRepository->findOneBy(['username' => $user_username]);
+        $user = $this->getUserByUsername($user_username);
 
-        // Check if the currently logged-in user is the one whose profile is being viewed
-        if ($currentUser !== $user) {
-            $this->addFlash('danger', 'Vous ne pouvez accéder qu\'à votre propre profil.');
+        $statistics = $this->getStatistics($user);
 
-            return $this->redirectToRoute('app_main');
-        }
-
-        // Count the tricks created, updated, and the comments left by the user
-        $countTricksCreated = $this->userTrickRepository->count(['user' => $user, 'operation' => 'create']);
-        $countTricksUpdated = $this->userTrickRepository->count(['user' => $user, 'operation' => 'update']);
-        $countComments = $this->commentRepository->count(['user' => $user]);
-
-        // comments
         $profilPicture = new Image();
 
         $profilPictureForm = $this->createForm(ProfilePictureFormType::class, $profilPicture);
@@ -82,32 +94,14 @@ class ProfileController extends AbstractController
 
         if ($profilPictureForm->isSubmitted() && $profilPictureForm->isValid()) {
             $this->em->getConnection()->beginTransaction();
+            $folder = 'users';
+            $updated = $this->pictureService->updateProfilePicture($user, $profilPictureForm->get('profilPicture')->getData(), $folder);
 
-            try {
-                // remove current profile picture
-                $filesystem = new Filesystem();
-                $currentPictureProfile = $user->getPictureSlug();
-                $pathToPicture = 'assets/img/users/'.$currentPictureProfile;
-
-                if ($filesystem->exists($pathToPicture)) {
-                    $filesystem->remove($pathToPicture);
-                }
-
-                // set the new profil picture
-                $profilPicture = $profilPictureForm->get('profilPicture')->getData();
-                $folder = 'users';
-                $profilPicture = $this->pictureService->processImage($profilPicture, $folder);
-
-                $this->em->persist($user);
-                $this->em->flush();
-
-                $this->em->getConnection()->commit();
-            } catch (\Exception $e) {
-                $this->em->getConnection()->rollBack();
-                throw $e;
+            if ($updated) {
+                $this->addFlash('success', 'Photo de profil modifiée avec succès');
+            } else {
+                $this->addFlash('danger', 'Erreur : impossible de modifier la photo de profil');
             }
-
-            $this->addFlash('success', 'Photo de profil modifiée avec succès');
 
             $route = $request->headers->get('referer');
 
@@ -116,32 +110,21 @@ class ProfileController extends AbstractController
 
         return $this->render('profile/index.html.twig', [
             'user' => $user,
-            'countTricksCreated' => $countTricksCreated,
-            'countTricksUpdated' => $countTricksUpdated,
-            'countComments' => $countComments,
+            'countTricksCreated' => $statistics['countTricksCreated'],
+            'countTricksUpdated' => $statistics['countTricksUpdated'],
+            'countComments' => $statistics['countComments'],
             'profilPictureForm' => $profilPictureForm->createView(),
         ]);
     }
 
     #[Route('/edit-infos/{user_username}', name: 'edit_infos')]
-    public function editInfos(string $user_username,Request $request) {
+    public function editInfos(string $user_username, Request $request)
+    {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
-        // Retrieve the currently logged-in user
-        /** @var User $currentUser */
-        $currentUser = $this->getUser();
+        $user = $this->getUserByUsername($user_username);
 
-        // Retrieve the user whose profile is being viewed
-        $user = $this->userRepository->findOneBy(['username' => $user_username]);
-
-        // Check if the currently logged-in user is the one whose profile is being viewed
-        if ($currentUser !== $user) {
-            $this->addFlash('danger', 'Vous ne pouvez accéder qu\'à votre propre profil.');
-
-            return $this->redirectToRoute('app_main');
-        }
-
-        $form = $this->createForm(ProfileInfosFormType::class, $currentUser);
+        $form = $this->createForm(ProfileInfosFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -166,19 +149,7 @@ class ProfileController extends AbstractController
     ): Response {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
-        // Retrieve the currently logged-in user
-        /** @var User $currentUser */
-        $currentUser = $this->getUser();
-
-        // Retrieve the user whose profile is being viewed
-        $user = $this->userRepository->findOneBy(['username' => $user_username]);
-
-        // Check if the currently logged-in user is the one whose profile is being viewed
-        if ($currentUser !== $user) {
-            $this->addFlash('danger', 'Vous ne pouvez accéder qu\'à votre propre profil.');
-
-            return $this->redirectToRoute('app_main');
-        }
+        $user = $this->getUserByUsername($user_username);
 
         $form = $this->createForm(ResetPasswordFormType::class);
         $form->handleRequest($request);

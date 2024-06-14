@@ -18,15 +18,17 @@ class ImagesController extends AbstractController
         $this->pictureService = $pictureService;
     }
 
-    #[Route('/tricks/{trick_slug}/image/supprimer/{id}', name: 'delete_image')]
-    public function deleteImage(
-        string $trick_slug,
-        Image $image,
-        Request $request,
-    ): Response {
+    private function handleDeleteImage(Image $image, Request $request, bool $promoteImage, string $folder)
+    {
         $this->denyAccessUnlessGranted('ROLE_USER');
-        if($this->pictureService->delete($image, 'tricks', $trick_slug)){
-            $this->addFlash('success', 'image supprimée avec succès');
+
+        if ($promoteImage) {
+            $trick = $image->getTrick();
+            $trick->setPromoteImage(null);
+        }
+
+        if ($this->pictureService->deleteImageWithPromotionCheck($image, $promoteImage, $folder)) {
+            $this->addFlash('success', 'Image supprimée avec succès');
         } else {
             $this->addFlash('danger', 'Erreur : impossible de supprimer cette image');
         }
@@ -34,5 +36,29 @@ class ImagesController extends AbstractController
         $route = $request->headers->get('referer');
 
         return $this->redirect($route);
+    }
+
+    #[Route('/tricks/{trick_slug}/promote_image/supprimer/{id}', name: 'delete_promote_image')]
+    public function deletePromoteImage(
+        Image $image,
+        Request $request,
+    ): Response {
+        return $this->handleDeleteImage($image, $request, true, 'tricks');
+    }
+
+    #[Route('/tricks/{trick_slug}/image/supprimer/{id}', name: 'delete_image')]
+    public function deleteTrickImage(
+        Image $image,
+        Request $request,
+    ): Response {
+        return $this->handleDeleteImage($image, $request, false, 'tricks');
+    }
+
+    #[Route('/profile/{user_username}/image/supprimer/{id}', name: 'app_profile_delete_picture')]
+    public function deleteUserImage(
+        Image $image,
+        Request $request,
+    ): Response {
+        return $this->handleDeleteImage($image, $request, false, 'user');
     }
 }
