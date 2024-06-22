@@ -24,57 +24,34 @@ class PictureService
 
     public function delete(Image $image, string $folder)
     {
-        $this->em->getConnection()->beginTransaction();
+        // Delete image from database
+        $this->em->remove($image);
+        $this->em->flush();
 
-        try {
-            // Delete image from database
+        // Delete image file from folder
+        $deleted = $this->fileService->delete($image, $folder);
 
-            $this->em->remove($image);
-            $this->em->flush();
-
-            $deleted = $this->fileService->delete($image, $folder);
-
-            if ($deleted) {
-                $this->em->getConnection()->commit();
-
-                return true;
-            }
-
-            throw new \Exception('not deleted');
-        } catch (\Exception $e) {
-            $this->em->getConnection()->rollBack();
-
+        if (!$deleted) {
             return false;
         }
+
+        return true;
     }
 
-    public function deleteImageWithPromotionCheck(Image $image, bool $promoteImage, string $folder): bool
-    {
-        if ($promoteImage) {
-            $trick = $image->getTrick();
-            $trick->setPromoteImage(null);
-        }
-
-        return $this->delete($image, $folder);
-    }
 
     public function updateProfilePicture(User $user, $newPicture, $folder): bool
     {
-        try {
-            // remove current profile picture
-            $currentPictureProfile = $this->imageRepository->findOneBy(['name' => $user->getPictureSlug()]);
+        // remove current profile picture
+        $currentPictureProfile = $this->imageRepository->findOneBy(['name' => $user->getPictureSlug()]);
 
-            $this->delete($currentPictureProfile, $folder);
-            $this->setProfilePicture($user, $newPicture, $folder);
+        $delete = $this->delete($currentPictureProfile, $folder);
+        $this->setProfilePicture($user, $newPicture, $folder);
 
-            $this->em->getConnection()->commit();
-
-            return true;
-        } catch (\Exception $e) {
-            $this->em->getConnection()->rollBack();
-
+        if (!$delete) {
             return false;
         }
+
+        return true;
     }
 
     private function setProfilePicture(User $user, $newPicture, $folder)

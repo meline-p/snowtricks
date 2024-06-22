@@ -7,6 +7,7 @@ use App\Entity\Trait\SoftDeleteTrait;
 use App\Entity\Trait\UpdatedAtTrait;
 use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
 class Image
@@ -79,25 +80,5 @@ class Image
         $this->trick = $trick;
 
         return $this;
-    }
-
-    public function getFullName()
-    {
-        // default image (empty entity image)
-        if (!$this->trick) {
-            return 'img.png';
-        }
-
-        return $this->name.'_'.$this->trick->getId().'.'.$this->extension;
-    }
-
-    public function getMiniName()
-    {
-        // default image (empty entity image)
-        if (!$this->trick) {
-            return 'img.png';
-        }
-
-        return '300x300_'.$this->name;
     }
 }

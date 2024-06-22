@@ -9,9 +9,10 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
-#[UniqueEntity('name')]
+#[UniqueEntity('name', message: 'Ce nom de figure existe déjà.')]
 class Trick
 {
     use SlugTrait;
@@ -22,6 +23,7 @@ class Trick
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank(message: 'Le nom est obligatoire.')]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -243,5 +245,12 @@ class Trick
         }
 
         return $this;
+    }
+
+    public function initOrUpdate($name, $slug, $description)
+    {
+        $this->setName($name);
+        $this->setSlug($slug);
+        $this->setDescription($description);
     }
 }

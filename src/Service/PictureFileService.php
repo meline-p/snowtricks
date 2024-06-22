@@ -16,7 +16,6 @@ class PictureFileService
     {
         $this->imagesDirectory = $params->get('images_directory');
         $this->filesystem = $filesystem;
-
     }
 
     public function processImage(UploadedFile $imageFile = null, $folder, $width = 300, $height = 300): ?Image
@@ -29,6 +28,10 @@ class PictureFileService
 
         $fileName = uniqid().'.'.$imageFile->getClientOriginalExtension();
         $fichier = $this->add($imageFile, $folder, $fileName, $width, $height);
+        
+        if ($fichier === 'invalid') {
+            return null;
+        }
 
         $extension = pathinfo($fichier, PATHINFO_EXTENSION);
 
@@ -52,37 +55,44 @@ class PictureFileService
         $picture_infos = getimagesize($picture);
 
         if (false === $picture_infos) {
-            throw new \Exception('Format d\'image incorrect');
+            return 'invalid';
         }
 
         // Check the image format
-        try {
-            switch ($picture_infos['mime']) {
-                case 'image/png':
-                    $picture_source = \imagecreatefrompng($picture);
-                    break;
-                case 'image/jpg':
-                case 'image/jpeg':
-                    $picture_source = \imagecreatefromjpeg($picture);
-                    break;
-                case 'image/webp':
-                    $picture_source = \imagecreatefromwebp($picture);
-                    break;
-                case 'image/avif':
-                    $picture_source = \imagecreatefromavif($picture);
-                    break;
-                default:
-                    throw new \Exception('Format d\'image incorrect');
-            }
-        } catch (\Exception) {
-            throw new \Exception('Format d\'image incorrect');
+        if (!$this->checkMimeType($picture, $picture_infos['mime'])) {
+            return 'invalid';
         }
 
-        $path = $this->imagesDirectory.$folder;
+        $path = $this->imagesDirectory . $folder;
 
         $picture->move($path, $fichier);
 
         return $fichier;
+    }
+
+    private function checkMimeType($picture, $mimeType): bool
+    {
+        try {
+            switch ($mimeType) {
+                case 'image/png':
+                    $picture_source = \imagecreatefrompng($picture);
+                    return true;
+                case 'image/jpg':
+                case 'image/jpeg':
+                    $picture_source = \imagecreatefromjpeg($picture);
+                    return true;
+                case 'image/webp':
+                    $picture_source = \imagecreatefromwebp($picture);
+                    return true;
+                case 'image/avif':
+                    $picture_source = \imagecreatefromavif($picture);
+                    return true;
+                default:
+                    return false;
+            }
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
     public function delete(Image $image, $folder): bool
@@ -93,20 +103,14 @@ class PictureFileService
             return true;
         }
 
-        try {
-            $filesystem = new Filesystem();
+        $pathToImage = $this->imagesDirectory.$folder.'/'.$file_name;
 
-            $pathToImage = $this->imagesDirectory.$folder.'/'.$file_name;
+        if ($this->filesystem->exists($pathToImage)) {
+            $this->filesystem->remove($pathToImage);
 
-            if ($this->filesystem->exists($pathToImage)) {
-                $this->filesystem->remove($pathToImage);
-
-                return true;
-            }
-
-            return false;
-        } catch (\Exception $e) {
-            return false;
+            return true;
         }
+
+        return false;
     }
 }
