@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType as TypeTextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\File;
 
 class TricksFormType extends AbstractType
@@ -53,38 +54,38 @@ class TricksFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                // 'constraints' => [
-                //     new File([
-                //         'mimeTypes' => [
-                //             'image/png',
-                //             'image/jpg',
-                //             'image/jpeg',
-                //             'image/webp',
-                //             'image/avif',
-                //         ],
-                //         'mimeTypesMessage' => 'Veuillez envoyer une image au format png, jpg, jpeg, webp ou avif.',
-                //         'maxSize' => '10M', // Limite de taille maximale à 10 mégaoctets
-                //         'maxSizeMessage' => 'La taille maximale du fichier est de 10 Mo.',
-                //     ]),
-                // ]
+                'constraints' => [
+                    new File([
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpg',
+                            'image/jpeg',
+                            'image/webp',
+                            'image/avif',
+                        ],
+                        'mimeTypesMessage' => 'Veuillez envoyer une image au format png, jpg, jpeg, webp ou avif.',
+                    ]),
+                ],
             ])
             ->add('images', FileType::class, [
                 'label' => 'Ajouter des images',
                 'multiple' => true,
                 'mapped' => false,
                 'required' => false,
-                // 'constraints' => [
-                //     new File([
-                //         'mimeTypes' => [
-                //             'image/png',
-                //             'image/jpg',
-                //             'image/jpeg',
-                //             'image/webp',
-                //             'image/avif',
-                //         ],
-                //         // 'mimeTypesMessage' => 'Veuillez envoyer une image au format png, jpg, jpeg, webp ou avif de 10 mégas octets maximum',
-                //     ]),
-                // ],
+                'constraints' => [
+                    new All([
+                        new File([
+                            'mimeTypes' => [
+                                'image/png',
+                                'image/jpg',
+                                'image/jpeg',
+                                'image/webp',
+                                'image/avif',
+                            ],
+                            'mimeTypesMessage' => 'Veuillez envoyer une ou des images au format png, jpg, jpeg, webp ou avif.',
+                        ]),
+                    ]),
+                ],
                 'attr' => [
                     'class' => 'form-control',
                 ],
