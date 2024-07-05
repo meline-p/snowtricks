@@ -50,8 +50,6 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // do anything else you need here, like send an email
-
             // Generate JWT for the user
             // Create JWT header
             $header = [

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Comment;
 use App\Entity\Image;
 use App\Entity\Trick;
@@ -72,21 +73,20 @@ class TricksController extends AbstractController
         // Retrieve paginated tricks based on the selected category
         $tricks = $trickRepository->findTricksPaginated($page, $category_slug, 6);
 
-        $deleteForms = $this->createDeleteTrickFormView($tricks);
-
         return $this->render('tricks/index.html.twig', [
-            'categories' => $categoryRepository->findBy([], ['categoryOrder' => 'asc']),
+            'categories' => $categoryRepository->findBy([]),
             'tricks' => $tricks,
             'categories' => $categories,
             'category_slug' => $category_slug,
-            'deleteForms' => $deleteForms,
         ]);
     }
 
     #[Route('/ajouter', name: 'add')]
-    public function add(Request $request): Response
+    public function add(Request $request, CategoryRepository $categoryRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
+
+        $categories = $categoryRepository->findAll();
 
         $trick = new Trick();
         $trickForm = $this->createForm(TricksFormType::class, $trick);
@@ -95,20 +95,24 @@ class TricksController extends AbstractController
         if ($trickForm->isSubmitted() && $trickForm->isValid()) {
             /** @var User $user */
             $user = $this->getUser();
-            $trick = $this->handleSubmittedForms($trick, $user, $trickForm, 'create');
+            $trick = $this->handleSubmittedForms($trick, $user, $trickForm, 'create', $categoryRepository);
             $slug = $trick->getSlug();
+
             return $this->redirectToRoute('app_tricks_details', ['slug' => $slug]);
         }
-            
+
         return $this->render('tricks/add.html.twig', [
             'trickForm' => $trickForm->createView(),
+            'categories' => $categories,
         ]);
     }
 
     #[Route('/modifier/{slug}', name: 'edit')]
-    public function edit(Trick $trick, Request $request): Response
+    public function edit(Trick $trick, Request $request, CategoryRepository $categoryRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
+
+        $categories = $categoryRepository->findAll();
 
         $trickForm = $this->createForm(TricksFormType::class, $trick);
         $trickForm->handleRequest($request);
@@ -116,14 +120,16 @@ class TricksController extends AbstractController
         if ($trickForm->isSubmitted() && $trickForm->isValid()) {
             /** @var User $user */
             $user = $this->getUser();
-            $trick = $this->handleSubmittedForms($trick, $user, $trickForm, 'update');
+            $trick = $this->handleSubmittedForms($trick, $user, $trickForm, 'update', $categoryRepository);
             $slug = $trick->getSlug();
+
             return $this->redirectToRoute('app_tricks_details', ['slug' => $slug]);
         }
 
         return $this->render('tricks/edit.html.twig', [
             'trick' => $trick,
             'trickForm' => $trickForm->createView(),
+            'categories' => $categories,
         ]);
     }
 
@@ -131,15 +137,8 @@ class TricksController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function delete(Request $request, Trick $trick): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
-
-        $form = $this->createForm(DeleteTrickType::class);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->handleDeleteTrick($trick);
-            $this->addFlash('success', 'Figure supprimée avec succès');
-        }
+        $this->handleDeleteTrick($trick);
+        $this->addFlash('success', 'Figure supprimée avec succès');
 
         return $this->redirectToRoute('app_tricks_index', ['category_slug' => 'all']);
     }
@@ -150,8 +149,6 @@ class TricksController extends AbstractController
         $page = $request->query->getInt('page', 1);
 
         $trickDetails = $this->getTrickDetails($trick, $page);
-
-        $deleteForms = $this->createDeleteTrickFormView($trick);
 
         /** @var User $user */
         $user = $this->getUser();
@@ -166,7 +163,6 @@ class TricksController extends AbstractController
             'comments' => $trickDetails['comments'],
             'created_at' => $trickDetails['created_at'],
             'updated_at' => $trickDetails['updated_at'],
-            'deleteForms' => $deleteForms,
             'commentForm' => $commentForm->createView(),
         ]);
     }
@@ -187,28 +183,26 @@ class TricksController extends AbstractController
         return [$tricks, $category_slug];
     }
 
-    private function createDeleteTrickFormView($tricks)
+    private function handleSubmittedForms(Trick $trick, User $user, $trickForm, $operation, $categoryRepository)
     {
-        $deleteForms = [];
-        if (is_array($tricks)) {
-            if (count($tricks) > 0) {
-                foreach ($tricks['data'] as $trick) {
-                    $deleteForms[$trick->getId()] = $this->createForm(DeleteTrickType::class)->createView();
-                }
-            }
-        } else {
-            $deleteForms[$tricks->getId()] = $this->createForm(DeleteTrickType::class)->createView();
+        // ----- CATEGORIES -----
+        $categoryName = $trickForm->get('categoryName')->getData();
+        $category = $categoryRepository->findOneBy(['name' => $categoryName]);
+    
+        if($category == null){
+            $newCategory = new Category;
+            $newCategory->setName($categoryName);
+            $newCategory->setSlug(strtolower($this->slugger->slug($categoryName)));
+            $category = $newCategory;
+
+            $this->em->persist($category);
         }
 
-        return $deleteForms;
-    }
-
-    private function handleSubmittedForms(Trick $trick, User $user, $trickForm, $operation)
-    {
         // ----- TRICK -------
         $slug = strtolower($this->slugger->slug($trick->getName()));
         $trick->initOrUpdate($trick->getName(), $slug, $trick->getDescription());
-        
+        $trick->setCategory($category);
+
         // ----- IMAGES -------
         $images = $trickForm->get('images')->getData();
         $folder = 'tricks';
@@ -228,7 +222,7 @@ class TricksController extends AbstractController
         $userTrick = new UserTrick();
         $userTrick->init($operation, $user, $trick);
         $this->em->persist($userTrick);
-    
+
         // Flush all changes at once
         $this->em->flush();
 
@@ -241,11 +235,11 @@ class TricksController extends AbstractController
         $processedImage = $this->pictureService->processImage($image, $folder);
         $originalName = $image->getClientOriginalName();
 
-        if ($processedImage === null) {
+        if (null === $processedImage) {
             $this->addFlash('danger', "$imageType : $originalName : Format d'image incorrect.");
         } else {
             $trick->addImage($processedImage);
-            if ($imageType === 'Image à la une') {
+            if ('Image à la une' === $imageType) {
                 $trick->setPromoteImage($processedImage);
             }
             $this->addFlash('success', "$imageType : $originalName : Image téléchargée avec succès.");

@@ -2,10 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Category;
 use App\Entity\Trick;
-use App\Repository\CategoryRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -34,17 +31,14 @@ class TricksFormType extends AbstractType
                 ],
                 'label' => 'Description',
             ])
-            ->add('category', EntityType::class, [
-                'class' => Category::class,
-                'choice_label' => 'name',
+            ->add('categoryName', TypeTextType::class, [
+                'label' => 'Catégorie',
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
+                    'placeholder' => 'Entrez une catégorie',
+                    'list' => 'categories',
                 ],
-                'label' => 'Catégorie',
-                'query_builder' => function (CategoryRepository $categoryRepository) {
-                    return $categoryRepository->createQueryBuilder('c')
-                        ->orderBy('c.name', 'ASC');
-                },
             ])
             ->add('promoteImage', FileType::class, [
                 'label' => "Modifier l'image à la une",

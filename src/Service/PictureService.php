@@ -38,7 +38,6 @@ class PictureService
         return true;
     }
 
-
     public function updateProfilePicture(User $user, $newPicture, $folder): bool
     {
         // remove current profile picture

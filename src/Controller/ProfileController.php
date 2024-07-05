@@ -110,9 +110,9 @@ class ProfileController extends AbstractController
 
         return $this->render('profile/index.html.twig', [
             'user' => $user,
-            'countTricksCreated' => $statistics['countTricksCreated'],
-            'countTricksUpdated' => $statistics['countTricksUpdated'],
-            'countComments' => $statistics['countComments'],
+            'countTricksCreated' => $statistics['tricksCreated'],
+            'countTricksUpdated' => $statistics['tricksUpdated'],
+            'countComments' => $statistics['comments'],
             'profilPictureForm' => $profilPictureForm->createView(),
         ]);
     }

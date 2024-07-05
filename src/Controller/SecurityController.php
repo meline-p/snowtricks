@@ -108,7 +108,7 @@ class SecurityController extends AbstractController
     /**
      * Resets user password.
      *
-     *  @param string $token
+     * @param string $token
      * @param Request $request
      * @param UserRepository $userRepository
      * @param EntityManagerInterface $entityManager

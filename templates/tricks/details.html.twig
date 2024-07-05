@@ -148,7 +148,7 @@
               <p class="text-center">Il n'y aucun commentaires pour cette figure.</p>  
         {% endif %}
 
-        {% include 'tricks/_delete_trick.html.twig' with {'trick': trick, 'deleteForms': deleteForms} %}
+        {% include 'tricks/_delete_trick.html.twig' with {'trick': trick} %}
         {% include 'tricks/_popup_image.html.twig' %}
 
 {% endblock %}

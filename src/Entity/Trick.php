@@ -32,6 +32,8 @@ class Trick
     #[ORM\ManyToOne(inversedBy: 'tricks')]
     private ?Category $category = null;
 
+    public ?string $categoryName = null;
+
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Image $promoteImage = null;
 
@@ -41,7 +43,6 @@ class Trick
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'trick', fetch: 'EAGER', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $comments;
 
-    // #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'trick', fetch: 'EAGER')]
     #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'trick', fetch: 'EAGER', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $images;
 
@@ -144,17 +145,6 @@ class Trick
         }
 
         return $this;
-    }
-
-    public function isDeleted(): bool
-    {
-        foreach ($this->userTricks as $userTrick) {
-            if ('delete' === $userTrick->getOperation()) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**

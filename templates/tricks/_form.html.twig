@@ -34,7 +34,7 @@
                             <h5 class=""> {{ form_label(trickForm.promoteImage) }}</h5>
                             {{ form_widget(trickForm.promoteImage) }}
                             {% if app.request.attributes.get('_route') == 'app_tricks_edit' %}
-                                {% if trick.promoteImage is not null and trick.promoteImage.id is not null %}
+                                {% if trick.promoteImage is not null and trick.promoteImage.name != "img.png" and trick.promoteImage.id is not null %}
                                     <a href="{{ path('delete_image', {id: trick.promoteImage.id, trick_slug: trick.slug}) }}" data-delete data-token="{{ csrf_token('delete' ~ trick.promoteImage.id) }}" class="mt-2 btn btn-light"><i class="fa-solid fa-trash"></i> Supprimer l'image à la une</a>
                                 {% endif %}
                             {% endif %}
@@ -123,8 +123,19 @@
         <section class="container">
             <section class="row">
                 <div class="col-6 mb-4">
-                    <h5>{{ form_label(trickForm.category) }}</h5>
-                    {{ form_widget(trickForm.category) }}
+                    <h5>{{ form_label(trickForm.categoryName) }}</h5>
+                    {% set categoryNameValue = trick.category.name ?? '' %}
+                    {% if categoryNameValue %}
+                        {{ form_widget(trickForm.categoryName, { 'attr': {'value': categoryNameValue} }) }}
+                    {% else %}
+                        {{ form_widget(trickForm.categoryName) }}
+                    {% endif %}
+
+                    <datalist id="categories">
+                        {% for category in categories %}
+                            <option value="{{ category.name }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </datalist>
                 </div>
                 <div class="col-12">
                     <h5>{{ form_label(trickForm.description) }}</h5>
