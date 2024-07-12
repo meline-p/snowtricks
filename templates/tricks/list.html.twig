@@ -6,9 +6,8 @@
                     src="/assets/img/tricks/{{ trick.promoteImage.name }}"
                     alt="Card image cap">
                 <div class="card-body">
-                    <span class="badge bg-secondary" style="width: fit-content">{{ trick.category.name }}</span>
+                    <span class="badge bg-warning text-black" style="width: fit-content">{{ trick.category.name }}</span>
                     <h5 class="card-title">{{ trick.name }}</h5>
-                    {# <p class="card-text">{{ trick.description }}</p> #}
                     <a href="{{ path('app_tricks_details', {"slug": trick.slug}) }}" class="btn btn-dark">Voir la figure</a>
                     
                     {% if is_granted('ROLE_USER') %}

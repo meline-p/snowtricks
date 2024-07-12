@@ -29,13 +29,18 @@ class TrickRepository extends ServiceEntityRepository
         $result = [];
 
         $queryBuilder = $this->getEntityManager()->createQueryBuilder()
-            ->select('c', 't')
+            ->select('c', 't', 'ut')
             ->from('App\Entity\Trick', 't')
-            ->join('t.category', 'c');
+            ->innerJoin('t.category', 'c')
+            ->innerJoin('t.userTricks', 'ut')
+            ->andWhere('ut.operation = :operation')
+            ->setParameter('operation', 'create')
+            ->orderBy('ut.date', 'DESC');
 
         // If the category slug is not 'all', filter by category
         if ('all' !== $slug) {
-            $queryBuilder->where("c.slug = '$slug'");
+            $queryBuilder->andWhere('c.slug = :slug')
+                ->setParameter('slug', $slug);
         }
 
         $queryBuilder->setMaxResults($limit)

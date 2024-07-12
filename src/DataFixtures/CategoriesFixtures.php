@@ -17,10 +17,12 @@ class CategoriesFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $this->createCategory('Sauts', $manager);
-        $this->createCategory('Figures sur rail', $manager);
-        $this->createCategory('Figures sur halfpipe', $manager);
-        $this->createCategory('Figures de flatland', $manager);
+        $this->createCategory('Big Air', $manager);
+        $this->createCategory('Flatland', $manager);
+        $this->createCategory('Freeride', $manager);
+        $this->createCategory('Freestyle', $manager);
+        $this->createCategory('Jibbing', $manager);
+        $this->createCategory('Pipe', $manager);
 
         $manager->flush();
     }
@@ -30,7 +32,6 @@ class CategoriesFixtures extends Fixture
         $category = new Category();
         $category->setName($name);
         $category->setSlug($this->slugger->slug($name)->lower());
-        $category->setCategoryOrder($this->counter);
         $manager->persist($category);
 
         // ajouter une référence categorie

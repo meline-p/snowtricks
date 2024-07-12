@@ -77,8 +77,13 @@ class RegistrationController extends AbstractController
             return $security->login($user, UserAuthenticator::class, 'main');
         }
 
+        if ($form->isSubmitted()) {
+            $plainPassword = $form->get('plainPassword')->getData();
+        }
+
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form,
+            'plainPassword' => $plainPassword,
         ]);
     }
 
@@ -104,7 +109,7 @@ class RegistrationController extends AbstractController
 
             $this->addFlash('success', 'Votre compte est bien activé');
 
-            return $this->redirectToRoute('app_profile');
+            return $this->redirectToRoute('app_profile_index', ['user_username' => $user->getUsername()]);
         }
 
         $this->addFlash('danger', 'Le token est invalide ou a expiré');
@@ -130,7 +135,7 @@ class RegistrationController extends AbstractController
         if ($user->getIsVerified()) {
             $this->addFlash('warning', 'Cet utilisateur est déjà activé');
 
-            return $this->redirectToRoute('app_profile');
+            return $this->redirectToRoute('app_profile_index', ['user_username' => $user->getUsername()]);
         }
 
         // Generate JWT for the user
@@ -159,6 +164,6 @@ class RegistrationController extends AbstractController
 
         $this->addFlash('success', 'Email de vérification envoyé');
 
-        return $this->redirectToRoute('app_profile');
+        return $this->redirectToRoute('app_profile_index', ['user_username' => $user->getUsername()]);
     }
 }

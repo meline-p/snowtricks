@@ -171,8 +171,13 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('app_profile_index', ['user_username' => $user->getUsername()]);
         }
 
+        if ($form->isSubmitted()) {
+            $oldPassword = $form->get('password')->getData();
+        }
+
         return $this->render('security/reset_password.html.twig', [
             'passForm' => $form->createView(),
+            'oldPassword' => $oldPassword,
         ]);
     }
 }

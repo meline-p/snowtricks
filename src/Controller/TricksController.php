@@ -9,7 +9,6 @@ use App\Entity\Trick;
 use App\Entity\User;
 use App\Entity\UserTrick;
 use App\Form\CommentsFormType;
-use App\Form\DeleteTrickType;
 use App\Form\TricksFormType;
 use App\Repository\CategoryRepository;
 use App\Repository\CommentRepository;
@@ -65,7 +64,7 @@ class TricksController extends AbstractController
     ): Response {
         // Check if the category_slug parameter is present
         list($tricks, $category_slug) = $this->getTricksByCategory($category_slug, $categoryRepository, $trickRepository, $request);
-        $categories = $categoryRepository->findAll();
+        $categories = $categoryRepository->findBy([], ['name' => 'ASC']);
 
         // Get the page number from the URL query parameters
         $page = $request->query->getInt('page', 1);
@@ -98,6 +97,8 @@ class TricksController extends AbstractController
             $trick = $this->handleSubmittedForms($trick, $user, $trickForm, 'create', $categoryRepository);
             $slug = $trick->getSlug();
 
+            $this->addFlash('success', 'La Figure '.$trick->getName().' a bien été ajoutée');
+
             return $this->redirectToRoute('app_tricks_details', ['slug' => $slug]);
         }
 
@@ -122,6 +123,8 @@ class TricksController extends AbstractController
             $user = $this->getUser();
             $trick = $this->handleSubmittedForms($trick, $user, $trickForm, 'update', $categoryRepository);
             $slug = $trick->getSlug();
+
+            $this->addFlash('success', 'La Figure '.$trick->getName().' a bien été modifiée');
 
             return $this->redirectToRoute('app_tricks_details', ['slug' => $slug]);
         }
@@ -188,9 +191,9 @@ class TricksController extends AbstractController
         // ----- CATEGORIES -----
         $categoryName = $trickForm->get('categoryName')->getData();
         $category = $categoryRepository->findOneBy(['name' => $categoryName]);
-    
-        if($category == null){
-            $newCategory = new Category;
+
+        if (null == $category) {
+            $newCategory = new Category();
             $newCategory->setName($categoryName);
             $newCategory->setSlug(strtolower($this->slugger->slug($categoryName)));
             $category = $newCategory;

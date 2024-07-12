@@ -11,29 +11,33 @@ class UserTricksFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $faker = Faker\Factory::create('fr_FR');
-
-        $operations = ['create', 'update', 'delete'];
-
-        for ($ut = 1; $ut <= 5; $ut++) {
-            $user_trick = new UserTrick();
-            $date = $faker->dateTimeBetween('-2 years', 'now');
-            $user_trick->setDate($date);
-
-            $randomOperation = $operations[array_rand($operations)];
-            $user_trick->setOperation($randomOperation);
-
-            // on va chercher une reference de user
-            $user = $this->getReference('usr-'.rand(1, 5));
-            $user_trick->setUser($user);
-
-            // on va chercher une reference de trick
-            $trick = $this->getReference('trk-'.rand(1, 4));
-            $user_trick->setTrick($trick);
-
-            $manager->persist($user_trick);
+        for ($trick = 1; $trick <= 12; $trick++) {
+            $this->createOrUpdateUserTrick('-3 weeks', '-1 week', 'create', $trick, $manager);
+            $this->createOrUpdateUserTrick('-3 days', 'now', 'update', $trick, $manager);
         }
 
         $manager->flush();
+    }
+
+    public function createOrUpdateUserTrick($dateStart, $dateEnd, $operation, $trick, ObjectManager $manager)
+    {
+        $faker = Faker\Factory::create('fr_FR');
+
+        $user_trick = new UserTrick();
+
+        $date = $faker->dateTimeBetween($dateStart, $dateEnd);
+        $user_trick->setDate($date);
+
+        $user_trick->setOperation($operation);
+
+        // on va chercher une reference de user
+        $user = $this->getReference('usr-'.rand(1, 5));
+        $user_trick->setUser($user);
+
+        // on va chercher une reference de trick
+        $trick = $this->getReference('trk-'.$trick);
+        $user_trick->setTrick($trick);
+
+        $manager->persist($user_trick);
     }
 }

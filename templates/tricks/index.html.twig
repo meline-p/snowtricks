@@ -1,10 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} 
+{% block title %}SnowTricks - 
     {% if categories is defined %}
-        {% for category in categories %}
-            {{ category.name }}
-        {% endfor %}
+        {% if app.request.attributes.get('_route_params').category_slug == 'all' %}
+            Toutes les Figures
+        {% else %}
+            {% for category in categories %}
+                {% if app.request.attributes.get('_route_params').category_slug == category.slug %}
+                    {{ category.name }}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
     {% else %}
         Toutes les Figures
     {% endif %}
@@ -14,6 +20,7 @@
     <main class="container">
 		<section class="row">
 			<div class="col-12 mx-auto text-center mt-4" style="width:fit-content;">
+
                 {% include "categories/list.html.twig"  %}
 
 				<h1 class="text-3xl font-bold mt-4">
@@ -36,7 +43,9 @@
 
         <section class="row">
             <div class="col-12">
+
                 {% include "tricks/list.html.twig"  %}
+                
             </div>
         </section>
 	</main>
