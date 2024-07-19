@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
-use App\Entity\Trait\CreatedAtTrait;
-use App\Entity\Trait\SoftDeleteTrait;
-use App\Entity\Trait\UpdatedAtTrait;
+use App\Entity\Traits\CreatedAtTrait;
+use App\Entity\Traits\SoftDeleteTrait;
+use App\Entity\Traits\UpdatedAtTrait;
 use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -79,25 +79,5 @@ class Image
         $this->trick = $trick;
 
         return $this;
-    }
-
-    public function getFullName()
-    {
-        // default image (empty entity image)
-        if (!$this->trick) {
-            return 'img.png';
-        }
-
-        return $this->name.'_'.$this->trick->getId().'.'.$this->extension;
-    }
-
-    public function getMiniName()
-    {
-        // default image (empty entity image)
-        if (!$this->trick) {
-            return 'img.png';
-        }
-
-        return '300x300_'.$this->name;
     }
 }

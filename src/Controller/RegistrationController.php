@@ -21,7 +21,7 @@ class RegistrationController extends AbstractController
     /**
      * Handles user registration.
      */
-    #[Route('/register', name: 'app_register')]
+    #[Route('/inscription', name: 'app_register')]
     public function register(
         Request $request,
         UserPasswordHasherInterface $userPasswordHasher,
@@ -33,6 +33,8 @@ class RegistrationController extends AbstractController
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
+
+        $plainPassword = null;
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
@@ -49,8 +51,6 @@ class RegistrationController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
-
-            // do anything else you need here, like send an email
 
             // Generate JWT for the user
             // Create JWT header
@@ -79,8 +79,13 @@ class RegistrationController extends AbstractController
             return $security->login($user, UserAuthenticator::class, 'main');
         }
 
+        if ($form->isSubmitted()) {
+            $plainPassword = $form->get('plainPassword')->getData();
+        }
+
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form,
+            'plainPassword' => $plainPassword,
         ]);
     }
 
@@ -106,7 +111,7 @@ class RegistrationController extends AbstractController
 
             $this->addFlash('success', 'Votre compte est bien activé');
 
-            return $this->redirectToRoute('app_profile');
+            return $this->redirectToRoute('app_profile_index', ['user_username' => $user->getUsername()]);
         }
 
         $this->addFlash('danger', 'Le token est invalide ou a expiré');
@@ -132,7 +137,7 @@ class RegistrationController extends AbstractController
         if ($user->getIsVerified()) {
             $this->addFlash('warning', 'Cet utilisateur est déjà activé');
 
-            return $this->redirectToRoute('app_profile');
+            return $this->redirectToRoute('app_profile_index', ['user_username' => $user->getUsername()]);
         }
 
         // Generate JWT for the user
@@ -161,6 +166,6 @@ class RegistrationController extends AbstractController
 
         $this->addFlash('success', 'Email de vérification envoyé');
 
-        return $this->redirectToRoute('app_profile');
+        return $this->redirectToRoute('app_profile_index', ['user_username' => $user->getUsername()]);
     }
 }

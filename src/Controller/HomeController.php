@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Form\DeleteTrickType;
 use App\Repository\TrickRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,18 +16,10 @@ class HomeController extends AbstractController
         Request $request,
     ): Response {
         $page = $request->query->getInt('page', 1);
-        $tricks = $trickRepository->findTricksPaginated($page, 'all', 6);
-
-        $deleteForms = [];
-        if (count($tricks) > 0) {
-            foreach ($tricks['data'] as $trick) {
-                $deleteForms[$trick->getId()] = $this->createForm(DeleteTrickType::class)->createView();
-            }
-        }
+        $tricks = $trickRepository->findTricksPaginated($page, 'tout', 6);
 
         return $this->render('home/index.html.twig', [
             'tricks' => $tricks,
-            'deleteForms' => $deleteForms,
         ]);
     }
 }

@@ -16,14 +16,28 @@ class VideosFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $faker = Faker\Factory::create('fr_FR');
+        $urls = [
+            1 => "https://www.youtube.com/watch?v=XKoj-e52w30",
+            2 => "https://www.youtube.com/watch?v=gbjwHZDaJLE",
+            3 => "https://www.youtube.com/watch?v=lD_kj-sD2dY",
+            4 => "https://www.youtube.com/watch?v=6iq3ZkdHxUM",
+            5 => "https://www.youtube.com/watch?v=e-7NgSu9SXg",
+            6 => "https://www.youtube.com/watch?v=gRZCF5_XRsA",
+            7 => "https://www.youtube.com/watch?v=_3C02T-4Uug",
+            8 => "https://www.youtube.com/watch?v=hPuVJkw1MmI",
+            9 => "https://www.youtube.com/watch?v=_CN_yyEn78M",
+            10 => "https://www.youtube.com/watch?v=hgy-Ff2DS6Y",
+            11 => "https://www.youtube.com/watch?v=azUFH79x_lY",
+            12 => "https://www.youtube.com/watch?v=Z1gCwhmTV7A"
+        ];
 
-        for ($vdo = 1; $vdo <= 5; $vdo++) {
+        for ($i = 1; $i <= 12; $i++) {
+
             $video = new Video();
-            $video->setUrl($faker->url());
+            $video->setUrl($urls[$i]);
 
             // on va chercher une reference de trick
-            $trick = $this->getReference('trk-'.rand(1, 5));
+            $trick = $this->getReference('trk-'.$i);
             $video->setTrick($trick);
 
             $manager->persist($video);

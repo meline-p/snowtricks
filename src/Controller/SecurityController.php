@@ -18,7 +18,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    #[Route(path: '/login', name: 'app_login')]
+    #[Route(path: '/connexion', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         // if ($this->getUser()) {
@@ -36,23 +36,16 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/logout', name: 'app_logout')]
+    #[Route(path: '/deconnexion', name: 'app_logout')]
     public function logout(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
- 
+
     /**
      * Handles the forgotten password request.
-     *
-     * @param Request $request
-     * @param UserRepository $userRepository
-     * @param TokenGeneratorInterface $tokenGenerator
-     * @param EntityManagerInterface $entityManager
-     * @param SendMailService $mail
-     * @return Response
      */
-    #[Route(path: '/forgot-password', name: 'app_forgotten_password')]   
+    #[Route(path: '/mot-de-passe-oublie', name: 'app_forgotten_password')]
     public function forgottenPassword(
         Request $request,
         UserRepository $userRepository,
@@ -69,7 +62,7 @@ class SecurityController extends AbstractController
             $user = $userRepository->findOneByEmail($form->get('email')->getData());
 
             if (!$user) {
-                $this->addFlash('danger', 'Un problème est survenu');
+                $this->addFlash('danger', 'Erreur : Aucun compte associé à cette adresse e-mail. Veuillez vérifier votre saisie ou créer un nouveau compte si nécessaire.');
 
                 return $this->redirectToRoute('app_login');
             }
@@ -104,18 +97,11 @@ class SecurityController extends AbstractController
             'requestPassForm' => $form->createView(),
         ]);
     }
-   
+
     /**
      * Resets user password.
-     *
-     *  @param string $token
-     * @param Request $request
-     * @param UserRepository $userRepository
-     * @param EntityManagerInterface $entityManager
-     * @param UserPasswordHasherInterface $passwordHasher
-     * @return Response
      */
-    #[Route(path: '/forgot-password/{token}', name: 'app_reset_password')] 
+    #[Route(path: '/mot-de-passe-oublie/{token}', name: 'app_reset_password')]
     public function resetPassword(
         string $token,
         Request $request,
@@ -134,14 +120,16 @@ class SecurityController extends AbstractController
 
         $form = $this->createForm(ResetPasswordFormType::class);
 
+        $oldPassword = null;
+
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             // Clear the reset token
             $user->setResetToken('');
             $user->setPassword(
                 $passwordHasher->hashPassword(
-                    $user, 
+                    $user,
                     $form->get('password')->getData()
                 )
             );
@@ -154,8 +142,13 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
+        if ($form->isSubmitted()) {
+            $oldPassword = $form->get('password')->getData();
+        }
+
         return $this->render('security/reset_password.html.twig', [
-            'passForm' => $form->createView()
+            'passForm' => $form->createView(),
+            'oldPassword' => $oldPassword,
         ]);
     }
 }

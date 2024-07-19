@@ -1,5 +1,6 @@
 {{ form_start(trickForm) }}
-        <div >
+    
+        <div class="position-relative">
             <img style="width: 100%;height: 90vh;object-fit: cover;" 
                 src="/assets/img//tricks/{{ trick.promoteImage.name ?? 'img.png' }}">
             <div class="row">
@@ -13,16 +14,37 @@
                                     Ajouter une figure
                                 {% endif %}
                             </h2>
+                            {% if form_errors(trickForm) %}
+                                <div class="alert alert-danger alert-dismissible mt-2">
+                                    {{ form_errors(trickForm) }}
+                                </div>
+                            {% endif  %}
                         </div>
+
                         <h5 class="">{{ form_label(trickForm.name) }}</h5>
                         {{ form_widget(trickForm.name) }}
+
+                        {% if form_errors(trickForm.name) %}
+                            <div class="alert alert-danger alert-dismissible mt-2">
+                                {{ form_errors(trickForm.name) }}
+                            </div>
+                        {% endif %}
+
                         <div class="col-12 mt-4">
                             <h5 class=""> {{ form_label(trickForm.promoteImage) }}</h5>
                             {{ form_widget(trickForm.promoteImage) }}
-                            {% if trick.promoteImage is not null and trick.promoteImage.id is not null %}
-                                <a href="{{ path('delete_image', {id: trick.promoteImage.id, trick_slug: trick.slug}) }}" data-delete data-token="{{ csrf_token('delete' ~ trick.promoteImage.id) }}" class="mt-2 btn btn-light"><i class="fa-solid fa-trash"></i> Supprimer l'image à la une</a>
+                            {% if app.request.attributes.get('_route') == 'app_tricks_edit' %}
+                                {% if trick.promoteImage is not null and trick.promoteImage.name != "img.png" and trick.promoteImage.id is not null %}
+                                    <a href="{{ path('delete_image', {id: trick.promoteImage.id, trick_slug: trick.slug}) }}" data-delete data-token="{{ csrf_token('delete' ~ trick.promoteImage.id) }}" class="mt-2 btn btn-light"><i class="fa-solid fa-trash"></i> Supprimer l'image à la une</a>
+                                {% endif %}
                             {% endif %}
                         </div>
+
+                        {% if form_errors(trickForm.promoteImage) %}
+                            <div class="alert alert-danger alert-dismissible mt-2">
+                                {{ form_errors(trickForm.promoteImage) }}
+                            </div>
+                        {% endif  %}
                     </div>
                 </div>
             </div>
@@ -35,10 +57,10 @@
             {% if app.request.attributes.get('_route') == 'app_tricks_edit' %}
                 <div class="d-flex flex-wrap justify-content-center m-2">
 
-                    {% if images is not empty or videos is not empty %}
+                    {% if trick.images is not empty or trick.videos is not empty %}
 
-                        {% if images|length > 0 %}
-                            {% for img in images %}
+                        {% if trick.images|length > 0 %}
+                            {% for img in trick.images %}
                                 <div class="m-2 d-flex flex-column">
                                     <img src="/assets/img/tricks/{{ img.name }}"
                                         style="height:200px; width:300px; object-fit:cover;"
@@ -66,6 +88,12 @@
                 {{ form_widget(trickForm.images) }}
             </div>
 
+            {% if form_errors(trickForm.images) %}
+                <div class="alert alert-danger alert-dismissible mt-2">
+                    {{ form_errors(trickForm.images) }}
+                </div>
+            {% endif  %}
+
 
             <h5 class="mt-4">Gérer les vidéos</h5>
             <div class="videos d-flex flex-wrap gap-2"
@@ -85,14 +113,29 @@
 
             </div>
             <button type="button" class="add_item_link btn btn-dark" data-collection-holder-class="videos"><i class="fa-solid fa-plus"></i> Ajouter une vidéo</button>
+            {% if trickForm.videos|length == 0 %}
+            <div class="d-none">{{ form_widget(trickForm.videos) }}</div>
+            {% endif %}
+
 
         <hr class="my-5">
 
         <section class="container">
             <section class="row">
                 <div class="col-6 mb-4">
-                    <h5>{{ form_label(trickForm.category) }}</h5>
-                    {{ form_widget(trickForm.category) }}
+                    <h5>{{ form_label(trickForm.categoryName) }}</h5>
+                    {% set categoryNameValue = trick.category.name ?? '' %}
+                    {% if categoryNameValue %}
+                        {{ form_widget(trickForm.categoryName, { 'attr': {'value': categoryNameValue} }) }}
+                    {% else %}
+                        {{ form_widget(trickForm.categoryName) }}
+                    {% endif %}
+
+                    <datalist id="categories">
+                        {% for category in categories %}
+                            <option value="{{ category.name }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </datalist>
                 </div>
                 <div class="col-12">
                     <h5>{{ form_label(trickForm.description) }}</h5>

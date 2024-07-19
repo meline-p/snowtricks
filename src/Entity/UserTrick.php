@@ -33,7 +33,6 @@ class UserTrick
         return $this->id;
     }
 
-
     public function getUser(): ?User
     {
         return $this->user;
@@ -80,5 +79,13 @@ class UserTrick
         $this->operation = $operation;
 
         return $this;
+    }
+
+    public function init(string $operation, User $user, Trick $trick): void
+    {
+        $this->setOperation($operation);
+        $this->setDate(new \DateTime());
+        $this->setUser($user);
+        $this->setTrick($trick);
     }
 }

@@ -2,16 +2,17 @@
 
 namespace App\Entity;
 
-use App\Entity\Trait\SlugTrait;
+use App\Entity\Traits\SlugTrait;
 use App\Repository\TrickRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
-#[UniqueEntity('name')]
+#[UniqueEntity('name', message: 'Ce nom de figure existe déjà.')]
 class Trick
 {
     use SlugTrait;
@@ -22,6 +23,7 @@ class Trick
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank(message: 'Le nom est obligatoire.')]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -30,7 +32,9 @@ class Trick
     #[ORM\ManyToOne(inversedBy: 'tricks')]
     private ?Category $category = null;
 
-    #[ORM\OneToOne]
+    public ?string $categoryName = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Image $promoteImage = null;
 
     #[ORM\OneToMany(targetEntity: UserTrick::class, mappedBy: 'trick', cascade: ['persist', 'remove'], orphanRemoval: true)]
@@ -39,7 +43,6 @@ class Trick
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'trick', fetch: 'EAGER', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $comments;
 
-    // #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'trick', fetch: 'EAGER')]
     #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'trick', fetch: 'EAGER', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $images;
 
@@ -144,17 +147,6 @@ class Trick
         return $this;
     }
 
-    public function isDeleted(): bool
-    {
-        foreach ($this->userTricks as $userTrick) {
-            if ('delete' === $userTrick->getOperation()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     /**
      * @return Collection<int, Comment>
      */
@@ -243,5 +235,12 @@ class Trick
         }
 
         return $this;
+    }
+
+    public function initOrUpdate(string $name, string $slug, string $description): void
+    {
+        $this->setName($name);
+        $this->setSlug($slug);
+        $this->setDescription($description);
     }
 }

@@ -6,9 +6,8 @@
                     src="/assets/img/tricks/{{ trick.promoteImage.name }}"
                     alt="Card image cap">
                 <div class="card-body">
-                    <span class="badge bg-secondary" style="width: fit-content">{{ trick.category.name }}</span>
+                    <span class="badge bg-warning text-black" style="width: fit-content">{{ trick.category.name }}</span>
                     <h5 class="card-title">{{ trick.name }}</h5>
-                    {# <p class="card-text">{{ trick.description }}</p> #}
                     <a href="{{ path('app_tricks_details', {"slug": trick.slug}) }}" class="btn btn-dark">Voir la figure</a>
                     
                     {% if is_granted('ROLE_USER') %}
@@ -18,7 +17,7 @@
                 </div>
             </div>
 
-            {% include 'tricks/_delete_trick.html.twig' with {'trick': trick, 'deleteForms': deleteForms} %}
+            {% include 'tricks/_delete_trick.html.twig' with {'trick': trick} %}
         {% endfor %}
         
     {% else %}
@@ -35,7 +34,7 @@
 				{% set slug = category_slug %}
 				{% set path = "app_tricks_index" %}
 			{% else %}
-				{% set slug = "all" %}
+				{% set slug = "tout" %}
 				{% set path = "app_main" %}
 			{% endif %}
 

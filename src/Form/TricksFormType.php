@@ -2,10 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Category;
 use App\Entity\Trick;
-use App\Repository\CategoryRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -13,6 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType as TypeTextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\All;
+use Symfony\Component\Validator\Constraints\File;
 
 class TricksFormType extends AbstractType
 {
@@ -32,17 +31,14 @@ class TricksFormType extends AbstractType
                 ],
                 'label' => 'Description',
             ])
-            ->add('category', EntityType::class, [
-                'class' => Category::class,
-                'choice_label' => 'name',
+            ->add('categoryName', TypeTextType::class, [
+                'label' => 'Catégorie',
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
+                    'placeholder' => 'Entrez une catégorie',
+                    'list' => 'categories',
                 ],
-                'label' => 'Catégorie',
-                'query_builder' => function (CategoryRepository $categoryRepository) {
-                    return $categoryRepository->createQueryBuilder('c')
-                        ->orderBy('c.name', 'ASC');
-                },
             ])
             ->add('promoteImage', FileType::class, [
                 'label' => "Modifier l'image à la une",
@@ -52,12 +48,38 @@ class TricksFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
+                'constraints' => [
+                    new File([
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpg',
+                            'image/jpeg',
+                            'image/webp',
+                            'image/avif',
+                        ],
+                        'mimeTypesMessage' => 'Veuillez envoyer une image au format png, jpg, jpeg, webp ou avif.',
+                    ]),
+                ],
             ])
             ->add('images', FileType::class, [
                 'label' => 'Ajouter des images',
                 'multiple' => true,
                 'mapped' => false,
                 'required' => false,
+                'constraints' => [
+                    new All([
+                        new File([
+                            'mimeTypes' => [
+                                'image/png',
+                                'image/jpg',
+                                'image/jpeg',
+                                'image/webp',
+                                'image/avif',
+                            ],
+                            'mimeTypesMessage' => 'Veuillez envoyer une ou des images au format png, jpg, jpeg, webp ou avif.',
+                        ]),
+                    ]),
+                ],
                 'attr' => [
                     'class' => 'form-control',
                 ],

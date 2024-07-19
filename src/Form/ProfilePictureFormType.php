@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class ProfilePictureFormType extends AbstractType
 {
@@ -23,6 +24,18 @@ class ProfilePictureFormType extends AbstractType
             'attr' => [
                 'class' => 'form-control',
             ],
+            'constraints' => [
+                    new File([
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpg',
+                            'image/jpeg',
+                            'image/webp',
+                            'image/avif',
+                        ],
+                        'mimeTypesMessage' => 'Veuillez envoyer une image au format png, jpg, jpeg, webp ou avif.',
+                    ]),
+                ],
         ]);
     }
 

@@ -1,11 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ trick.name }}{% endblock %}
+{% block title %}SnowTricks - Modifier {{ trick.name }}{% endblock %}
 
 {% block body %}
     {% include 'tricks/_form.html.twig' with {'button_label':'Modifier'} %}
-{% endblock %}
-
-{% block javascripts %}
-    <script src="{{ asset('assets/js/images.js') }}" defer></script>
 {% endblock %}

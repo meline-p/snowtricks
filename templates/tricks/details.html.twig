@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ trick.name }}{% endblock %}
+{% block title %}SnowTricks - {{ trick.name }}{% endblock %}
 
 {% block body %}
 
-		<section>
+		<section class="position-relative">
                 <img style="width: 100%;height: 100vh;object-fit: cover;" 
                     src="/assets/img/tricks/{{ trick.promoteImage.name }}">
                 <div class="row">
@@ -13,7 +13,7 @@
                             <h1>{{ trick.name }}</h1>
 
                             {% if is_granted('ROLE_USER') %}
-                                <div class="mx-2 d-flex gap-2">
+                                <div class="mx-2 d-flex gap-2 justify-content-center">
                                     <a href="{{ path('app_tricks_edit', {'slug' : trick.slug})}}" class="btn btn-light"><i class="fa-solid fa-pen-to-square"></i> Modifier</a>
                                     <a href="#" data-slug="{{ trick.slug }}" data-bs-toggle="modal" data-bs-target="#deleteTrick{{ trick.id }}" class="btn btn-light"><i class="fa-solid fa-trash deleteTrick"></i> Supprimer</a>
                                 </div>
@@ -22,10 +22,7 @@
                     </div>
                 </div>
 		</section>
-
-        {# {% if is_granted('ROLE_ADMIN') %}
-            <a href="...">Delete</a>
-        {% endif %} #}
+        
         <section>
             <div class="d-flex m-2 flex-wrap justify-content-center">
             {% if images is not empty or videos is not empty %}
@@ -83,14 +80,23 @@
             </section>
         </main>
 
-        {% if is_granted('ROLE_USER') %}
-            <hr class="my-5">
+         <hr class="my-5">
 
+        {% if is_granted('ROLE_USER') %}
             <section>
                 <div class="d-flex flex-column justify-content-center text-center">
                     <h4>Laisser un commentaire</h4>
                     <div class="col-lg-6 mx-auto mt-4">
                         {% include "comments/_comments_form.html.twig" %}
+                    </div>
+                </div>
+            </section>
+        {% else %}
+             <section>
+                <div class="d-flex flex-column justify-content-center text-center">
+                    <h4>Veuillez vous connecter pour laisser un commentaire</h4>
+                    <div class="col-lg-6 mx-auto mt-4">
+                        <a href="{{ path('app_login') }}" class="btn btn-light">Se connecter</a>
                     </div>
                 </div>
             </section>
@@ -151,7 +157,7 @@
               <p class="text-center">Il n'y aucun commentaires pour cette figure.</p>  
         {% endif %}
 
-        {% include 'tricks/_delete_trick.html.twig' with {'trick': trick, 'deleteForms': deleteForms} %}
+        {% include 'tricks/_delete_trick.html.twig' with {'trick': trick} %}
         {% include 'tricks/_popup_image.html.twig' %}
 
 {% endblock %}

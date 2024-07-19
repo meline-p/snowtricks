@@ -11,10 +11,10 @@
     <div class="btn-group d-flex flex-wrap flex-md-row flex-column" role="group" id='tricks'>
         
         <div>
-            <a href="{{ path('app_tricks_index', {'category_slug': 'all'}) }}" 
+            <a href="{{ path('app_tricks_index', {'category_slug': 'tout'}) }}" 
             style="display:flex;justify-content:center;align-items:center;"
             class="btn
-            {% if app.request.attributes.get('_route_params').category_slug == 'all' %}
+            {% if app.request.attributes.get('_route_params').category_slug == 'tout' %}
                 btn-dark
             {% else %}
                 btn-light

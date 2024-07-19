@@ -12,20 +12,32 @@ class CommentsFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-        $faker = Faker\Factory::create('fr_FR');
+        $comments = [
+            "La neige avait l'air parfaite pour ça ! Bravo pour cette descente.",
+            "Vraiment stylé ! Tu fais ça tellement naturellement. Tu peux m'apprendre ?",
+            "Tellement fluide dans cette poudreuse.",
+            "C'est fou comment tu maintiens l'équilibre là-dessus. Respect !",
+            "Super technique ! Tu fais ça avec tant de fluidité.",
+            "Je suis content d'avoir enfin réussi cette figure.",
+            "C'était impressionnant à voir ! Combien de temps ça t'a pris pour maîtriser ça ?",
+            "Wow, ça demande tellement de technique et de courage. Tu es un pro !",
+            "Boom ! C'est réussi !",
+            "Tu as volé haut là-dedans ! Comment tu fais pour atterrir aussi proprement ?",
+            "Ça montre vraiment ton niveau de maîtrise."
+        ];
 
-        for ($cmt = 1; $cmt <= 5; $cmt++) {
+        foreach ($comments as $content){
             $comment = new Comment();
-            $comment->setContent($faker->text(50));
-
+            $comment->setContent($content);
+    
             // on va chercher une reference de user
             $user = $this->getReference('usr-'.rand(1, 5));
             $comment->setUser($user);
-
+    
             // on va chercher une reference de trick
-            $trick = $this->getReference('trk-'.rand(1, 4));
+            $trick = $this->getReference('trk-'.rand(1,12));
             $comment->setTrick($trick);
-
+    
             $manager->persist($comment);
         }
 
@@ -36,6 +48,7 @@ class CommentsFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             UsersFixtures::class,
+            TricksFixtures::class,
         ];
     }
 }

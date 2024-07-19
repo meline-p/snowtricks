@@ -3,63 +3,55 @@
 namespace App\Controller;
 
 use App\Entity\Image;
-use App\Repository\TrickRepository;
 use App\Service\PictureService;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Filesystem\Filesystem;
-
 
 class ImagesController extends AbstractController
 {
+    private $pictureService;
+
+    public function __construct(PictureService $pictureService)
+    {
+        $this->pictureService = $pictureService;
+    }
+
     #[Route('/tricks/{trick_slug}/image/supprimer/{id}', name: 'delete_image')]
-    public function deleteImage(
-        string $trick_slug,
+    public function deleteTrickImage(
         Image $image,
         Request $request,
-        EntityManagerInterface $em,
-        PictureService $pictureService,
-        TrickRepository $trickRepository
     ): Response {
-        $this->denyAccessUnlessGranted('ROLE_USER');
+        $this->removePromoteImageIfCurrent($image);
 
-        // Retrieve image name
-        $name = $image->getName();
+        return $this->handleDeleteImage($image, $request, 'tricks');
+    }
 
-        $trick = $trickRepository->findOneBy(['slug' => $trick_slug]);
+    #[Route('/profil/{user_username}/image/supprimer/{id}', name: 'app_profile_delete_picture')]
+    public function deleteUserImage(
+        Image $image,
+        Request $request,
+    ): Response {
+        return $this->handleDeleteImage($image, $request, 'user');
+    }
 
-        if ($image == $trick->getPromoteImage()) {
+    private function removePromoteImageIfCurrent(Image $image): void
+    {
+        $trick = $image->getTrick();
+
+        if ($image === $trick->getPromoteImage()) {
             $trick->setPromoteImage(null);
         }
+    }
 
-        if ($pictureService->delete($name, 'tricks', 300, 300)) {
+    private function handleDeleteImage(Image $image, Request $request, string $folder): RedirectResponse
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
-            $em->getConnection()->beginTransaction();
-
-            try{
-                // Delete image from database
-                $em->remove($image);
-                $em->flush();
-
-                // Delete image from folder
-                $filesystem = new Filesystem();
-                $pathToImage = 'assets/img/tricks/' . $image->getName();
-
-                if ($filesystem->exists($pathToImage)) {
-                    $filesystem->remove($pathToImage);
-                } 
-
-                $em->getConnection()->commit();
-
-            }catch (\Exception $e) {
-                $em->getConnection()->rollBack();
-                throw $e;
-            }
-
-            $this->addFlash('success', 'image supprimée avec succès');
+        if ($this->pictureService->delete($image, $folder)) {
+            $this->addFlash('success', 'Image supprimée avec succès');
         } else {
             $this->addFlash('danger', 'Erreur : impossible de supprimer cette image');
         }
