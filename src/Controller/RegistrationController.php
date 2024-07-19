@@ -93,7 +93,7 @@ class RegistrationController extends AbstractController
      * Verifies user account using provided token.
      */
     #[Route('/verification/{token}', name: 'app_verify_user')]
-    public function verifyUser($token, JWTService $jwt, UserRepository $userRepository, EntityManagerInterface $em): Response
+    public function verifyUser(string $token, JWTService $jwt, UserRepository $userRepository, EntityManagerInterface $em): Response
     {
         // Check if the token is valid, not expired, and not modified
         if ($jwt->isValid($token) && !$jwt->isExpired($token) && $jwt->check($token, $this->getParameter('app.jwtsecret'))) {

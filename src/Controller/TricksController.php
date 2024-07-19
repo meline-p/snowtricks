@@ -75,7 +75,6 @@ class TricksController extends AbstractController
         $tricks = $trickRepository->findTricksPaginated($page, $category_slug, 6);
 
         return $this->render('tricks/index.html.twig', [
-            'categories' => $categoryRepository->findBy([]),
             'tricks' => $tricks,
             'categories' => $categories,
             'category_slug' => $category_slug,
@@ -195,7 +194,7 @@ class TricksController extends AbstractController
         $categoryName = $trickForm->get('categoryName')->getData();
         $category = $categoryRepository->findOneBy(['name' => $categoryName]);
 
-        if (null == $category) {
+        if (null === $category) {
             $newCategory = new Category();
             $newCategory->setName($categoryName);
             $newCategory->setSlug(strtolower($this->slugger->slug($categoryName)));

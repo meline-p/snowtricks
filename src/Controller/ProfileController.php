@@ -44,7 +44,7 @@ class ProfileController extends AbstractController
         $this->pictureService = $pictureService;
     }
 
-    public function getUserByUsername(string $username): User
+    public function getUserByUsername(string $username): ?User
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
