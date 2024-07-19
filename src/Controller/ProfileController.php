@@ -54,9 +54,7 @@ class ProfileController extends AbstractController
         $user = $this->userRepository->findOneBy(['username' => $username]);
 
         if ($currentUser !== $user) {
-            $this->addFlash('danger', 'Vous ne pouvez accéder qu\'à votre propre profil.');
-
-            return $this->redirectToRoute('app_main');
+            return null;
         }
 
         return $user;
@@ -88,6 +86,11 @@ class ProfileController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         $user = $this->getUserByUsername($user_username);
+        if (null === $user) {
+            $this->addFlash('danger', 'Vous ne pouvez accéder qu\'à votre propre profil.');
+
+            return $this->redirectToRoute('app_main');
+        }
 
         $statistics = $this->getStatistics($user);
 
@@ -127,6 +130,11 @@ class ProfileController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         $user = $this->getUserByUsername($user_username);
+        if (null === $user) {
+            $this->addFlash('danger', 'Vous ne pouvez accéder qu\'à votre propre profil.');
+
+            return $this->redirectToRoute('app_main');
+        }
 
         $form = $this->createForm(ProfileInfosFormType::class, $user);
         $form->handleRequest($request);
@@ -154,6 +162,11 @@ class ProfileController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         $user = $this->getUserByUsername($user_username);
+        if (null === $user) {
+            $this->addFlash('danger', 'Vous ne pouvez accéder qu\'à votre propre profil.');
+
+            return $this->redirectToRoute('app_main');
+        }
 
         $form = $this->createForm(ResetPasswordFormType::class);
         $form->handleRequest($request);
