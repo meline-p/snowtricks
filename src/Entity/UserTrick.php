@@ -74,7 +74,7 @@ class UserTrick
         return $this->operation;
     }
 
-    public function setOperation($operation)
+    public function setOperation(string $operation)
     {
         $this->operation = $operation;
 
