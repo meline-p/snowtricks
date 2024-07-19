@@ -19,7 +19,7 @@ class UserTricksFixtures extends Fixture
         $manager->flush();
     }
 
-    public function createOrUpdateUserTrick(string $dateStart, string $dateEnd, string $operation, int $trick, ObjectManager $manager)
+    public function createOrUpdateUserTrick(string $dateStart, string $dateEnd, string $operation, int $trick, ObjectManager $manager): UserTrick
     {
         $faker = Faker\Factory::create('fr_FR');
 
@@ -39,5 +39,7 @@ class UserTricksFixtures extends Fixture
         $user_trick->setTrick($trick);
 
         $manager->persist($user_trick);
+
+        return $user_trick;
     }
 }
