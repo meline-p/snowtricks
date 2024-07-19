@@ -69,12 +69,12 @@ class UserTrick
         return $this;
     }
 
-    public function getOperation()
+    public function getOperation(): ?string
     {
         return $this->operation;
     }
 
-    public function setOperation(string $operation)
+    public function setOperation(string $operation): static
     {
         $this->operation = $operation;
 
