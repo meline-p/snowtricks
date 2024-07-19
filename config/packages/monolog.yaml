@@ -49,12 +49,13 @@ when@prod:
             nested:
                 type: stream
                 path: php://stderr
-                level: notice
+                level: error
                 formatter: monolog.formatter.json
             console:
                 type: console
                 process_psr_3_messages: false
                 channels: ["!event", "!doctrine"]
+                level: info
             deprecation:
                 type: stream
                 channels: [deprecation]
