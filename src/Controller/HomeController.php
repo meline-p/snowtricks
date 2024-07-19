@@ -16,7 +16,7 @@ class HomeController extends AbstractController
         Request $request,
     ): Response {
         $page = $request->query->getInt('page', 1);
-        $tricks = $trickRepository->findTricksPaginated($page, 'all', 6);
+        $tricks = $trickRepository->findTricksPaginated($page, 'tout', 6);
 
         return $this->render('home/index.html.twig', [
             'tricks' => $tricks,

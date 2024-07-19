@@ -38,7 +38,7 @@ class TrickRepository extends ServiceEntityRepository
             ->orderBy('ut.date', 'DESC');
 
         // If the category slug is not 'all', filter by category
-        if ('all' !== $slug) {
+        if ('tout' !== $slug) {
             $queryBuilder->andWhere('c.slug = :slug')
                 ->setParameter('slug', $slug);
         }

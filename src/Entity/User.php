@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
-use App\Entity\Trait\CreatedAtTrait;
-use App\Entity\Trait\SoftDeleteTrait;
-use App\Entity\Trait\UpdatedAtTrait;
+use App\Entity\Traits\CreatedAtTrait;
+use App\Entity\Traits\SoftDeleteTrait;
+use App\Entity\Traits\UpdatedAtTrait;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

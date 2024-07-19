@@ -21,7 +21,7 @@ class RegistrationController extends AbstractController
     /**
      * Handles user registration.
      */
-    #[Route('/register', name: 'app_register')]
+    #[Route('/inscription', name: 'app_register')]
     public function register(
         Request $request,
         UserPasswordHasherInterface $userPasswordHasher,
@@ -33,6 +33,8 @@ class RegistrationController extends AbstractController
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
+
+        $plainPassword = null;
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password

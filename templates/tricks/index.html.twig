@@ -2,7 +2,7 @@
 
 {% block title %}SnowTricks - 
     {% if categories is defined %}
-        {% if app.request.attributes.get('_route_params').category_slug == 'all' %}
+        {% if app.request.attributes.get('_route_params').category_slug == 'tout' %}
             Toutes les Figures
         {% else %}
             {% for category in categories %}
@@ -25,7 +25,7 @@
 
 				<h1 class="text-3xl font-bold mt-4">
                     {% if categories is defined %}
-                        {% if app.request.attributes.get('_route_params').category_slug == 'all' %}
+                        {% if app.request.attributes.get('_route_params').category_slug == 'tout' %}
                             Toutes les Figures
                         {% else %}
                             {% for category in categories %}

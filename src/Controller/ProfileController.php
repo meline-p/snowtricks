@@ -46,6 +46,8 @@ class ProfileController extends AbstractController
 
     public function getUserByUsername(string $username): User
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         /** @var User $currentUser */
         $currentUser = $this->getUser();
 
@@ -60,8 +62,10 @@ class ProfileController extends AbstractController
         return $user;
     }
 
-    private function getStatistics(User $user)
+    private function getStatistics(User $user): array
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         $countTricksCreated = $this->userTrickRepository->count(['user' => $user, 'operation' => 'create']);
         $countTricksUpdated = $this->userTrickRepository->count(['user' => $user, 'operation' => 'update']);
         $countComments = $this->commentRepository->count(['user' => $user]);
@@ -78,7 +82,7 @@ class ProfileController extends AbstractController
      *
      * @return Response a response object containing the rendered profile view
      */
-    #[Route('/profil/{user_username}', name: 'index')]
+    #[Route('/{user_username}', name: 'index')]
     public function index(string $user_username, Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
@@ -117,8 +121,8 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    #[Route('/edit-infos/{user_username}', name: 'edit_infos')]
-    public function editInfos(string $user_username, Request $request)
+    #[Route('/modifier-mes-infos/{user_username}', name: 'edit_infos')]
+    public function editInfos(string $user_username, Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -141,7 +145,7 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/edit-password/{user_username}', name: 'edit_password')]
+    #[Route(path: '/modifier-mot-de-passe/{user_username}', name: 'edit_password')]
     public function editPassword(
         string $user_username,
         Request $request,

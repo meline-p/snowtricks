@@ -19,6 +19,8 @@ use App\Repository\VideoRepository;
 use App\Service\PictureService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -140,10 +142,11 @@ class TricksController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function delete(Request $request, Trick $trick): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $this->handleDeleteTrick($trick);
         $this->addFlash('success', 'Figure supprimée avec succès');
 
-        return $this->redirectToRoute('app_tricks_index', ['category_slug' => 'all']);
+        return $this->redirectToRoute('app_tricks_index', ['category_slug' => 'tout']);
     }
 
     #[Route('/details/{slug}', name: 'details')]
@@ -174,9 +177,9 @@ class TricksController extends AbstractController
         ?string $category_slug,
         CategoryRepository $categoryRepository,
     ): array {
-        if ('all' === $category_slug) {
+        if ('tout' === $category_slug) {
             $tricks = $this->trickRepository->findAll();
-            $category_slug = 'all';
+            $category_slug = 'tout';
         } else {
             $categorySelected = $categoryRepository->findOneBy(['slug' => $category_slug]);
             $category_slug = $category_slug;
@@ -186,7 +189,7 @@ class TricksController extends AbstractController
         return [$tricks, $category_slug];
     }
 
-    private function handleSubmittedForms(Trick $trick, User $user, $trickForm, $operation, $categoryRepository)
+    private function handleSubmittedForms(Trick $trick, User $user, FormInterface $trickForm, string $operation, CategoryRepository $categoryRepository): Trick
     {
         // ----- CATEGORIES -----
         $categoryName = $trickForm->get('categoryName')->getData();
@@ -233,7 +236,7 @@ class TricksController extends AbstractController
         return $trick;
     }
 
-    private function processImageAndAddToTrick($trick, $image, $folder, $imageType)
+    private function processImageAndAddToTrick(Trick $trick, UploadedFile $image, string $folder, string $imageType): void
     {
         $processedImage = $this->pictureService->processImage($image, $folder);
         $originalName = $image->getClientOriginalName();
@@ -249,7 +252,7 @@ class TricksController extends AbstractController
         }
     }
 
-    private function handleDeleteTrick(Trick $trick)
+    private function handleDeleteTrick(Trick $trick): void
     {
         $images = $trick->getImages();
         $promoteImage = $trick->getPromoteImage();

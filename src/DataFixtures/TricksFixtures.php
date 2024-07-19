@@ -98,7 +98,7 @@ class TricksFixtures extends Fixture
         $manager->flush();
     }
 
-    public function createTrick(string $name, $description, $category, ObjectManager $manager)
+    public function createTrick(string $name, string $description, int $category, ObjectManager $manager)
     {
         $trick = new Trick();
         $trick->setName($name);

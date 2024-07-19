@@ -17,12 +17,12 @@ class PictureService
     ) {
     }
 
-    public function processImage(UploadedFile $imageFile = null, $folder, $width = 300, $height = 300)
+    public function processImage(UploadedFile $imageFile = null, string $folder, int $width = 300, int $height = 300): ?Image
     {
         return $this->fileService->processImage($imageFile, $folder, $width, $height);
     }
 
-    public function delete(Image $image, string $folder)
+    public function delete(Image $image, string $folder): bool
     {
         // Delete image from database
         $this->em->remove($image);
@@ -38,7 +38,7 @@ class PictureService
         return true;
     }
 
-    public function updateProfilePicture(User $user, $newPicture, $folder): bool
+    public function updateProfilePicture(User $user, UploadedFile $newPicture, string $folder): bool
     {
         // remove current profile picture
         $currentPictureProfile = $this->imageRepository->findOneBy(['name' => $user->getPictureSlug()]);
@@ -53,7 +53,7 @@ class PictureService
         return true;
     }
 
-    private function setProfilePicture(User $user, $newPicture, $folder)
+    private function setProfilePicture(User $user, UploadedFile $newPicture, string $folder): void
     {
         // set the new profil picture
         $profilPicture = $newPicture;

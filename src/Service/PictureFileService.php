@@ -18,7 +18,7 @@ class PictureFileService
         $this->filesystem = $filesystem;
     }
 
-    public function processImage(UploadedFile $imageFile = null, $folder, $width = 300, $height = 300): ?Image
+    public function processImage(UploadedFile $imageFile = null, string $folder, int $width = 300, int $height = 300): ?Image
     {
         if (null === $imageFile) {
             return null;
@@ -28,8 +28,8 @@ class PictureFileService
 
         $fileName = uniqid().'.'.$imageFile->getClientOriginalExtension();
         $fichier = $this->add($imageFile, $folder, $fileName, $width, $height);
-        
-        if ($fichier === 'invalid') {
+
+        if ('invalid' === $fichier) {
             return null;
         }
 
@@ -63,29 +63,33 @@ class PictureFileService
             return 'invalid';
         }
 
-        $path = $this->imagesDirectory . $folder;
+        $path = $this->imagesDirectory.$folder;
 
         $picture->move($path, $fichier);
 
         return $fichier;
     }
 
-    private function checkMimeType($picture, $mimeType): bool
+    private function checkMimeType(UploadedFile $picture, string $mimeType): bool
     {
         try {
             switch ($mimeType) {
                 case 'image/png':
                     $picture_source = \imagecreatefrompng($picture);
+
                     return true;
                 case 'image/jpg':
                 case 'image/jpeg':
                     $picture_source = \imagecreatefromjpeg($picture);
+
                     return true;
                 case 'image/webp':
                     $picture_source = \imagecreatefromwebp($picture);
+
                     return true;
                 case 'image/avif':
                     $picture_source = \imagecreatefromavif($picture);
+
                     return true;
                 default:
                     return false;
@@ -95,7 +99,7 @@ class PictureFileService
         }
     }
 
-    public function delete(Image $image, $folder): bool
+    public function delete(Image $image, string $folder): bool
     {
         $file_name = $image->getName();
 

@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Entity\Trait\SlugTrait;
+use App\Entity\Traits\SlugTrait;
 use App\Repository\TrickRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -237,7 +237,7 @@ class Trick
         return $this;
     }
 
-    public function initOrUpdate($name, $slug, $description)
+    public function initOrUpdate(string $name, string $slug, string $description): void
     {
         $this->setName($name);
         $this->setSlug($slug);

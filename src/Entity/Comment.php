@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use App\Entity\Trait\CreatedAtTrait;
-use App\Entity\Trait\SoftDeleteTrait;
+use App\Entity\Traits\CreatedAtTrait;
+use App\Entity\Traits\SoftDeleteTrait;
 use App\Repository\CommentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;

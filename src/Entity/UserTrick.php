@@ -81,7 +81,7 @@ class UserTrick
         return $this;
     }
 
-    public function init($operation, $user, $trick)
+    public function init(string $operation, User $user, Trick $trick): void
     {
         $this->setOperation($operation);
         $this->setDate(new \DateTime());

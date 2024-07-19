@@ -133,7 +133,7 @@ class JWTService
      *
      * @return bool true if the provided token matches the generated token, false otherwise
      */
-    public function check(string $token, string $secret)
+    public function check(string $token, string $secret): bool
     {
         // Retrieve the header and payload from the token
         $header = $this->getHeader($token);

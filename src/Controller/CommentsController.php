@@ -12,14 +12,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-#[Route('/comments', name: 'app_comments_')]
+#[Route('/commentaires', name: 'app_comments_')]
 class CommentsController extends AbstractController
 {
     public function __construct(private readonly EntityManagerInterface $em)
     {
     }
 
-    #[Route('/add/{trick}', name: 'add')]
+    #[Route('/ajouter/{trick}', name: 'add')]
     public function add(Request $request, Trick $trick, UserInterface $user): Response
     {
         $comment = new Comment();
