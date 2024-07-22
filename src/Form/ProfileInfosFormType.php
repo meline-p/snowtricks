@@ -19,12 +19,6 @@ class ProfileInfosFormType extends AbstractType
                     'class' => 'form-control',
                 ],
             ])
-            ->add('username', TypeTextType::class, [
-                'attr' => [
-                    'class' => 'form-control',
-                ],
-                'label' => 'Pseudo',
-            ])
             ->add('first_name', TypeTextType::class, [
                 'attr' => [
                     'class' => 'form-control',

@@ -19,7 +19,7 @@ class CommentsController extends AbstractController
     {
     }
 
-    #[Route('/ajouter/{trick}', name: 'add')]
+    #[Route('/ajouter/{trick}', name: 'add', requirements: ['trick' => '[a-z0-9\-]+'])]
     public function add(Request $request, Trick $trick, UserInterface $user): Response
     {
         $comment = new Comment();

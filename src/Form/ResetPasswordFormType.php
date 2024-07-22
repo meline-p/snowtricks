@@ -28,7 +28,6 @@ class ResetPasswordFormType extends AbstractType
                 'attr' => ['class' => 'password-field form-control'],
             ],
             'required' => true,
-            'data' => $options['data'] ?? null,
             'constraints' => [
                 new NotBlank([
                     'message' => 'Veuillez entrer un mot de passe',

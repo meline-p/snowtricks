@@ -37,16 +37,12 @@
             <div class="my-3">
                 <div class="d-flex gap-3 flex-column flex-md-row">
                     <div class="flex-grow-1">
-                        {{ form_row(editInfosForm.username) }}
-                    </div>
-                    <div class="flex-grow-1">
                         {{ form_row(editInfosForm.email) }}
                     </div>
                 </div>
             </div>
         
                 <button type="submit" class="btn btn-primary my-3">Modifier mes informations</button>
-                <a href="{{ path('app_login') }}" class="btn btn-secondary">Se connecter</a>
             {{ form_end(editInfosForm) }}
         </div>
     </div>

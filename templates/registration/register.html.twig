@@ -41,6 +41,7 @@
             </div>
             <div class="my-3">
             {{ form_row(registrationForm.username) }}
+            <div><small><i>Votre pseudo ne pourra plus être modifié par la suite</i></small></div>
             </div>
             <div class="my-3">
                 <div class="d-flex gap-3 flex-column flex-md-row">
@@ -49,7 +50,6 @@
                     </div>
                     <div class="flex-grow-1">
                         {{ form_row(registrationForm.plainPassword, {
-                            label: 'Password',
                             'attr': {
                                 'value': plainPassword
                             }
@@ -57,11 +57,13 @@
                     </div>
                 </div>
             </div>
-                
-                {{ form_row(registrationForm.RGPDConsent) }}
 
-                <button type="submit" class="btn btn-primary my-3">S'inscrire</button>
-                <a href="{{ path('app_login') }}" class="btn btn-secondary">Se connecter</a>
+            <div class="form-check">
+                {{ form_row(registrationForm.RGPDConsent) }}
+            </div>
+
+            <button type="submit" class="btn btn-primary my-3">S'inscrire</button>
+            <a href="{{ path('app_login') }}" class="btn btn-secondary">Se connecter</a>
             {{ form_end(registrationForm) }}
         </div>
     </div>

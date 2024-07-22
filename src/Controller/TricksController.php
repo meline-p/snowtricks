@@ -57,7 +57,7 @@ class TricksController extends AbstractController
         $this->trickRepository = $trickRepository;
     }
 
-    #[Route('/categories/{category_slug}', name: 'index')]
+    #[Route('/categories/{category_slug}', name: 'index', requirements: ['category_slug' => '[a-z0-9\-]+'])]
     public function index(
         ?string $category_slug,
         CategoryRepository $categoryRepository,
@@ -109,7 +109,7 @@ class TricksController extends AbstractController
         ]);
     }
 
-    #[Route('/modifier/{slug}', name: 'edit')]
+    #[Route('/modifier/{slug}', name: 'edit', requirements: ['category_slug' => '[a-z0-9\-]+'])]
     public function edit(Trick $trick, Request $request, CategoryRepository $categoryRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
@@ -137,7 +137,7 @@ class TricksController extends AbstractController
         ]);
     }
 
-    #[Route('/supprimer/{slug}', name: 'delete')]
+    #[Route('/supprimer/{slug}', name: 'delete', requirements: ['category_slug' => '[a-z0-9\-]+'])]
     #[IsGranted('ROLE_USER')]
     public function delete(Request $request, Trick $trick): Response
     {
@@ -148,7 +148,7 @@ class TricksController extends AbstractController
         return $this->redirectToRoute('app_tricks_index', ['category_slug' => 'tout']);
     }
 
-    #[Route('/details/{slug}', name: 'details')]
+    #[Route('/details/{slug}', name: 'details', requirements: ['category_slug' => '[a-z0-9\-]+'])]
     public function details(Trick $trick, Request $request): Response
     {
         $page = $request->query->getInt('page', 1);
@@ -275,7 +275,7 @@ class TricksController extends AbstractController
     {
         $images = $this->imageRepository->findBy(['trick' => $trick]);
         $videos = $this->videoRepository->findBy(['trick' => $trick]);
-        $comments = $this->commentRepository->findCommentsPaginated($page, $trick->getId(), 3);
+        $comments = $this->commentRepository->findCommentsPaginated($page, $trick->getId(), 10);
 
         $userTrickCreatedAt = $this->userTrickRepository->findOneBy(['trick' => $trick, 'operation' => 'create']);
         $created_at = $userTrickCreatedAt ? $userTrickCreatedAt->getDate() : null;

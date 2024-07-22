@@ -3,7 +3,7 @@
         {% for trick in tricks.data %}
             <div class="card m-2 mt-4" style="width: 18rem;">
                 <img class="card-img-top" style="height: 200px; object-fit:cover; background-color: grey;" 
-                    src="/assets/img/tricks/{{ trick.promoteImage.name }}"
+                    src="/assets/img/tricks/{{ trick.promoteImage.name ?? 'img.png' }}"
                     alt="Card image cap">
                 <div class="card-body">
                     <span class="badge bg-warning text-black" style="width: fit-content">{{ trick.category.name }}</span>

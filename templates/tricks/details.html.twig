@@ -6,7 +6,7 @@
 
 		<section class="position-relative">
                 <img style="width: 100%;height: 100vh;object-fit: cover;" 
-                    src="/assets/img/tricks/{{ trick.promoteImage.name }}">
+                    src="/assets/img/tricks/{{ trick.promoteImage.name ?? 'img.png' }}">
                 <div class="row">
                     <div class="col-lg-6 p-4 position-absolute top-50 start-50 translate-middle" >
                         <div class="w-100 bg-light rounded p-5 text-center" style="--bs-bg-opacity: .8;">
@@ -114,7 +114,7 @@
                             <div class="bg-light px-4 py-3 rounded flex-grow-1">
                                 <div>
                                     <small>
-                                        <span class="fw-bold">@{{ comment.user.username }}</span><br>
+                                        <span class="fw-bold">{{ comment.user.firstname }} {{ comment.user.lastname }}</span><br>
                                         <span class="fw-light">{{ comment.createdAt|date('d/m/Y à H:i') }}</span><br>
                                     </small>
                                 </div>
@@ -132,7 +132,7 @@
                         <div class="bg-light px-4 py-3 rounded flex-grow-1">
                             <div>
                                 <small>
-                                    <span class="fw-bold">@{{ comment.user.username }}</span><br>
+                                    <span class="fw-bold">{{ comment.user.firstname }} {{ comment.user.lastname }}</span><br>
                                     <span class="fw-light">{{ comment.createdAt|date('d/m/Y à H:i') }}</span><br>
                                 </small>
                             </div>

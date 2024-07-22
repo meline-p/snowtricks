@@ -15,9 +15,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class RegistrationController extends AbstractController
 {
+
+    private $slugger;
+
+    public function __construct(
+        SluggerInterface $slugger,
+    ) {
+        $this->slugger = $slugger;
+    }
+
     /**
      * Handles user registration.
      */
@@ -47,7 +57,7 @@ class RegistrationController extends AbstractController
 
             $user->setLastName(strtoupper($user->getLastName()));
             $user->setFirstName(ucfirst(strtolower($user->getFirstName())));
-            $user->setUsername(strtolower($user->getUsername()));
+            $user->setUsername(strtolower($this->slugger->slug($user->getUsername())));
 
             $entityManager->persist($user);
             $entityManager->flush();

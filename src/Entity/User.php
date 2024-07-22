@@ -12,11 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['username'])]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['username'], message: 'Un compte avec ce pseudo existe déjà.')]
+#[UniqueEntity(fields: ['email'], message: 'Un compte avec cette adresse mail existe déjà.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use CreatedAtTrait;
@@ -47,6 +49,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $userTricks;
 
     #[ORM\Column(length: 50, unique: true)]
+     #[Assert\NotBlank]
+    #[Assert\Regex(
+        pattern: '/^[a-z0-9\-]+$/',
+        message: 'Le pseudo ne peut contenir que des lettres, des chiffres et des tirets.'
+    )]
     private ?string $username = null;
 
     #[ORM\Column(length: 255)]
@@ -98,7 +105,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string) $this->username;
     }
 
     /**

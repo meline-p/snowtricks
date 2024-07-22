@@ -21,6 +21,15 @@ class UsersFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
+
+        $pictureSlugs = [
+            1 => "669ec6c6d6104.avif",
+            2 => "669ec71db158d.avif",
+            3 => "669ec73ae4291.avif",
+            4 => "669ec752ab620.avif",
+            5 => "669ec77c7bd5a.avif",
+        ];
+
         $faker = Faker\Factory::create('fr_FR');
 
         for ($usr = 1; $usr <= 5; $usr++) {
@@ -37,6 +46,8 @@ class UsersFixtures extends Fixture
             $user->setPassword(
                 $this->passwordEncoder->hashPassword($user, 'secret')
             );
+
+            $user->setPictureSlug($pictureSlugs[$usr]);
 
             $manager->persist($user);
 

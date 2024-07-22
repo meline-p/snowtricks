@@ -62,9 +62,9 @@ Ensure these parameters are configured in the .env.local file.
 
 ### Terminal 1 : Launch the website
 Start the local server:
-    ```bash
-    symfony serve -d
-    ```
+```bash
+symfony serve -d
+```
 
 Access the application via your browser at http://localhost:8000.
 

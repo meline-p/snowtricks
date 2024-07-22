@@ -19,7 +19,7 @@ class ImagesController extends AbstractController
         $this->pictureService = $pictureService;
     }
 
-    #[Route('/tricks/{trick_slug}/image/supprimer/{id}', name: 'delete_image')]
+    #[Route('/tricks/{trick_slug}/image/supprimer/{id}', name: 'delete_image', requirements: ['trick_slug' => '[a-z0-9\-]+', 'id' => '\d+'])]
     public function deleteTrickImage(
         Image $image,
         Request $request,
@@ -27,14 +27,6 @@ class ImagesController extends AbstractController
         $this->removePromoteImageIfCurrent($image);
 
         return $this->handleDeleteImage($image, $request, 'tricks');
-    }
-
-    #[Route('/profil/{user_username}/image/supprimer/{id}', name: 'app_profile_delete_picture')]
-    public function deleteUserImage(
-        Image $image,
-        Request $request,
-    ): Response {
-        return $this->handleDeleteImage($image, $request, 'user');
     }
 
     private function removePromoteImageIfCurrent(Image $image): void

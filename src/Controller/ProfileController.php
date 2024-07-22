@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * Controller class responsible for handling profile-related actions.
@@ -24,6 +25,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/profil', name: 'app_profile_')]
 class ProfileController extends AbstractController
 {
+    private $slugger;
     private $em;
     private $pictureService;
     private $userTrickRepository;
@@ -31,12 +33,14 @@ class ProfileController extends AbstractController
     private $userRepository;
 
     public function __construct(
+        SluggerInterface $slugger,
         EntityManagerInterface $em,
         PictureService $pictureService,
         UserTrickRepository $userTrickRepository,
         CommentRepository $commentRepository,
         UserRepository $userRepository,
     ) {
+        $this->slugger = $slugger;
         $this->em = $em;
         $this->userTrickRepository = $userTrickRepository;
         $this->commentRepository = $commentRepository;
@@ -80,7 +84,7 @@ class ProfileController extends AbstractController
      *
      * @return Response a response object containing the rendered profile view
      */
-    #[Route('/{user_username}', name: 'index')]
+    #[Route('/{user_username}', name: 'index',  requirements: ['user_username' => '[a-z0-9\-]+'])]
     public function index(string $user_username, Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
@@ -100,11 +104,11 @@ class ProfileController extends AbstractController
         $profilPictureForm->handleRequest($request);
 
         if ($profilPictureForm->isSubmitted() && $profilPictureForm->isValid()) {
-            $this->em->getConnection()->beginTransaction();
             $folder = 'users';
-            $updated = $this->pictureService->updateProfilePicture($user, $profilPictureForm->get('profilPicture')->getData(), $folder);
+            $updated = $this->pictureService->updateProfilePicture($user, $folder);
 
             if ($updated) {
+                $this->pictureService->setProfilePicture($user, $profilPictureForm->get('profilPicture')->getData(), $folder);
                 $this->addFlash('success', 'Photo de profil modifiée avec succès');
             } else {
                 $this->addFlash('danger', 'Erreur : impossible de modifier la photo de profil');
@@ -124,7 +128,7 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    #[Route('/modifier-mes-infos/{user_username}', name: 'edit_infos')]
+    #[Route('/modifier-mes-infos/{user_username}', name: 'edit_infos',  requirements: ['user_username' => '[a-z0-9\-]+'])]
     public function editInfos(string $user_username, Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
@@ -140,6 +144,8 @@ class ProfileController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $user->setUsername(strtolower($this->slugger->slug($user->getUsername())));
             $this->em->persist($user);
             $this->em->flush();
 
@@ -153,7 +159,7 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/modifier-mot-de-passe/{user_username}', name: 'edit_password')]
+    #[Route(path: '/modifier-mot-de-passe/{user_username}', name: 'edit_password',  requirements: ['user_username' => '[a-z0-9\-]+'])]
     public function editPassword(
         string $user_username,
         Request $request,
@@ -170,6 +176,8 @@ class ProfileController extends AbstractController
 
         $form = $this->createForm(ResetPasswordFormType::class);
         $form->handleRequest($request);
+
+        $oldPassword = null;
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Clear the reset token
