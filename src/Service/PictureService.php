@@ -76,7 +76,7 @@ class PictureService
      *              or if there was no old profile picture. Returns false if the old
      *              profile picture file could not be deleted from the file system.
      */
-    public function removeOldProfilePicture(User $user, string $folder): bool
+    private function removeOldProfilePicture(User $user, string $folder): bool
     {
         $old_picture_profil = $user->getPictureSlug();
 
@@ -99,7 +99,6 @@ class PictureService
      */
     public function setNewProfilePicture(User $user, UploadedFile $newPicture, string $folder): bool
     {
-        // set the new profil picture
         $profilPicture = $newPicture;
         $profilPicture = $this->processImage($profilPicture, $folder);
 
@@ -107,6 +106,10 @@ class PictureService
             return false;
         }
 
+        // delete old profile picture
+        $this->removeOldProfilePicture($user, $folder);
+
+        // set the new profil picture
         $user->setPictureSlug($profilPicture->getName());
         $this->em->persist($user);
         $this->em->flush();

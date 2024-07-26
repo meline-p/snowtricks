@@ -42,11 +42,6 @@ class Image
 
     public function getName(): ?string
     {
-        // default image (empty entity image)
-        // if (!$this->trick) {
-        //     return 'img.png';
-        // }
-
         return $this->name;
     }
 

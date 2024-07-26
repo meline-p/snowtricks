@@ -14,6 +14,7 @@ use App\Service\PictureService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -119,8 +120,25 @@ class ProfileController extends AbstractController
 
         $statistics = $this->getStatistics($user);
 
+        // update profil picture
         $profilPictureForm = $this->createForm(ProfilePictureFormType::class, new Image());
-        $this->handleProfilePictureForm($request, $profilPictureForm, $user);
+        $profilPictureForm->handleRequest($request);
+
+        if ($profilPictureForm->isSubmitted() && $profilPictureForm->isValid()) {
+            $folder = 'users';
+            $newImg = $profilPictureForm->get('profilPicture')->getData();
+            
+            $success = $this->pictureService->setNewProfilePicture($user, $newImg, $folder);
+
+            if ($success) {
+                $this->addFlash('success', 'Photo de profil modifiée avec succès');
+            } else {
+                $this->addFlash('danger', 'Erreur : '.$newImg->getClientOriginalName()." : Format d'image incorrect.");
+            }
+
+            $route = $request->headers->get('referer');
+            return $this->redirect($route);
+        }
 
         return $this->render('profile/index.html.twig', [
             'user' => $user,
@@ -129,38 +147,6 @@ class ProfileController extends AbstractController
             'countComments' => $statistics['comments'],
             'profilPictureForm' => $profilPictureForm->createView(),
         ]);
-    }
-
-    /**
-     * Handles the submission and processing of the profile picture form.
-     *
-     * @param Request       $request the HTTP request object containing the form submission data
-     * @param FormInterface $form    the form object for updating the profile picture
-     * @param User          $user    the `User` entity for which the profile picture is being updated
-     *
-     * @return void this method does not return a value; it handles form processing and redirection
-     */
-    private function handleProfilePictureForm(Request $request, FormInterface $form, User $user): void
-    {
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $folder = 'users';
-            $this->pictureService->removeOldProfilePicture($user, $folder);
-
-            $newImg = $form->get('profilPicture')->getData();
-
-            $success = $this->pictureService->setNewProfilePicture($user, $newImg, $folder);
-            if ($success) {
-                $this->addFlash('success', 'Photo de profil modifiée avec succès');
-            } else {
-                $this->addFlash('danger', 'Erreur : '.$newImg->getClientOriginalName()." : Format d'image incorrect.");
-            }
-
-            $route = $request->headers->get('referer');
-            header("Location: $route");
-            exit;
-        }
     }
 
     /**
