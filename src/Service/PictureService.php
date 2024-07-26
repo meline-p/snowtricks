@@ -109,7 +109,7 @@ class PictureService
         // delete old profile picture
         $this->removeOldProfilePicture($user, $folder);
 
-        // set the new profil picture
+        // set the new profile picture
         $user->setPictureSlug($profilPicture->getName());
         $this->em->persist($user);
         $this->em->flush();
