@@ -142,11 +142,12 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Service/PictureFileService.php"><a href="files/src-service-picturefileservice.html"><abbr title="src/Service/PictureFileService.php">PictureFileService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">10</span>
+    <span class="phpdocumentor-element-found-in__line">13</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">Manages image files: processing, adding, MIME type handling, and deletion.</p>
+
 
 
 
@@ -206,24 +207,35 @@
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>Deletes an image file from the specified folder.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/App-Service-PictureFileService.html#method_processImage">processImage()</a>
+    <a class="" href="classes/App-Service-PictureFileService.html#method_handleDeleteImg">handleDeleteImg()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Handles the deletion of an image file from the specified folder.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/App-Service-PictureFileService.html#method_processImageFile">processImageFile()</a>
     <span>
                                 &nbsp;: <a href="classes/App-Entity-Image.html"><abbr title="\App\Entity\Image">Image</abbr></a>|null    </span>
 </dt>
+<dd>Processes an uploaded image file by creating an Image entity.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a class="" href="classes/App-Service-PictureFileService.html#method_add">add()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>Moves and processes an uploaded image file to a specified folder with optional resizing.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a class="" href="classes/App-Service-PictureFileService.html#method_checkMimeType">checkMimeType()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>Checks if the provided image file&#039;s MIME type is valid and supported.</dd>
 
     </dl>
 
@@ -255,7 +267,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Service/PictureFileService.php"><a href="files/src-service-picturefileservice.html"><abbr title="src/Service/PictureFileService.php">PictureFileService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">13</span>
+    <span class="phpdocumentor-element-found-in__line">16</span>
 
     </aside>
 
@@ -291,7 +303,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Service/PictureFileService.php"><a href="files/src-service-picturefileservice.html"><abbr title="src/Service/PictureFileService.php">PictureFileService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">12</span>
+    <span class="phpdocumentor-element-found-in__line">15</span>
 
     </aside>
 
@@ -332,7 +344,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Service/PictureFileService.php"><a href="files/src-service-picturefileservice.html"><abbr title="src/Service/PictureFileService.php">PictureFileService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">15</span>
+    <span class="phpdocumentor-element-found-in__line">18</span>
 
     </aside>
 
@@ -383,11 +395,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Service/PictureFileService.php"><a href="files/src-service-picturefileservice.html"><abbr title="src/Service/PictureFileService.php">PictureFileService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">102</span>
+    <span class="phpdocumentor-element-found-in__line">142</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Deletes an image file from the specified folder.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">delete</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-Image.html"><abbr title="\App\Entity\Image">Image</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$image</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$folder</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
@@ -403,14 +416,18 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-Image.html"><abbr title="\App\Entity\Image">Image</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the image object containing the file name to be deleted</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$folder</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the folder where the image file is stored</p>
+</section>
+
             </dd>
             </dl>
 
@@ -421,6 +438,10 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>returns true if the file was successfully deleted, otherwise false</p>
+</section>
+
             </section>
 
 </article>
@@ -430,22 +451,88 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_processImage">
-        processImage()
-        <a href="classes/App-Service-PictureFileService.html#method_processImage" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_handleDeleteImg">
+        handleDeleteImg()
+        <a href="classes/App-Service-PictureFileService.html#method_handleDeleteImg" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Service/PictureFileService.php"><a href="files/src-service-picturefileservice.html"><abbr title="src/Service/PictureFileService.php">PictureFileService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">21</span>
+    <span class="phpdocumentor-element-found-in__line">158</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Handles the deletion of an image file from the specified folder.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">processImage</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\File\UploadedFile">UploadedFile</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$imageFile</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$folder</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$width</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">300</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$height</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">300</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/App-Entity-Image.html"><abbr title="\App\Entity\Image">Image</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">handleDeleteImg</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$file_name</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$folder</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$file_name</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>the name of the file to be deleted</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$folder</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>the folder where the file is located</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Returns true if the file was successfully deleted or if the file
+name was 'img.png', otherwise returns false.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_processImageFile">
+        processImageFile()
+        <a href="classes/App-Service-PictureFileService.html#method_processImageFile" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Service/PictureFileService.php"><a href="files/src-service-picturefileservice.html"><abbr title="src/Service/PictureFileService.php">PictureFileService.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">34</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Processes an uploaded image file by creating an Image entity.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">processImageFile</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\File\UploadedFile">UploadedFile</abbr>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$imageFile</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$folder</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$width</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">300</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$height</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">300</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/App-Entity-Image.html"><abbr title="\App\Entity\Image">Image</abbr></a>|null</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -455,31 +542,39 @@
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$imageFile</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\File\UploadedFile">UploadedFile</abbr></span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\File\UploadedFile">UploadedFile</abbr>|null</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>The image file to be processed. If null, returns null.</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$folder</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the folder where the image file will be saved</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$width</span>
                 : <span class="phpdocumentor-signature__argument__return-type">int</span>
                  = <span class="phpdocumentor-signature__argument__default-value">300</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>The width to which the image should be resized. Default is 300.</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$height</span>
                 : <span class="phpdocumentor-signature__argument__return-type">int</span>
                  = <span class="phpdocumentor-signature__argument__default-value">300</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>The height to which the image should be resized. Default is 300.</p>
+</section>
+
             </dd>
             </dl>
 
@@ -490,6 +585,10 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><a href="classes/App-Entity-Image.html"><abbr title="\App\Entity\Image">Image</abbr></a>|null</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>returns an Image entity with the file name and extension, or null if the file is invalid</p>
+</section>
+
             </section>
 
 </article>
@@ -507,11 +606,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Service/PictureFileService.php"><a href="files/src-service-picturefileservice.html"><abbr title="src/Service/PictureFileService.php">PictureFileService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">68</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Moves and processes an uploaded image file to a specified folder with optional resizing.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">add</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\File\UploadedFile">UploadedFile</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$picture</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$folder</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$fileName</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$width</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">300</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$height</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">300</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
@@ -527,35 +627,45 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\File\UploadedFile">UploadedFile</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the uploaded image file to be processed</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$folder</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the folder where the image file will be saved</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$fileName</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the new name of the image file</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$width</span>
                 : <span class="phpdocumentor-signature__argument__return-type">int|null</span>
                  = <span class="phpdocumentor-signature__argument__default-value">300</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>The width to which the image should be resized (optional). Default is 300.</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$height</span>
                 : <span class="phpdocumentor-signature__argument__return-type">int|null</span>
                  = <span class="phpdocumentor-signature__argument__default-value">300</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>The height to which the image should be resized (optional). Default is 300.</p>
+</section>
+
             </dd>
             </dl>
 
@@ -566,6 +676,10 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">string</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>returns the file name if successful, or 'invalid' if the file is not valid</p>
+</section>
+
             </section>
 
 </article>
@@ -583,11 +697,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Service/PictureFileService.php"><a href="files/src-service-picturefileservice.html"><abbr title="src/Service/PictureFileService.php">PictureFileService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">73</span>
+    <span class="phpdocumentor-element-found-in__line">105</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Checks if the provided image file&#039;s MIME type is valid and supported.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">checkMimeType</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\File\UploadedFile">UploadedFile</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$picture</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$mimeType</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
@@ -603,14 +718,18 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\File\UploadedFile">UploadedFile</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the uploaded image file to be checked</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$mimeType</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the MIME type of the image file to be validated</p>
+</section>
+
             </dd>
             </dl>
 
@@ -621,6 +740,10 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>returns true if the MIME type is valid and the image can be processed, otherwise false</p>
+</section>
+
             </section>
 
 </article>
@@ -747,7 +870,8 @@
                 <ul class="phpdocumentor-list -clean">
                                             <li class=""><a href="classes/App-Service-PictureFileService.html#method___construct">__construct()</a></li>
                                             <li class=""><a href="classes/App-Service-PictureFileService.html#method_delete">delete()</a></li>
-                                            <li class=""><a href="classes/App-Service-PictureFileService.html#method_processImage">processImage()</a></li>
+                                            <li class=""><a href="classes/App-Service-PictureFileService.html#method_handleDeleteImg">handleDeleteImg()</a></li>
+                                            <li class=""><a href="classes/App-Service-PictureFileService.html#method_processImageFile">processImageFile()</a></li>
                                             <li class=""><a href="classes/App-Service-PictureFileService.html#method_add">add()</a></li>
                                             <li class=""><a href="classes/App-Service-PictureFileService.html#method_checkMimeType">checkMimeType()</a></li>
                                     </ul>

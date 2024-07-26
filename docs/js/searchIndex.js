@@ -3,7 +3,7 @@ Search.appendIndex(
                 {
             "fqsen": "\\App\\Controller\\CommentsController",
             "name": "CommentsController",
-            "summary": "",
+            "summary": "Controller\u0020class\u0020responsible\u0020for\u0020handling\u0020the\u0020addition\u0020of\u0020a\u0020new\u0020comment\u0020to\u0020a\u0020trick.",
             "url": "classes/App-Controller-CommentsController.html"
         },                {
             "fqsen": "\\App\\Controller\\CommentsController\u003A\u003A__construct\u0028\u0029",
@@ -13,7 +13,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Controller\\CommentsController\u003A\u003Aadd\u0028\u0029",
             "name": "add",
-            "summary": "",
+            "summary": "Handles\u0020the\u0020addition\u0020of\u0020a\u0020new\u0020comment\u0020to\u0020a\u0020trick.",
             "url": "classes/App-Controller-CommentsController.html#method_add"
         },                {
             "fqsen": "\\App\\Controller\\CommentsController\u003A\u003A\u0024em",
@@ -21,50 +21,45 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Controller-CommentsController.html#property_em"
         },                {
+            "fqsen": "\\App\\Controller\\DeleteTrickImagesController",
+            "name": "DeleteTrickImagesController",
+            "summary": "Controller\u0020class\u0020responsible\u0020for\u0020handling\u0020the\u0020deletion\u0020of\u0020an\u0020image\u0020associated\u0020with\u0020a\u0020trick.",
+            "url": "classes/App-Controller-DeleteTrickImagesController.html"
+        },                {
+            "fqsen": "\\App\\Controller\\DeleteTrickImagesController\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Controller-DeleteTrickImagesController.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Controller\\DeleteTrickImagesController\u003A\u003AdeleteTrickImage\u0028\u0029",
+            "name": "deleteTrickImage",
+            "summary": "Deletes\u0020an\u0020image\u0020associated\u0020with\u0020a\u0020trick.",
+            "url": "classes/App-Controller-DeleteTrickImagesController.html#method_deleteTrickImage"
+        },                {
+            "fqsen": "\\App\\Controller\\DeleteTrickImagesController\u003A\u003AremovePromoteImageIfCurrent\u0028\u0029",
+            "name": "removePromoteImageIfCurrent",
+            "summary": "Removes\u0020the\u0020promoted\u0020status\u0020from\u0020an\u0020image\u0020if\u0020it\u0020is\u0020currently\u0020promoted.",
+            "url": "classes/App-Controller-DeleteTrickImagesController.html#method_removePromoteImageIfCurrent"
+        },                {
+            "fqsen": "\\App\\Controller\\DeleteTrickImagesController\u003A\u003AhandleDeleteImage\u0028\u0029",
+            "name": "handleDeleteImage",
+            "summary": "Handles\u0020the\u0020deletion\u0020of\u0020an\u0020image\u0020and\u0020provides\u0020feedback\u0020to\u0020the\u0020user.",
+            "url": "classes/App-Controller-DeleteTrickImagesController.html#method_handleDeleteImage"
+        },                {
+            "fqsen": "\\App\\Controller\\DeleteTrickImagesController\u003A\u003A\u0024pictureService",
+            "name": "pictureService",
+            "summary": "",
+            "url": "classes/App-Controller-DeleteTrickImagesController.html#property_pictureService"
+        },                {
             "fqsen": "\\App\\Controller\\HomeController",
             "name": "HomeController",
-            "summary": "",
+            "summary": "Controller\u0020class\u0020responsible\u0020for\u0020displaying\u0020the\u0020main\u0020page\u0020with\u0020a\u0020list\u0020of\u0020tricks.",
             "url": "classes/App-Controller-HomeController.html"
         },                {
             "fqsen": "\\App\\Controller\\HomeController\u003A\u003Aindex\u0028\u0029",
             "name": "index",
-            "summary": "",
+            "summary": "Displays\u0020the\u0020main\u0020page\u0020with\u0020a\u0020paginated\u0020list\u0020of\u0020tricks.",
             "url": "classes/App-Controller-HomeController.html#method_index"
-        },                {
-            "fqsen": "\\App\\Controller\\ImagesController",
-            "name": "ImagesController",
-            "summary": "",
-            "url": "classes/App-Controller-ImagesController.html"
-        },                {
-            "fqsen": "\\App\\Controller\\ImagesController\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "",
-            "url": "classes/App-Controller-ImagesController.html#method___construct"
-        },                {
-            "fqsen": "\\App\\Controller\\ImagesController\u003A\u003AdeleteTrickImage\u0028\u0029",
-            "name": "deleteTrickImage",
-            "summary": "",
-            "url": "classes/App-Controller-ImagesController.html#method_deleteTrickImage"
-        },                {
-            "fqsen": "\\App\\Controller\\ImagesController\u003A\u003AdeleteUserImage\u0028\u0029",
-            "name": "deleteUserImage",
-            "summary": "",
-            "url": "classes/App-Controller-ImagesController.html#method_deleteUserImage"
-        },                {
-            "fqsen": "\\App\\Controller\\ImagesController\u003A\u003AremovePromoteImageIfCurrent\u0028\u0029",
-            "name": "removePromoteImageIfCurrent",
-            "summary": "",
-            "url": "classes/App-Controller-ImagesController.html#method_removePromoteImageIfCurrent"
-        },                {
-            "fqsen": "\\App\\Controller\\ImagesController\u003A\u003AhandleDeleteImage\u0028\u0029",
-            "name": "handleDeleteImage",
-            "summary": "",
-            "url": "classes/App-Controller-ImagesController.html#method_handleDeleteImage"
-        },                {
-            "fqsen": "\\App\\Controller\\ImagesController\u003A\u003A\u0024pictureService",
-            "name": "pictureService",
-            "summary": "",
-            "url": "classes/App-Controller-ImagesController.html#property_pictureService"
         },                {
             "fqsen": "\\App\\Controller\\ProfileController",
             "name": "ProfileController",
@@ -78,28 +73,38 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Controller\\ProfileController\u003A\u003AgetUserByUsername\u0028\u0029",
             "name": "getUserByUsername",
-            "summary": "",
+            "summary": "Retrieves\u0020a\u0020user\u0020by\u0020their\u0020username\u0020if\u0020the\u0020current\u0020user\u0020is\u0020the\u0020same.",
             "url": "classes/App-Controller-ProfileController.html#method_getUserByUsername"
         },                {
             "fqsen": "\\App\\Controller\\ProfileController\u003A\u003AgetStatistics\u0028\u0029",
             "name": "getStatistics",
-            "summary": "",
+            "summary": "Retrieves\u0020statistics\u0020for\u0020a\u0020specific\u0020user.",
             "url": "classes/App-Controller-ProfileController.html#method_getStatistics"
         },                {
             "fqsen": "\\App\\Controller\\ProfileController\u003A\u003Aindex\u0028\u0029",
             "name": "index",
-            "summary": "Displays\u0020the\u0020user\u0027s\u0020profile.",
+            "summary": "Displays\u0020the\u0020profile\u0020page\u0020for\u0020a\u0020specific\u0020user.",
             "url": "classes/App-Controller-ProfileController.html#method_index"
+        },                {
+            "fqsen": "\\App\\Controller\\ProfileController\u003A\u003AhandleProfilePictureForm\u0028\u0029",
+            "name": "handleProfilePictureForm",
+            "summary": "Handles\u0020the\u0020submission\u0020and\u0020processing\u0020of\u0020the\u0020profile\u0020picture\u0020form.",
+            "url": "classes/App-Controller-ProfileController.html#method_handleProfilePictureForm"
         },                {
             "fqsen": "\\App\\Controller\\ProfileController\u003A\u003AeditInfos\u0028\u0029",
             "name": "editInfos",
-            "summary": "",
+            "summary": "Handles\u0020the\u0020update\u0020of\u0020a\u0020user\u0027s\u0020profile\u0020information.",
             "url": "classes/App-Controller-ProfileController.html#method_editInfos"
         },                {
             "fqsen": "\\App\\Controller\\ProfileController\u003A\u003AeditPassword\u0028\u0029",
             "name": "editPassword",
-            "summary": "",
+            "summary": "Handles\u0020the\u0020password\u0020update\u0020process\u0020for\u0020a\u0020user.",
             "url": "classes/App-Controller-ProfileController.html#method_editPassword"
+        },                {
+            "fqsen": "\\App\\Controller\\ProfileController\u003A\u003A\u0024slugger",
+            "name": "slugger",
+            "summary": "",
+            "url": "classes/App-Controller-ProfileController.html#property_slugger"
         },                {
             "fqsen": "\\App\\Controller\\ProfileController\u003A\u003A\u0024em",
             "name": "em",
@@ -128,52 +133,62 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Controller\\RegistrationController",
             "name": "RegistrationController",
-            "summary": "",
+            "summary": "Controller\u0020class\u0020responsible\u0020for\u0020handling\u0020registration\u0020actions.",
             "url": "classes/App-Controller-RegistrationController.html"
+        },                {
+            "fqsen": "\\App\\Controller\\RegistrationController\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Controller-RegistrationController.html#method___construct"
         },                {
             "fqsen": "\\App\\Controller\\RegistrationController\u003A\u003Aregister\u0028\u0029",
             "name": "register",
-            "summary": "Handles\u0020user\u0020registration.",
+            "summary": "Handles\u0020the\u0020user\u0020registration\u0020process.",
             "url": "classes/App-Controller-RegistrationController.html#method_register"
         },                {
             "fqsen": "\\App\\Controller\\RegistrationController\u003A\u003AverifyUser\u0028\u0029",
             "name": "verifyUser",
-            "summary": "Verifies\u0020user\u0020account\u0020using\u0020provided\u0020token.",
+            "summary": "Verifies\u0020a\u0020user\u0027s\u0020account\u0020based\u0020on\u0020a\u0020JWT\u0020token.",
             "url": "classes/App-Controller-RegistrationController.html#method_verifyUser"
         },                {
             "fqsen": "\\App\\Controller\\RegistrationController\u003A\u003AresendVerif\u0028\u0029",
             "name": "resendVerif",
-            "summary": "Resends\u0020verification\u0020email\u0020to\u0020the\u0020current\u0020user.",
+            "summary": "Resends\u0020the\u0020verification\u0020email\u0020to\u0020the\u0020currently\u0020logged\u002Din\u0020user.",
             "url": "classes/App-Controller-RegistrationController.html#method_resendVerif"
+        },                {
+            "fqsen": "\\App\\Controller\\RegistrationController\u003A\u003A\u0024slugger",
+            "name": "slugger",
+            "summary": "",
+            "url": "classes/App-Controller-RegistrationController.html#property_slugger"
         },                {
             "fqsen": "\\App\\Controller\\SecurityController",
             "name": "SecurityController",
-            "summary": "",
+            "summary": "Controller\u0020class\u0020responsible\u0020for\u0020handling\u0020log\u0020in,\u0020log\u0020out,\u0020and\u0020password\u0020reset\u0020actions.",
             "url": "classes/App-Controller-SecurityController.html"
         },                {
             "fqsen": "\\App\\Controller\\SecurityController\u003A\u003Alogin\u0028\u0029",
             "name": "login",
-            "summary": "",
+            "summary": "Displays\u0020the\u0020login\u0020page\u0020and\u0020handles\u0020login\u0020errors.",
             "url": "classes/App-Controller-SecurityController.html#method_login"
         },                {
             "fqsen": "\\App\\Controller\\SecurityController\u003A\u003Alogout\u0028\u0029",
             "name": "logout",
-            "summary": "",
+            "summary": "Handles\u0020user\u0020logout.",
             "url": "classes/App-Controller-SecurityController.html#method_logout"
         },                {
             "fqsen": "\\App\\Controller\\SecurityController\u003A\u003AforgottenPassword\u0028\u0029",
             "name": "forgottenPassword",
-            "summary": "Handles\u0020the\u0020forgotten\u0020password\u0020request.",
+            "summary": "Handles\u0020the\u0020password\u0020reset\u0020request\u0020process.",
             "url": "classes/App-Controller-SecurityController.html#method_forgottenPassword"
         },                {
             "fqsen": "\\App\\Controller\\SecurityController\u003A\u003AresetPassword\u0028\u0029",
             "name": "resetPassword",
-            "summary": "Resets\u0020user\u0020password.",
+            "summary": "Handles\u0020the\u0020password\u0020reset\u0020process.",
             "url": "classes/App-Controller-SecurityController.html#method_resetPassword"
         },                {
             "fqsen": "\\App\\Controller\\TricksController",
             "name": "TricksController",
-            "summary": "",
+            "summary": "Controller\u0020class\u0020responsible\u0020for\u0020handling\u0020the\u0020display\u0020of\u0020trick\u0020details,\u0020as\u0020well\u0020as\u0020adding,\u0020editing,\u0020and\u0020deleting\u0020tricks.",
             "url": "classes/App-Controller-TricksController.html"
         },                {
             "fqsen": "\\App\\Controller\\TricksController\u003A\u003A__construct\u0028\u0029",
@@ -183,52 +198,52 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Controller\\TricksController\u003A\u003Aindex\u0028\u0029",
             "name": "index",
-            "summary": "",
+            "summary": "Displays\u0020a\u0020paginated\u0020list\u0020of\u0020tricks\u0020for\u0020a\u0020specific\u0020category.",
             "url": "classes/App-Controller-TricksController.html#method_index"
         },                {
             "fqsen": "\\App\\Controller\\TricksController\u003A\u003Aadd\u0028\u0029",
             "name": "add",
-            "summary": "",
+            "summary": "Handles\u0020the\u0020creation\u0020of\u0020a\u0020new\u0020trick\u0020and\u0020displays\u0020the\u0020form\u0020for\u0020it.",
             "url": "classes/App-Controller-TricksController.html#method_add"
         },                {
             "fqsen": "\\App\\Controller\\TricksController\u003A\u003Aedit\u0028\u0029",
             "name": "edit",
-            "summary": "",
+            "summary": "Handles\u0020the\u0020editing\u0020of\u0020an\u0020existing\u0020trick\u0020and\u0020displays\u0020the\u0020form\u0020for\u0020it.",
             "url": "classes/App-Controller-TricksController.html#method_edit"
         },                {
             "fqsen": "\\App\\Controller\\TricksController\u003A\u003Adelete\u0028\u0029",
             "name": "delete",
-            "summary": "",
+            "summary": "Deletes\u0020a\u0020specific\u0020trick\u0020and\u0020redirects\u0020the\u0020user\u0020to\u0020the\u0020list\u0020of\u0020tricks.",
             "url": "classes/App-Controller-TricksController.html#method_delete"
         },                {
             "fqsen": "\\App\\Controller\\TricksController\u003A\u003Adetails\u0028\u0029",
             "name": "details",
-            "summary": "",
+            "summary": "Displays\u0020the\u0020details\u0020of\u0020a\u0020specific\u0020trick\u0020along\u0020with\u0020its\u0020associated\u0020images,\u0020videos,\u0020and\u0020comments.",
             "url": "classes/App-Controller-TricksController.html#method_details"
         },                {
             "fqsen": "\\App\\Controller\\TricksController\u003A\u003AgetTricksByCategory\u0028\u0029",
             "name": "getTricksByCategory",
-            "summary": "",
+            "summary": "Retrieves\u0020tricks\u0020based\u0020on\u0020the\u0020specified\u0020category\u0020slug.",
             "url": "classes/App-Controller-TricksController.html#method_getTricksByCategory"
         },                {
             "fqsen": "\\App\\Controller\\TricksController\u003A\u003AhandleSubmittedForms\u0028\u0029",
             "name": "handleSubmittedForms",
-            "summary": "",
+            "summary": "Handles\u0020the\u0020form\u0020submission\u0020for\u0020a\u0020Trick\u0020entity,\u0020including\u0020category\u0020assignment,\u0020image\u0020processing,\u0020and\u0020user\u0020association.",
             "url": "classes/App-Controller-TricksController.html#method_handleSubmittedForms"
         },                {
             "fqsen": "\\App\\Controller\\TricksController\u003A\u003AprocessImageAndAddToTrick\u0028\u0029",
             "name": "processImageAndAddToTrick",
-            "summary": "",
+            "summary": "Processes\u0020an\u0020uploaded\u0020image\u0020file\u0020and\u0020associates\u0020it\u0020with\u0020a\u0020Trick\u0020entity.",
             "url": "classes/App-Controller-TricksController.html#method_processImageAndAddToTrick"
         },                {
             "fqsen": "\\App\\Controller\\TricksController\u003A\u003AhandleDeleteTrick\u0028\u0029",
             "name": "handleDeleteTrick",
-            "summary": "",
+            "summary": "Handles\u0020the\u0020deletion\u0020of\u0020a\u0020Trick\u0020entity,\u0020including\u0020its\u0020associated\u0020images.",
             "url": "classes/App-Controller-TricksController.html#method_handleDeleteTrick"
         },                {
             "fqsen": "\\App\\Controller\\TricksController\u003A\u003AgetTrickDetails\u0028\u0029",
             "name": "getTrickDetails",
-            "summary": "",
+            "summary": "Retrieves\u0020detailed\u0020information\u0020about\u0020a\u0020specific\u0020Trick\u0020entity.",
             "url": "classes/App-Controller-TricksController.html#method_getTrickDetails"
         },                {
             "fqsen": "\\App\\Controller\\TricksController\u003A\u003A\u0024slugger",
@@ -1453,7 +1468,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Service\\JWTService",
             "name": "JWTService",
-            "summary": "JWTService.",
+            "summary": "JSON\u0020Web\u0020Token\u0020\u0028JWT\u0029\u0020Service.",
             "url": "classes/App-Service-JWTService.html"
         },                {
             "fqsen": "\\App\\Service\\JWTService\u003A\u003Agenerate\u0028\u0029",
@@ -1488,7 +1503,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Service\\PictureFileService",
             "name": "PictureFileService",
-            "summary": "",
+            "summary": "Manages\u0020image\u0020files\u003A\u0020processing,\u0020adding,\u0020MIME\u0020type\u0020handling,\u0020and\u0020deletion.",
             "url": "classes/App-Service-PictureFileService.html"
         },                {
             "fqsen": "\\App\\Service\\PictureFileService\u003A\u003A__construct\u0028\u0029",
@@ -1496,25 +1511,30 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Service-PictureFileService.html#method___construct"
         },                {
-            "fqsen": "\\App\\Service\\PictureFileService\u003A\u003AprocessImage\u0028\u0029",
-            "name": "processImage",
-            "summary": "",
-            "url": "classes/App-Service-PictureFileService.html#method_processImage"
+            "fqsen": "\\App\\Service\\PictureFileService\u003A\u003AprocessImageFile\u0028\u0029",
+            "name": "processImageFile",
+            "summary": "Processes\u0020an\u0020uploaded\u0020image\u0020file\u0020by\u0020creating\u0020an\u0020Image\u0020entity.",
+            "url": "classes/App-Service-PictureFileService.html#method_processImageFile"
         },                {
             "fqsen": "\\App\\Service\\PictureFileService\u003A\u003Aadd\u0028\u0029",
             "name": "add",
-            "summary": "",
+            "summary": "Moves\u0020and\u0020processes\u0020an\u0020uploaded\u0020image\u0020file\u0020to\u0020a\u0020specified\u0020folder\u0020with\u0020optional\u0020resizing.",
             "url": "classes/App-Service-PictureFileService.html#method_add"
         },                {
             "fqsen": "\\App\\Service\\PictureFileService\u003A\u003AcheckMimeType\u0028\u0029",
             "name": "checkMimeType",
-            "summary": "",
+            "summary": "Checks\u0020if\u0020the\u0020provided\u0020image\u0020file\u0027s\u0020MIME\u0020type\u0020is\u0020valid\u0020and\u0020supported.",
             "url": "classes/App-Service-PictureFileService.html#method_checkMimeType"
         },                {
             "fqsen": "\\App\\Service\\PictureFileService\u003A\u003Adelete\u0028\u0029",
             "name": "delete",
-            "summary": "",
+            "summary": "Deletes\u0020an\u0020image\u0020file\u0020from\u0020the\u0020specified\u0020folder.",
             "url": "classes/App-Service-PictureFileService.html#method_delete"
+        },                {
+            "fqsen": "\\App\\Service\\PictureFileService\u003A\u003AhandleDeleteImg\u0028\u0029",
+            "name": "handleDeleteImg",
+            "summary": "Handles\u0020the\u0020deletion\u0020of\u0020an\u0020image\u0020file\u0020from\u0020the\u0020specified\u0020folder.",
+            "url": "classes/App-Service-PictureFileService.html#method_handleDeleteImg"
         },                {
             "fqsen": "\\App\\Service\\PictureFileService\u003A\u003A\u0024imagesDirectory",
             "name": "imagesDirectory",
@@ -1528,7 +1548,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Service\\PictureService",
             "name": "PictureService",
-            "summary": "",
+            "summary": "Manages\u0020images\u0020in\u0020the\u0020database\u003A\u0020processing,\u0020deletion,\u0020updating\u0020profile\u0020pictures,\u0020and\u0020integrating\u0020with\u0020the\u0020service\u0020that\u0020handles\u0020associated\u0020files.",
             "url": "classes/App-Service-PictureService.html"
         },                {
             "fqsen": "\\App\\Service\\PictureService\u003A\u003A__construct\u0028\u0029",
@@ -1538,23 +1558,23 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Service\\PictureService\u003A\u003AprocessImage\u0028\u0029",
             "name": "processImage",
-            "summary": "",
+            "summary": "Processes\u0020an\u0020image\u0020file\u0020by\u0020delegating\u0020the\u0020task\u0020to\u0020the\u0020file\u0020service.",
             "url": "classes/App-Service-PictureService.html#method_processImage"
         },                {
             "fqsen": "\\App\\Service\\PictureService\u003A\u003Adelete\u0028\u0029",
             "name": "delete",
-            "summary": "",
+            "summary": "Deletes\u0020an\u0020image\u0020both\u0020from\u0020the\u0020database\u0020and\u0020the\u0020file\u0020system.",
             "url": "classes/App-Service-PictureService.html#method_delete"
         },                {
-            "fqsen": "\\App\\Service\\PictureService\u003A\u003AupdateProfilePicture\u0028\u0029",
-            "name": "updateProfilePicture",
-            "summary": "",
-            "url": "classes/App-Service-PictureService.html#method_updateProfilePicture"
+            "fqsen": "\\App\\Service\\PictureService\u003A\u003AremoveOldProfilePicture\u0028\u0029",
+            "name": "removeOldProfilePicture",
+            "summary": "Removes\u0020the\u0020old\u0020profile\u0020picture\u0020for\u0020a\u0020user.",
+            "url": "classes/App-Service-PictureService.html#method_removeOldProfilePicture"
         },                {
-            "fqsen": "\\App\\Service\\PictureService\u003A\u003AsetProfilePicture\u0028\u0029",
-            "name": "setProfilePicture",
-            "summary": "",
-            "url": "classes/App-Service-PictureService.html#method_setProfilePicture"
+            "fqsen": "\\App\\Service\\PictureService\u003A\u003AsetNewProfilePicture\u0028\u0029",
+            "name": "setNewProfilePicture",
+            "summary": "Sets\u0020a\u0020new\u0020profile\u0020picture\u0020for\u0020the\u0020user.",
+            "url": "classes/App-Service-PictureService.html#method_setNewProfilePicture"
         },                {
             "fqsen": "\\App\\Service\\PictureService\u003A\u003A\u0024fileService",
             "name": "fileService",
@@ -1573,7 +1593,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Service\\SendMailService",
             "name": "SendMailService",
-            "summary": "",
+            "summary": "Manages\u0020email\u0020sending",
             "url": "classes/App-Service-SendMailService.html"
         },                {
             "fqsen": "\\App\\Service\\SendMailService\u003A\u003A__construct\u0028\u0029",

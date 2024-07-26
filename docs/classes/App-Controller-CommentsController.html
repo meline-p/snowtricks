@@ -145,11 +145,12 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/CommentsController.php"><a href="files/src-controller-commentscontroller.html"><abbr title="src/Controller/CommentsController.php">CommentsController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">15</span>
+    <span class="phpdocumentor-element-found-in__line">18</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">Controller class responsible for handling the addition of a new comment to a trick.</p>
+
 
 
 
@@ -220,6 +221,7 @@
     <span>
                                 &nbsp;: <abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr>    </span>
 </dt>
+<dd>Handles the addition of a new comment to a trick.</dd>
 
     </dl>
 
@@ -251,7 +253,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/CommentsController.php"><a href="files/src-controller-commentscontroller.html"><abbr title="src/Controller/CommentsController.php">CommentsController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">18</span>
+    <span class="phpdocumentor-element-found-in__line">21</span>
 
     </aside>
 
@@ -292,7 +294,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/CommentsController.php"><a href="files/src-controller-commentscontroller.html"><abbr title="src/Controller/CommentsController.php">CommentsController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">18</span>
+    <span class="phpdocumentor-element-found-in__line">21</span>
 
     </aside>
 
@@ -336,11 +338,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/CommentsController.php"><a href="files/src-controller-commentscontroller.html"><abbr title="src/Controller/CommentsController.php">CommentsController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">22</span>
+    <span class="phpdocumentor-element-found-in__line">35</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Handles the addition of a new comment to a trick.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">add</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\Request">Request</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-Trick.html"><abbr title="\App\Entity\Trick">Trick</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$trick</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\Security\Core\User\UserInterface">UserInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr></span></code>
@@ -356,21 +359,27 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\Request">Request</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the HTTP request object containing form data and headers</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$trick</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-Trick.html"><abbr title="\App\Entity\Trick">Trick</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the Trick entity to which the comment will be added</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$user</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\Security\Core\User\UserInterface">UserInterface</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the current authenticated user who is adding the comment</p>
+</section>
+
             </dd>
             </dl>
 
@@ -392,12 +401,20 @@
         <dd class="phpdocumentor-argument-list__entry">
         $name: &#039;add&#039;
     </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $requirements: [&#039;trick&#039; =&gt; &#039;[a-z0-9\-]+&#039;]
+    </dd>
     </dl>
             </section>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>a Response object which could be a redirect to the previous page with the comments section,
+or a rendered view with the comment form</p>
+</section>
+
             </section>
 
 </article>

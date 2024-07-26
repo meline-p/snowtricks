@@ -13,6 +13,7 @@ use App\Repository\UserTrickRepository;
 use App\Service\PictureService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -48,6 +49,13 @@ class ProfileController extends AbstractController
         $this->pictureService = $pictureService;
     }
 
+    /**
+     * Retrieves a user by their username if the current user is the same.
+     *
+     * @param string $username the username of the user to retrieve
+     *
+     * @return User|null the `User` entity if the current user matches the fetched user, otherwise `null`
+     */
     public function getUserByUsername(string $username): ?User
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
@@ -64,6 +72,16 @@ class ProfileController extends AbstractController
         return $user;
     }
 
+    /**
+     * Retrieves statistics for a specific user.
+     *
+     * @param User $user the `User` entity for which statistics are to be retrieved
+     *
+     * @return array An associative array containing the statistics:
+     *               - 'tricksCreated': Number of tricks created by the user.
+     *               - 'tricksUpdated': Number of tricks updated by the user.
+     *               - 'comments': Number of comments made by the user.
+     */
     private function getStatistics(User $user): array
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
@@ -80,11 +98,14 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * Displays the user's profile.
+     * Displays the profile page for a specific user.
      *
-     * @return Response a response object containing the rendered profile view
+     * @param string  $user_username the username of the user whose profile is to be displayed
+     * @param Request $request       the HTTP request object containing form data and other request information
+     *
+     * @return Response a Response object that renders the profile page view with the user's data and form
      */
-    #[Route('/{user_username}', name: 'index',  requirements: ['user_username' => '[a-z0-9\-]+'])]
+    #[Route('/{user_username}', name: 'index', requirements: ['user_username' => '[a-z0-9\-]+'])]
     public function index(string $user_username, Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
@@ -98,26 +119,8 @@ class ProfileController extends AbstractController
 
         $statistics = $this->getStatistics($user);
 
-        $profilPicture = new Image();
-
-        $profilPictureForm = $this->createForm(ProfilePictureFormType::class, $profilPicture);
-        $profilPictureForm->handleRequest($request);
-
-        if ($profilPictureForm->isSubmitted() && $profilPictureForm->isValid()) {
-            $folder = 'users';
-            $updated = $this->pictureService->updateProfilePicture($user, $folder);
-
-            if ($updated) {
-                $this->pictureService->setProfilePicture($user, $profilPictureForm->get('profilPicture')->getData(), $folder);
-                $this->addFlash('success', 'Photo de profil modifiée avec succès');
-            } else {
-                $this->addFlash('danger', 'Erreur : impossible de modifier la photo de profil');
-            }
-
-            $route = $request->headers->get('referer');
-
-            return $this->redirect($route);
-        }
+        $profilPictureForm = $this->createForm(ProfilePictureFormType::class, new Image());
+        $this->handleProfilePictureForm($request, $profilPictureForm, $user);
 
         return $this->render('profile/index.html.twig', [
             'user' => $user,
@@ -128,7 +131,47 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    #[Route('/modifier-mes-infos/{user_username}', name: 'edit_infos',  requirements: ['user_username' => '[a-z0-9\-]+'])]
+    /**
+     * Handles the submission and processing of the profile picture form.
+     *
+     * @param Request       $request the HTTP request object containing the form submission data
+     * @param FormInterface $form    the form object for updating the profile picture
+     * @param User          $user    the `User` entity for which the profile picture is being updated
+     *
+     * @return void this method does not return a value; it handles form processing and redirection
+     */
+    private function handleProfilePictureForm(Request $request, FormInterface $form, User $user): void
+    {
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $folder = 'users';
+            $this->pictureService->removeOldProfilePicture($user, $folder);
+
+            $newImg = $form->get('profilPicture')->getData();
+
+            $success = $this->pictureService->setNewProfilePicture($user, $newImg, $folder);
+            if ($success) {
+                $this->addFlash('success', 'Photo de profil modifiée avec succès');
+            } else {
+                $this->addFlash('danger', 'Erreur : '.$newImg->getClientOriginalName()." : Format d'image incorrect.");
+            }
+
+            $route = $request->headers->get('referer');
+            header("Location: $route");
+            exit;
+        }
+    }
+
+    /**
+     * Handles the update of a user's profile information.
+     *
+     * @param string  $user_username the username of the user whose information is being edited
+     * @param Request $request       the HTTP request object containing form data and other request information
+     *
+     * @return Response a Response object that renders the form view or redirects based on the form submission
+     */
+    #[Route('/modifier-mes-infos/{user_username}', name: 'edit_infos', requirements: ['user_username' => '[a-z0-9\-]+'])]
     public function editInfos(string $user_username, Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
@@ -144,7 +187,6 @@ class ProfileController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $user->setUsername(strtolower($this->slugger->slug($user->getUsername())));
             $this->em->persist($user);
             $this->em->flush();
@@ -159,7 +201,16 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/modifier-mot-de-passe/{user_username}', name: 'edit_password',  requirements: ['user_username' => '[a-z0-9\-]+'])]
+    /**
+     * Handles the password update process for a user.
+     *
+     * @param string                      $user_username  the username of the user whose password is being changed
+     * @param Request                     $request        the HTTP request object containing form data and other request information
+     * @param UserPasswordHasherInterface $passwordHasher the service used to hash the new password
+     *
+     * @return Response a Response object that renders the password reset form view or redirects based on the form submission
+     */
+    #[Route(path: '/modifier-mot-de-passe/{user_username}', name: 'edit_password', requirements: ['user_username' => '[a-z0-9\-]+'])]
     public function editPassword(
         string $user_username,
         Request $request,

@@ -16,8 +16,18 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+/**
+ * Controller class responsible for handling log in, log out, and password reset actions.
+ */
 class SecurityController extends AbstractController
 {
+    /**
+     * Displays the login page and handles login errors.
+     *
+     * @param AuthenticationUtils $authenticationUtils the service used to get information about the last authentication attempt
+     *
+     * @return Response a Response object that renders the login page with any authentication errors and the last entered username
+     */
     #[Route(path: '/connexion', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -32,6 +42,14 @@ class SecurityController extends AbstractController
         ]);
     }
 
+    /**
+     * Handles user logout.
+     *
+     * @return void this method does not return a response as the logout logic is handled by Symfony's security system
+     *
+     * @throws \LogicException this exception is thrown to indicate that the method is intentionally left blank and that
+     *                         Symfony's security system will handle the logout process
+     */
     #[Route(path: '/deconnexion', name: 'app_logout')]
     public function logout(): void
     {
@@ -39,7 +57,15 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * Handles the forgotten password request.
+     * Handles the password reset request process.
+     *
+     * @param Request                 $request        the HTTP request object containing the form submission data
+     * @param UserRepository          $userRepository the repository to fetch user information
+     * @param TokenGeneratorInterface $tokenGenerator the service used to generate a unique reset token
+     * @param EntityManagerInterface  $entityManager  the entity manager to persist changes to the database
+     * @param SendMailService         $mail           the service used to send emails
+     *
+     * @return Response a Response object that either renders the password reset request form or redirects to the login page
      */
     #[Route(path: '/mot-de-passe-oublie', name: 'app_forgotten_password')]
     public function forgottenPassword(
@@ -95,7 +121,15 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * Resets user password.
+     * Handles the password reset process.
+     *
+     * @param string                      $token          the password reset token used to identify the user
+     * @param Request                     $request        the HTTP request object containing the form submission data
+     * @param UserRepository              $userRepository the repository used to fetch user information by reset token
+     * @param EntityManagerInterface      $entityManager  the entity manager used to persist changes to the database
+     * @param UserPasswordHasherInterface $passwordHasher the service used to hash the new password
+     *
+     * @return Response a Response object that either renders the password reset form or redirects to the login page
      */
     #[Route(path: '/mot-de-passe-oublie/{token}', name: 'app_reset_password')]
     public function resetPassword(

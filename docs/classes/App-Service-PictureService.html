@@ -142,11 +142,12 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Service/PictureService.php"><a href="files/src-service-pictureservice.html"><abbr title="src/Service/PictureService.php">PictureService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">11</span>
+    <span class="phpdocumentor-element-found-in__line">14</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">Manages images in the database: processing, deletion, updating profile pictures, and integrating with the service that handles associated files.</p>
+
 
 
 
@@ -212,24 +213,28 @@
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>Deletes an image both from the database and the file system.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/App-Service-PictureService.html#method_processImage">processImage()</a>
     <span>
                                 &nbsp;: <a href="classes/App-Entity-Image.html"><abbr title="\App\Entity\Image">Image</abbr></a>|null    </span>
 </dt>
+<dd>Processes an image file by delegating the task to the file service.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/App-Service-PictureService.html#method_updateProfilePicture">updateProfilePicture()</a>
+    <a class="" href="classes/App-Service-PictureService.html#method_removeOldProfilePicture">removeOldProfilePicture()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>Removes the old profile picture for a user.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -method -private">
-    <a class="" href="classes/App-Service-PictureService.html#method_setProfilePicture">setProfilePicture()</a>
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/App-Service-PictureService.html#method_setNewProfilePicture">setNewProfilePicture()</a>
     <span>
-                                &nbsp;: void    </span>
+                                &nbsp;: bool    </span>
 </dt>
+<dd>Sets a new profile picture for the user.</dd>
 
     </dl>
 
@@ -261,7 +266,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Service/PictureService.php"><a href="files/src-service-pictureservice.html"><abbr title="src/Service/PictureService.php">PictureService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">15</span>
+    <span class="phpdocumentor-element-found-in__line">18</span>
 
     </aside>
 
@@ -297,7 +302,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Service/PictureService.php"><a href="files/src-service-pictureservice.html"><abbr title="src/Service/PictureService.php">PictureService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">14</span>
+    <span class="phpdocumentor-element-found-in__line">17</span>
 
     </aside>
 
@@ -333,7 +338,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Service/PictureService.php"><a href="files/src-service-pictureservice.html"><abbr title="src/Service/PictureService.php">PictureService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">16</span>
+    <span class="phpdocumentor-element-found-in__line">19</span>
 
     </aside>
 
@@ -374,7 +379,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Service/PictureService.php"><a href="files/src-service-pictureservice.html"><abbr title="src/Service/PictureService.php">PictureService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">13</span>
+    <span class="phpdocumentor-element-found-in__line">16</span>
 
     </aside>
 
@@ -432,14 +437,15 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Service/PictureService.php"><a href="files/src-service-pictureservice.html"><abbr title="src/Service/PictureService.php">PictureService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">25</span>
+    <span class="phpdocumentor-element-found-in__line">49</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Deletes an image both from the database and the file system.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">delete</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-Image.html"><abbr title="\App\Entity\Image">Image</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$image</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$folder</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">delete</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-Image.html"><abbr title="\App\Entity\Image">Image</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$image</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$folder</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -449,17 +455,21 @@
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$image</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-Image.html"><abbr title="\App\Entity\Image">Image</abbr></a></span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-Image.html"><abbr title="\App\Entity\Image">Image</abbr></a>|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>The image object to delete. Can be null.</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$folder</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the folder where the image file is stored</p>
+</section>
+
             </dd>
             </dl>
 
@@ -470,6 +480,12 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Returns true if the image is successfully deleted from both the database
+and the file system, or if the image was null. Returns false if the image
+file could not be deleted from the file system.</p>
+</section>
+
             </section>
 
 </article>
@@ -487,14 +503,15 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Service/PictureService.php"><a href="files/src-service-pictureservice.html"><abbr title="src/Service/PictureService.php">PictureService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">20</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Processes an image file by delegating the task to the file service.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">processImage</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\File\UploadedFile">UploadedFile</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$imageFile</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$folder</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$width</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">300</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$height</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">300</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/App-Entity-Image.html"><abbr title="\App\Entity\Image">Image</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">processImage</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\File\UploadedFile">UploadedFile</abbr>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$imageFile</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$folder</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$width</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">300</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$height</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">300</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/App-Entity-Image.html"><abbr title="\App\Entity\Image">Image</abbr></a>|null</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -504,31 +521,39 @@
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$imageFile</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\File\UploadedFile">UploadedFile</abbr></span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\File\UploadedFile">UploadedFile</abbr>|null</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>The uploaded image file to process. Can be null.</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$folder</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the folder where the image should be saved</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$width</span>
                 : <span class="phpdocumentor-signature__argument__return-type">int</span>
                  = <span class="phpdocumentor-signature__argument__default-value">300</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>The width of the image after processing. Default is 300.</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$height</span>
                 : <span class="phpdocumentor-signature__argument__return-type">int</span>
                  = <span class="phpdocumentor-signature__argument__default-value">300</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>The height of the image after processing. Default is 300.</p>
+</section>
+
             </dd>
             </dl>
 
@@ -539,6 +564,11 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><a href="classes/App-Entity-Image.html"><abbr title="\App\Entity\Image">Image</abbr></a>|null</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>returns an <code class="prettyprint">Image</code> object if the processing is successful,
+or null if the <code class="prettyprint">imageFile</code> is null or processing fails</p>
+</section>
+
             </section>
 
 </article>
@@ -548,22 +578,23 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_updateProfilePicture">
-        updateProfilePicture()
-        <a href="classes/App-Service-PictureService.html#method_updateProfilePicture" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_removeOldProfilePicture">
+        removeOldProfilePicture()
+        <a href="classes/App-Service-PictureService.html#method_removeOldProfilePicture" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Service/PictureService.php"><a href="files/src-service-pictureservice.html"><abbr title="src/Service/PictureService.php">PictureService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">79</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Removes the old profile picture for a user.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">updateProfilePicture</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-User.html"><abbr title="\App\Entity\User">User</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\File\UploadedFile">UploadedFile</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$newPicture</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$folder</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">removeOldProfilePicture</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-User.html"><abbr title="\App\Entity\User">User</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$folder</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -576,21 +607,18 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-User.html"><abbr title="\App\Entity\User">User</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$newPicture</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\File\UploadedFile">UploadedFile</abbr></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the user whose old profile picture is to be removed</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$folder</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the folder where the profile picture file is stored</p>
+</section>
+
             </dd>
             </dl>
 
@@ -601,31 +629,38 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Returns true if the old profile picture was successfully deleted
+or if there was no old profile picture. Returns false if the old
+profile picture file could not be deleted from the file system.</p>
+</section>
+
             </section>
 
 </article>
                     <article
         class="phpdocumentor-element
             -method
-            -private
+            -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_setProfilePicture">
-        setProfilePicture()
-        <a href="classes/App-Service-PictureService.html#method_setProfilePicture" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_setNewProfilePicture">
+        setNewProfilePicture()
+        <a href="classes/App-Service-PictureService.html#method_setNewProfilePicture" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Service/PictureService.php"><a href="files/src-service-pictureservice.html"><abbr title="src/Service/PictureService.php">PictureService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">56</span>
+    <span class="phpdocumentor-element-found-in__line">100</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Sets a new profile picture for the user.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-                    <span class="phpdocumentor-signature__name">setProfilePicture</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-User.html"><abbr title="\App\Entity\User">User</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\File\UploadedFile">UploadedFile</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$newPicture</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$folder</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setNewProfilePicture</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-User.html"><abbr title="\App\Entity\User">User</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\File\UploadedFile">UploadedFile</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$newPicture</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$folder</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -638,21 +673,27 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-User.html"><abbr title="\App\Entity\User">User</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the user whose profile picture is being updated</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$newPicture</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\File\UploadedFile">UploadedFile</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the new profile picture file to be uploaded</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$folder</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the folder where the profile picture file will be stored</p>
+</section>
+
             </dd>
             </dl>
 
@@ -660,7 +701,16 @@
 
     
 
-    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>returns true if the new profile picture was successfully set and saved,
+or false if the picture processing failed</p>
+</section>
+
+            </section>
+
 </article>
             </section>
 
@@ -787,8 +837,8 @@
                                             <li class=""><a href="classes/App-Service-PictureService.html#method___construct">__construct()</a></li>
                                             <li class=""><a href="classes/App-Service-PictureService.html#method_delete">delete()</a></li>
                                             <li class=""><a href="classes/App-Service-PictureService.html#method_processImage">processImage()</a></li>
-                                            <li class=""><a href="classes/App-Service-PictureService.html#method_updateProfilePicture">updateProfilePicture()</a></li>
-                                            <li class=""><a href="classes/App-Service-PictureService.html#method_setProfilePicture">setProfilePicture()</a></li>
+                                            <li class=""><a href="classes/App-Service-PictureService.html#method_removeOldProfilePicture">removeOldProfilePicture()</a></li>
+                                            <li class=""><a href="classes/App-Service-PictureService.html#method_setNewProfilePicture">setNewProfilePicture()</a></li>
                                     </ul>
             </li>
                     </ul>

@@ -145,11 +145,12 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/TricksController.php"><a href="files/src-controller-trickscontroller.html"><abbr title="src/Controller/TricksController.php">TricksController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">30</span>
+    <span class="phpdocumentor-element-found-in__line">33</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">Controller class responsible for handling the display of trick details, as well as adding, editing, and deleting tricks.</p>
+
 
 
 
@@ -262,60 +263,70 @@
     <span>
                                 &nbsp;: <abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr>    </span>
 </dt>
+<dd>Handles the creation of a new trick and displays the form for it.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/App-Controller-TricksController.html#method_delete">delete()</a>
     <span>
                                 &nbsp;: <abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr>    </span>
 </dt>
+<dd>Deletes a specific trick and redirects the user to the list of tricks.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/App-Controller-TricksController.html#method_details">details()</a>
     <span>
                                 &nbsp;: <abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr>    </span>
 </dt>
+<dd>Displays the details of a specific trick along with its associated images, videos, and comments.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/App-Controller-TricksController.html#method_edit">edit()</a>
     <span>
                                 &nbsp;: <abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr>    </span>
 </dt>
+<dd>Handles the editing of an existing trick and displays the form for it.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/App-Controller-TricksController.html#method_index">index()</a>
     <span>
                                 &nbsp;: <abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr>    </span>
 </dt>
+<dd>Displays a paginated list of tricks for a specific category.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a class="" href="classes/App-Controller-TricksController.html#method_getTrickDetails">getTrickDetails()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
+<dd>Retrieves detailed information about a specific Trick entity.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a class="" href="classes/App-Controller-TricksController.html#method_getTricksByCategory">getTricksByCategory()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
+<dd>Retrieves tricks based on the specified category slug.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a class="" href="classes/App-Controller-TricksController.html#method_handleDeleteTrick">handleDeleteTrick()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>Handles the deletion of a Trick entity, including its associated images.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a class="" href="classes/App-Controller-TricksController.html#method_handleSubmittedForms">handleSubmittedForms()</a>
     <span>
                                 &nbsp;: <a href="classes/App-Entity-Trick.html"><abbr title="\App\Entity\Trick">Trick</abbr></a>    </span>
 </dt>
+<dd>Handles the form submission for a Trick entity, including category assignment, image processing, and user association.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a class="" href="classes/App-Controller-TricksController.html#method_processImageAndAddToTrick">processImageAndAddToTrick()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>Processes an uploaded image file and associates it with a Trick entity.</dd>
 
     </dl>
 
@@ -347,7 +358,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/TricksController.php"><a href="files/src-controller-trickscontroller.html"><abbr title="src/Controller/TricksController.php">TricksController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">38</span>
+    <span class="phpdocumentor-element-found-in__line">41</span>
 
     </aside>
 
@@ -383,7 +394,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/TricksController.php"><a href="files/src-controller-trickscontroller.html"><abbr title="src/Controller/TricksController.php">TricksController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">45</span>
 
     </aside>
 
@@ -419,7 +430,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/TricksController.php"><a href="files/src-controller-trickscontroller.html"><abbr title="src/Controller/TricksController.php">TricksController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">35</span>
+    <span class="phpdocumentor-element-found-in__line">38</span>
 
     </aside>
 
@@ -455,7 +466,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/TricksController.php"><a href="files/src-controller-trickscontroller.html"><abbr title="src/Controller/TricksController.php">TricksController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">34</span>
+    <span class="phpdocumentor-element-found-in__line">37</span>
 
     </aside>
 
@@ -491,7 +502,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/TricksController.php"><a href="files/src-controller-trickscontroller.html"><abbr title="src/Controller/TricksController.php">TricksController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">33</span>
+    <span class="phpdocumentor-element-found-in__line">36</span>
 
     </aside>
 
@@ -527,7 +538,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/TricksController.php"><a href="files/src-controller-trickscontroller.html"><abbr title="src/Controller/TricksController.php">TricksController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
@@ -563,7 +574,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/TricksController.php"><a href="files/src-controller-trickscontroller.html"><abbr title="src/Controller/TricksController.php">TricksController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">40</span>
 
     </aside>
 
@@ -599,7 +610,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/TricksController.php"><a href="files/src-controller-trickscontroller.html"><abbr title="src/Controller/TricksController.php">TricksController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">36</span>
+    <span class="phpdocumentor-element-found-in__line">39</span>
 
     </aside>
 
@@ -640,7 +651,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/TricksController.php"><a href="files/src-controller-trickscontroller.html"><abbr title="src/Controller/TricksController.php">TricksController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">44</span>
 
     </aside>
 
@@ -733,11 +744,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/TricksController.php"><a href="files/src-controller-trickscontroller.html"><abbr title="src/Controller/TricksController.php">TricksController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">84</span>
+    <span class="phpdocumentor-element-found-in__line">106</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Handles the creation of a new trick and displays the form for it.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">add</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\Request">Request</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Repository-CategoryRepository.html"><abbr title="\App\Repository\CategoryRepository">CategoryRepository</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$categoryRepository</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr></span></code>
@@ -753,14 +765,18 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\Request">Request</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the HTTP request object containing form data</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$categoryRepository</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Repository-CategoryRepository.html"><abbr title="\App\Repository\CategoryRepository">CategoryRepository</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the repository used to fetch categories</p>
+</section>
+
             </dd>
             </dl>
 
@@ -788,6 +804,11 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>a Response object that renders the form for creating a new trick or redirects
+to the trick details page upon successful form submission</p>
+</section>
+
             </section>
 
 </article>
@@ -805,11 +826,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/TricksController.php"><a href="files/src-controller-trickscontroller.html"><abbr title="src/Controller/TricksController.php">TricksController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">140</span>
+    <span class="phpdocumentor-element-found-in__line">181</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Deletes a specific trick and redirects the user to the list of tricks.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">delete</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\Request">Request</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-Trick.html"><abbr title="\App\Entity\Trick">Trick</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$trick</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr></span></code>
@@ -825,14 +847,18 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\Request">Request</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the HTTP request object</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$trick</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-Trick.html"><abbr title="\App\Entity\Trick">Trick</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the trick entity to be deleted, retrieved by slug</p>
+</section>
+
             </dd>
             </dl>
 
@@ -862,12 +888,20 @@
         <dd class="phpdocumentor-argument-list__entry">
         $name: &#039;delete&#039;
     </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $requirements: [&#039;category_slug&#039; =&gt; &#039;[a-z0-9\-]+&#039;]
+    </dd>
     </dl>
             </section>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>a Response object that redirects the user to the tricks index page after
+successful deletion</p>
+</section>
+
             </section>
 
 </article>
@@ -885,11 +919,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/TricksController.php"><a href="files/src-controller-trickscontroller.html"><abbr title="src/Controller/TricksController.php">TricksController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">151</span>
+    <span class="phpdocumentor-element-found-in__line">200</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Displays the details of a specific trick along with its associated images, videos, and comments.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">details</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-Trick.html"><abbr title="\App\Entity\Trick">Trick</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$trick</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\Request">Request</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr></span></code>
@@ -905,14 +940,18 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-Trick.html"><abbr title="\App\Entity\Trick">Trick</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the trick entity to be displayed, identified by slug</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$request</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\Request">Request</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the HTTP request object containing query parameters for pagination</p>
+</section>
+
             </dd>
             </dl>
 
@@ -934,12 +973,19 @@
         <dd class="phpdocumentor-argument-list__entry">
         $name: &#039;details&#039;
     </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $requirements: [&#039;category_slug&#039; =&gt; &#039;[a-z0-9\-]+&#039;]
+    </dd>
     </dl>
             </section>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>a Response object that renders the trick details page</p>
+</section>
+
             </section>
 
 </article>
@@ -957,11 +1003,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/TricksController.php"><a href="files/src-controller-trickscontroller.html"><abbr title="src/Controller/TricksController.php">TricksController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">112</span>
+    <span class="phpdocumentor-element-found-in__line">144</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Handles the editing of an existing trick and displays the form for it.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">edit</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-Trick.html"><abbr title="\App\Entity\Trick">Trick</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$trick</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\Request">Request</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Repository-CategoryRepository.html"><abbr title="\App\Repository\CategoryRepository">CategoryRepository</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$categoryRepository</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr></span></code>
@@ -977,21 +1024,27 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-Trick.html"><abbr title="\App\Entity\Trick">Trick</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the trick entity to be edited, retrieved by slug</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$request</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\Request">Request</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the HTTP request object containing form data</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$categoryRepository</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Repository-CategoryRepository.html"><abbr title="\App\Repository\CategoryRepository">CategoryRepository</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the repository used to fetch categories</p>
+</section>
+
             </dd>
             </dl>
 
@@ -1013,12 +1066,20 @@
         <dd class="phpdocumentor-argument-list__entry">
         $name: &#039;edit&#039;
     </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $requirements: [&#039;category_slug&#039; =&gt; &#039;[a-z0-9\-]+&#039;]
+    </dd>
     </dl>
             </section>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>a Response object that renders the form for editing the trick or redirects
+to the trick details page upon successful form submission</p>
+</section>
+
             </section>
 
 </article>
@@ -1036,11 +1097,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/TricksController.php"><a href="files/src-controller-trickscontroller.html"><abbr title="src/Controller/TricksController.php">TricksController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">60</span>
+    <span class="phpdocumentor-element-found-in__line">73</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Displays a paginated list of tricks for a specific category.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">index</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$category_slug</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Repository-CategoryRepository.html"><abbr title="\App\Repository\CategoryRepository">CategoryRepository</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$categoryRepository</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Repository-TrickRepository.html"><abbr title="\App\Repository\TrickRepository">TrickRepository</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$trickRepository</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\Request">Request</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr></span></code>
@@ -1056,28 +1118,36 @@
                 : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>The slug of the category to filter tricks by. If null, no category filtering is applied.</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$categoryRepository</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Repository-CategoryRepository.html"><abbr title="\App\Repository\CategoryRepository">CategoryRepository</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the repository used to fetch category data</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$trickRepository</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Repository-TrickRepository.html"><abbr title="\App\Repository\TrickRepository">TrickRepository</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the repository used to fetch tricks data</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$request</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\Request">Request</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the HTTP request object containing the pagination parameters</p>
+</section>
+
             </dd>
             </dl>
 
@@ -1099,12 +1169,19 @@
         <dd class="phpdocumentor-argument-list__entry">
         $name: &#039;index&#039;
     </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $requirements: [&#039;category_slug&#039; =&gt; &#039;[a-z0-9\-]+&#039;]
+    </dd>
     </dl>
             </section>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>a Response object that renders the view with the list of tricks, categories, and selected category slug</p>
+</section>
+
             </section>
 
 </article>
@@ -1122,11 +1199,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/TricksController.php"><a href="files/src-controller-trickscontroller.html"><abbr title="src/Controller/TricksController.php">TricksController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">274</span>
+    <span class="phpdocumentor-element-found-in__line">368</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Retrieves detailed information about a specific Trick entity.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">getTrickDetails</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-Trick.html"><abbr title="\App\Entity\Trick">Trick</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$trick</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$page</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
@@ -1142,14 +1220,18 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-Trick.html"><abbr title="\App\Entity\Trick">Trick</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the Trick entity for which details are being retrieved</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$page</span>
                 : <span class="phpdocumentor-signature__argument__return-type">int</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the current page number for paginated comments</p>
+</section>
+
             </dd>
             </dl>
 
@@ -1160,6 +1242,17 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>An associative array containing the following details:</p>
+<ul>
+<li>'images': Array of images associated with the Trick.</li>
+<li>'videos': Array of videos associated with the Trick.</li>
+<li>'comments': Array of paginated comments for the Trick.</li>
+<li>'created_at': Date the Trick was created by the user, or null if not available.</li>
+<li>'updated_at': Date the Trick was last updated by the user, or null if not available.</li>
+</ul>
+</section>
+
             </section>
 
 </article>
@@ -1177,11 +1270,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/TricksController.php"><a href="files/src-controller-trickscontroller.html"><abbr title="src/Controller/TricksController.php">TricksController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">175</span>
+    <span class="phpdocumentor-element-found-in__line">232</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Retrieves tricks based on the specified category slug.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">getTricksByCategory</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$category_slug</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Repository-CategoryRepository.html"><abbr title="\App\Repository\CategoryRepository">CategoryRepository</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$categoryRepository</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
@@ -1197,14 +1291,18 @@
                 : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the slug of the category to filter tricks by, or 'tout' to get all tricks</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$categoryRepository</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Repository-CategoryRepository.html"><abbr title="\App\Repository\CategoryRepository">CategoryRepository</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the repository to access category data</p>
+</section>
+
             </dd>
             </dl>
 
@@ -1215,6 +1313,10 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>an array where the first element is a collection of tricks and the second element is the category slug</p>
+</section>
+
             </section>
 
 </article>
@@ -1232,11 +1334,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/TricksController.php"><a href="files/src-controller-trickscontroller.html"><abbr title="src/Controller/TricksController.php">TricksController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">254</span>
+    <span class="phpdocumentor-element-found-in__line">335</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Handles the deletion of a Trick entity, including its associated images.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">handleDeleteTrick</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-Trick.html"><abbr title="\App\Entity\Trick">Trick</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$trick</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -1252,7 +1355,9 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-Trick.html"><abbr title="\App\Entity\Trick">Trick</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the Trick entity to be deleted</p>
+</section>
+
             </dd>
             </dl>
 
@@ -1276,11 +1381,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/TricksController.php"><a href="files/src-controller-trickscontroller.html"><abbr title="src/Controller/TricksController.php">TricksController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">191</span>
+    <span class="phpdocumentor-element-found-in__line">259</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Handles the form submission for a Trick entity, including category assignment, image processing, and user association.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">handleSubmittedForms</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-Trick.html"><abbr title="\App\Entity\Trick">Trick</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$trick</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-User.html"><abbr title="\App\Entity\User">User</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\Form\FormInterface">FormInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$trickForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$operation</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Repository-CategoryRepository.html"><abbr title="\App\Repository\CategoryRepository">CategoryRepository</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$categoryRepository</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/App-Entity-Trick.html"><abbr title="\App\Entity\Trick">Trick</abbr></a></span></code>
@@ -1296,35 +1402,45 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-Trick.html"><abbr title="\App\Entity\Trick">Trick</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the Trick entity being processed</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$user</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-User.html"><abbr title="\App\Entity\User">User</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>The user associated with the operation (e.g., the creator or updater).</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$trickForm</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\Form\FormInterface">FormInterface</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the form interface containing submitted data</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$operation</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the type of operation being performed ('create' or 'update')</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$categoryRepository</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Repository-CategoryRepository.html"><abbr title="\App\Repository\CategoryRepository">CategoryRepository</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the repository used to access category data</p>
+</section>
+
             </dd>
             </dl>
 
@@ -1335,6 +1451,10 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><a href="classes/App-Entity-Trick.html"><abbr title="\App\Entity\Trick">Trick</abbr></a></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>the updated or newly created Trick entity</p>
+</section>
+
             </section>
 
 </article>
@@ -1352,11 +1472,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/TricksController.php"><a href="files/src-controller-trickscontroller.html"><abbr title="src/Controller/TricksController.php">TricksController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">238</span>
+    <span class="phpdocumentor-element-found-in__line">314</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Processes an uploaded image file and associates it with a Trick entity.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">processImageAndAddToTrick</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-Trick.html"><abbr title="\App\Entity\Trick">Trick</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$trick</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\File\UploadedFile">UploadedFile</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$image</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$folder</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$imageType</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -1372,28 +1493,36 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-Trick.html"><abbr title="\App\Entity\Trick">Trick</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the Trick entity to which the image will be added</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$image</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\File\UploadedFile">UploadedFile</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the uploaded image file to be processed</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$folder</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the folder where the processed image will be stored</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$imageType</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>The type of the image (e.g., 'Image' or 'Image à la une').</p>
+</section>
+
             </dd>
             </dl>
 

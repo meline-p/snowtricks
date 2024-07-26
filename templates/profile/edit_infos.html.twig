@@ -43,6 +43,8 @@
             </div>
         
                 <button type="submit" class="btn btn-primary my-3">Modifier mes informations</button>
+                <a href="{{ path('app_profile_index', {'user_username': app.user.username}) }}" class="btn btn-light my-3">annuler</a>
+
             {{ form_end(editInfosForm) }}
         </div>
     </div>

@@ -145,11 +145,12 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/RegistrationController.php"><a href="files/src-controller-registrationcontroller.html"><abbr title="src/Controller/RegistrationController.php">RegistrationController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">19</span>
+    <span class="phpdocumentor-element-found-in__line">23</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">Controller class responsible for handling registration actions.</p>
+
 
 
 
@@ -172,6 +173,19 @@
 
 
 
+<h4 id="toc-properties">
+    Properties
+    <a href="classes/App-Controller-RegistrationController.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a class="" href="classes/App-Controller-RegistrationController.html#property_slugger">$slugger</a>
+    <span>
+                        &nbsp;: mixed            </span>
+</dt>
+
+    </dl>
 
 <h4 id="toc-methods">
     Methods
@@ -180,25 +194,31 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/App-Controller-RegistrationController.html#method___construct">__construct()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/App-Controller-RegistrationController.html#method_register">register()</a>
     <span>
                                 &nbsp;: <abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr>    </span>
 </dt>
-<dd>Handles user registration.</dd>
+<dd>Handles the user registration process.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/App-Controller-RegistrationController.html#method_resendVerif">resendVerif()</a>
     <span>
                                 &nbsp;: <abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr>    </span>
 </dt>
-<dd>Resends verification email to the current user.</dd>
+<dd>Resends the verification email to the currently logged-in user.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/App-Controller-RegistrationController.html#method_verifyUser">verifyUser()</a>
     <span>
                                 &nbsp;: <abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr>    </span>
 </dt>
-<dd>Verifies user account using provided token.</dd>
+<dd>Verifies a user&#039;s account based on a JWT token.</dd>
 
     </dl>
 
@@ -207,6 +227,49 @@
         
 
         
+    <section class="phpdocumentor-properties">
+        <h3 class="phpdocumentor-elements__header" id="properties">
+            Properties
+            <a href="classes/App-Controller-RegistrationController.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h3>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_slugger">
+        $slugger
+        <a href="classes/App-Controller-RegistrationController.html#property_slugger" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/RegistrationController.php"><a href="files/src-controller-registrationcontroller.html"><abbr title="src/Controller/RegistrationController.php">RegistrationController.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">25</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">$slugger</span>
+    </code>
+
+    
+    
+    
+
+    
+
+</article>
+            </section>
 
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
@@ -214,6 +277,50 @@
             <a href="classes/App-Controller-RegistrationController.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method___construct">
+        __construct()
+        <a href="classes/App-Controller-RegistrationController.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/RegistrationController.php"><a href="files/src-controller-registrationcontroller.html"><abbr title="src/Controller/RegistrationController.php">RegistrationController.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">27</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\String\Slugger\SluggerInterface">SluggerInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$slugger</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$slugger</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\String\Slugger\SluggerInterface">SluggerInterface</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
+
+    
+</article>
                     <article
         class="phpdocumentor-element
             -method
@@ -228,11 +335,11 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/RegistrationController.php"><a href="files/src-controller-registrationcontroller.html"><abbr title="src/Controller/RegistrationController.php">RegistrationController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">24</span>
+    <span class="phpdocumentor-element-found-in__line">45</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Handles user registration.</p>
+        <p class="phpdocumentor-summary">Handles the user registration process.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -249,42 +356,54 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\Request">Request</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the HTTP request object containing form data and other request information</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$userPasswordHasher</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface">UserPasswordHasherInterface</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the service used to hash the user's password</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$security</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Bundle\SecurityBundle\Security">Security</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the security service used for user authentication</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$entityManager</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Doctrine\ORM\EntityManagerInterface">EntityManagerInterface</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the service used to manage database operations</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$mail</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Service-SendMailService.html"><abbr title="\App\Service\SendMailService">SendMailService</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the service used for sending emails</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$jwt</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Service-JWTService.html"><abbr title="\App\Service\JWTService">JWTService</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the service used for generating JWT tokens</p>
+</section>
+
             </dd>
             </dl>
 
@@ -312,6 +431,10 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>a Response object that renders the registration form view or handles user login and redirection</p>
+</section>
+
             </section>
 
 </article>
@@ -329,11 +452,11 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/RegistrationController.php"><a href="files/src-controller-registrationcontroller.html"><abbr title="src/Controller/RegistrationController.php">RegistrationController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">125</span>
+    <span class="phpdocumentor-element-found-in__line">159</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Resends verification email to the current user.</p>
+        <p class="phpdocumentor-summary">Resends the verification email to the currently logged-in user.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -350,21 +473,27 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Service-JWTService.html"><abbr title="\App\Service\JWTService">JWTService</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the service used for handling JWT operations, such as token generation</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$mail</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Service-SendMailService.html"><abbr title="\App\Service\SendMailService">SendMailService</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the service used for sending emails</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$userRepository</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Repository-UserRepository.html"><abbr title="\App\Repository\UserRepository">UserRepository</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the repository used to fetch user data from the database</p>
+</section>
+
             </dd>
             </dl>
 
@@ -392,6 +521,10 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>a Response object that redirects the user to their profile page or login page with flash messages</p>
+</section>
+
             </section>
 
 </article>
@@ -409,11 +542,11 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/RegistrationController.php"><a href="files/src-controller-registrationcontroller.html"><abbr title="src/Controller/RegistrationController.php">RegistrationController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">95</span>
+    <span class="phpdocumentor-element-found-in__line">123</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Verifies user account using provided token.</p>
+        <p class="phpdocumentor-summary">Verifies a user&#039;s account based on a JWT token.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -430,28 +563,36 @@
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the JWT token used for verifying the user's account</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$jwt</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Service-JWTService.html"><abbr title="\App\Service\JWTService">JWTService</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the service used for handling JWT operations such as validation and decoding</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$userRepository</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Repository-UserRepository.html"><abbr title="\App\Repository\UserRepository">UserRepository</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the repository used to fetch user data from the database</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$em</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Doctrine\ORM\EntityManagerInterface">EntityManagerInterface</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the service used for managing database operations</p>
+</section>
+
             </dd>
             </dl>
 
@@ -479,6 +620,10 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>a Response object that redirects to the profile page or login page with a flash message</p>
+</section>
+
             </section>
 
 </article>
@@ -587,14 +732,22 @@
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                                                <li><a href="classes/App-Controller-RegistrationController.html#toc-methods">Methods</a></li>
+                                                            <li><a href="classes/App-Controller-RegistrationController.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/App-Controller-RegistrationController.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
             
+                            <li class="phpdocumentor-on-this-page-section__title">Properties</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/App-Controller-RegistrationController.html#property_slugger">$slugger</a></li>
+                                            </ul>
+                </li>
             
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
+                                            <li class=""><a href="classes/App-Controller-RegistrationController.html#method___construct">__construct()</a></li>
                                             <li class=""><a href="classes/App-Controller-RegistrationController.html#method_register">register()</a></li>
                                             <li class=""><a href="classes/App-Controller-RegistrationController.html#method_resendVerif">resendVerif()</a></li>
                                             <li class=""><a href="classes/App-Controller-RegistrationController.html#method_verifyUser">verifyUser()</a></li>

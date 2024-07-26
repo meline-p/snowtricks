@@ -145,7 +145,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/ProfileController.php"><a href="files/src-controller-profilecontroller.html"><abbr title="src/Controller/ProfileController.php">ProfileController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">24</span>
+    <span class="phpdocumentor-element-found-in__line">26</span>
 
     </aside>
 
@@ -215,6 +215,12 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a class="" href="classes/App-Controller-ProfileController.html#property_slugger">$slugger</a>
+    <span>
+                        &nbsp;: mixed            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/App-Controller-ProfileController.html#property_userRepository">$userRepository</a>
     <span>
                         &nbsp;: mixed            </span>
@@ -245,31 +251,42 @@
     <span>
                                 &nbsp;: <abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr>    </span>
 </dt>
+<dd>Handles the update of a user&#039;s profile information.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/App-Controller-ProfileController.html#method_editPassword">editPassword()</a>
     <span>
                                 &nbsp;: <abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr>    </span>
 </dt>
+<dd>Handles the password update process for a user.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/App-Controller-ProfileController.html#method_getUserByUsername">getUserByUsername()</a>
     <span>
                                 &nbsp;: <a href="classes/App-Entity-User.html"><abbr title="\App\Entity\User">User</abbr></a>|null    </span>
 </dt>
+<dd>Retrieves a user by their username if the current user is the same.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/App-Controller-ProfileController.html#method_index">index()</a>
     <span>
                                 &nbsp;: <abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr>    </span>
 </dt>
-<dd>Displays the user&#039;s profile.</dd>
+<dd>Displays the profile page for a specific user.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a class="" href="classes/App-Controller-ProfileController.html#method_getStatistics">getStatistics()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
+<dd>Retrieves statistics for a specific user.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -private">
+    <a class="" href="classes/App-Controller-ProfileController.html#method_handleProfilePictureForm">handleProfilePictureForm()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Handles the submission and processing of the profile picture form.</dd>
 
     </dl>
 
@@ -301,7 +318,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/ProfileController.php"><a href="files/src-controller-profilecontroller.html"><abbr title="src/Controller/ProfileController.php">ProfileController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">30</span>
+    <span class="phpdocumentor-element-found-in__line">33</span>
 
     </aside>
 
@@ -337,7 +354,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/ProfileController.php"><a href="files/src-controller-profilecontroller.html"><abbr title="src/Controller/ProfileController.php">ProfileController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">27</span>
+    <span class="phpdocumentor-element-found-in__line">30</span>
 
     </aside>
 
@@ -373,7 +390,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/ProfileController.php"><a href="files/src-controller-profilecontroller.html"><abbr title="src/Controller/ProfileController.php">ProfileController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">28</span>
+    <span class="phpdocumentor-element-found-in__line">31</span>
 
     </aside>
 
@@ -383,6 +400,42 @@
     <span class="phpdocumentor-signature__visibility">private</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">$pictureService</span>
+    </code>
+
+    
+    
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_slugger">
+        $slugger
+        <a href="classes/App-Controller-ProfileController.html#property_slugger" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/ProfileController.php"><a href="files/src-controller-profilecontroller.html"><abbr title="src/Controller/ProfileController.php">ProfileController.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">29</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">$slugger</span>
     </code>
 
     
@@ -409,7 +462,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/ProfileController.php"><a href="files/src-controller-profilecontroller.html"><abbr title="src/Controller/ProfileController.php">ProfileController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">31</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
     </aside>
 
@@ -445,7 +498,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/ProfileController.php"><a href="files/src-controller-profilecontroller.html"><abbr title="src/Controller/ProfileController.php">ProfileController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">29</span>
+    <span class="phpdocumentor-element-found-in__line">32</span>
 
     </aside>
 
@@ -486,14 +539,14 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/ProfileController.php"><a href="files/src-controller-profilecontroller.html"><abbr title="src/Controller/ProfileController.php">ProfileController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">33</span>
+    <span class="phpdocumentor-element-found-in__line">36</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Doctrine\ORM\EntityManagerInterface">EntityManagerInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$em</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Service-PictureService.html"><abbr title="\App\Service\PictureService">PictureService</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$pictureService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Repository-UserTrickRepository.html"><abbr title="\App\Repository\UserTrickRepository">UserTrickRepository</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$userTrickRepository</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Repository-CommentRepository.html"><abbr title="\App\Repository\CommentRepository">CommentRepository</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$commentRepository</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Repository-UserRepository.html"><abbr title="\App\Repository\UserRepository">UserRepository</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$userRepository</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\String\Slugger\SluggerInterface">SluggerInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$slugger</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Doctrine\ORM\EntityManagerInterface">EntityManagerInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$em</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Service-PictureService.html"><abbr title="\App\Service\PictureService">PictureService</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$pictureService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Repository-UserTrickRepository.html"><abbr title="\App\Repository\UserTrickRepository">UserTrickRepository</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$userTrickRepository</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Repository-CommentRepository.html"><abbr title="\App\Repository\CommentRepository">CommentRepository</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$commentRepository</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Repository-UserRepository.html"><abbr title="\App\Repository\UserRepository">UserRepository</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$userRepository</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -501,6 +554,13 @@
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$slugger</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\String\Slugger\SluggerInterface">SluggerInterface</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$em</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Doctrine\ORM\EntityManagerInterface">EntityManagerInterface</abbr></span>
@@ -558,11 +618,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/ProfileController.php"><a href="files/src-controller-profilecontroller.html"><abbr title="src/Controller/ProfileController.php">ProfileController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">127</span>
+    <span class="phpdocumentor-element-found-in__line">174</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Handles the update of a user&#039;s profile information.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">editInfos</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user_username</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\Request">Request</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr></span></code>
@@ -578,14 +639,18 @@
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the username of the user whose information is being edited</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$request</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\Request">Request</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the HTTP request object containing form data and other request information</p>
+</section>
+
             </dd>
             </dl>
 
@@ -607,12 +672,19 @@
         <dd class="phpdocumentor-argument-list__entry">
         $name: &#039;edit_infos&#039;
     </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $requirements: [&#039;user_username&#039; =&gt; &#039;[a-z0-9\-]+&#039;]
+    </dd>
     </dl>
             </section>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>a Response object that renders the form view or redirects based on the form submission</p>
+</section>
+
             </section>
 
 </article>
@@ -630,11 +702,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/ProfileController.php"><a href="files/src-controller-profilecontroller.html"><abbr title="src/Controller/ProfileController.php">ProfileController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">156</span>
+    <span class="phpdocumentor-element-found-in__line">213</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Handles the password update process for a user.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">editPassword</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user_username</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\Request">Request</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface">UserPasswordHasherInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$passwordHasher</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr></span></code>
@@ -650,21 +723,27 @@
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the username of the user whose password is being changed</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$request</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\Request">Request</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the HTTP request object containing form data and other request information</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$passwordHasher</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface">UserPasswordHasherInterface</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the service used to hash the new password</p>
+</section>
+
             </dd>
             </dl>
 
@@ -686,12 +765,19 @@
         <dd class="phpdocumentor-argument-list__entry">
         $name: &#039;edit_password&#039;
     </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $requirements: [&#039;user_username&#039; =&gt; &#039;[a-z0-9\-]+&#039;]
+    </dd>
     </dl>
             </section>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>a Response object that renders the password reset form view or redirects based on the form submission</p>
+</section>
+
             </section>
 
 </article>
@@ -709,11 +795,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/ProfileController.php"><a href="files/src-controller-profilecontroller.html"><abbr title="src/Controller/ProfileController.php">ProfileController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+    <span class="phpdocumentor-element-found-in__line">59</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Retrieves a user by their username if the current user is the same.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getUserByUsername</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$username</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/App-Entity-User.html"><abbr title="\App\Entity\User">User</abbr></a>|null</span></code>
@@ -729,7 +816,9 @@
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the username of the user to retrieve</p>
+</section>
+
             </dd>
             </dl>
 
@@ -740,6 +829,10 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><a href="classes/App-Entity-User.html"><abbr title="\App\Entity\User">User</abbr></a>|null</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>the <code class="prettyprint">User</code> entity if the current user matches the fetched user, otherwise <code class="prettyprint">null</code></p>
+</section>
+
             </section>
 
 </article>
@@ -757,11 +850,11 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/ProfileController.php"><a href="files/src-controller-profilecontroller.html"><abbr title="src/Controller/ProfileController.php">ProfileController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">83</span>
+    <span class="phpdocumentor-element-found-in__line">108</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Displays the user&#039;s profile.</p>
+        <p class="phpdocumentor-summary">Displays the profile page for a specific user.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -778,14 +871,18 @@
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the username of the user whose profile is to be displayed</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$request</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\Request">Request</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the HTTP request object containing form data and other request information</p>
+</section>
+
             </dd>
             </dl>
 
@@ -807,6 +904,9 @@
         <dd class="phpdocumentor-argument-list__entry">
         $name: &#039;index&#039;
     </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $requirements: [&#039;user_username&#039; =&gt; &#039;[a-z0-9\-]+&#039;]
+    </dd>
     </dl>
             </section>
 
@@ -814,7 +914,7 @@
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\Symfony\Component\HttpFoundation\Response">Response</abbr></span>
                     &mdash;
-                <section class="phpdocumentor-description"><p>a response object containing the rendered profile view</p>
+                <section class="phpdocumentor-description"><p>a Response object that renders the profile page view with the user's data and form</p>
 </section>
 
             </section>
@@ -834,11 +934,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/ProfileController.php"><a href="files/src-controller-profilecontroller.html"><abbr title="src/Controller/ProfileController.php">ProfileController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">63</span>
+    <span class="phpdocumentor-element-found-in__line">85</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Retrieves statistics for a specific user.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">getStatistics</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-User.html"><abbr title="\App\Entity\User">User</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
@@ -854,7 +955,9 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-User.html"><abbr title="\App\Entity\User">User</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>the <code class="prettyprint">User</code> entity for which statistics are to be retrieved</p>
+</section>
+
             </dd>
             </dl>
 
@@ -865,6 +968,88 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>An associative array containing the statistics:</p>
+<ul>
+<li>'tricksCreated': Number of tricks created by the user.</li>
+<li>'tricksUpdated': Number of tricks updated by the user.</li>
+<li>'comments': Number of comments made by the user.</li>
+</ul>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -private
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_handleProfilePictureForm">
+        handleProfilePictureForm()
+        <a href="classes/App-Controller-ProfileController.html#method_handleProfilePictureForm" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Controller/ProfileController.php"><a href="files/src-controller-profilecontroller.html"><abbr title="src/Controller/ProfileController.php">ProfileController.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">143</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Handles the submission and processing of the profile picture form.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+                    <span class="phpdocumentor-signature__name">handleProfilePictureForm</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\Request">Request</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\Form\FormInterface">FormInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$form</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-User.html"><abbr title="\App\Entity\User">User</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$request</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\HttpFoundation\Request">Request</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>the HTTP request object containing the form submission data</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$form</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Symfony\Component\Form\FormInterface">FormInterface</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>the form object for updating the profile picture</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$user</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/App-Entity-User.html"><abbr title="\App\Entity\User">User</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>the <code class="prettyprint">User</code> entity for which the profile picture is being updated</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">void</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>this method does not return a value; it handles form processing and redirection</p>
+</section>
+
             </section>
 
 </article>
@@ -984,6 +1169,7 @@
                                                     <li class=""><a href="classes/App-Controller-ProfileController.html#property_commentRepository">$commentRepository</a></li>
                                                     <li class=""><a href="classes/App-Controller-ProfileController.html#property_em">$em</a></li>
                                                     <li class=""><a href="classes/App-Controller-ProfileController.html#property_pictureService">$pictureService</a></li>
+                                                    <li class=""><a href="classes/App-Controller-ProfileController.html#property_slugger">$slugger</a></li>
                                                     <li class=""><a href="classes/App-Controller-ProfileController.html#property_userRepository">$userRepository</a></li>
                                                     <li class=""><a href="classes/App-Controller-ProfileController.html#property_userTrickRepository">$userTrickRepository</a></li>
                                             </ul>
@@ -998,6 +1184,7 @@
                                             <li class=""><a href="classes/App-Controller-ProfileController.html#method_getUserByUsername">getUserByUsername()</a></li>
                                             <li class=""><a href="classes/App-Controller-ProfileController.html#method_index">index()</a></li>
                                             <li class=""><a href="classes/App-Controller-ProfileController.html#method_getStatistics">getStatistics()</a></li>
+                                            <li class=""><a href="classes/App-Controller-ProfileController.html#method_handleProfilePictureForm">handleProfilePictureForm()</a></li>
                                     </ul>
             </li>
                     </ul>

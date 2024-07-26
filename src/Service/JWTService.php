@@ -3,7 +3,7 @@
 namespace App\Service;
 
 /**
- * JWTService.
+ * JSON Web Token (JWT) Service.
  */
 class JWTService
 {
