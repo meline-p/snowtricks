@@ -120,14 +120,14 @@ class ProfileController extends AbstractController
 
         $statistics = $this->getStatistics($user);
 
-        // update profil picture
+        // update profile picture
         $profilPictureForm = $this->createForm(ProfilePictureFormType::class, new Image());
         $profilPictureForm->handleRequest($request);
 
         if ($profilPictureForm->isSubmitted() && $profilPictureForm->isValid()) {
             $folder = 'users';
             $newImg = $profilPictureForm->get('profilPicture')->getData();
-            
+
             $success = $this->pictureService->setNewProfilePicture($user, $newImg, $folder);
 
             if ($success) {
