@@ -22,8 +22,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use CreatedAtTrait;
-    use UpdatedAtTrait;
-    use SoftDeleteTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

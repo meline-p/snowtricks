@@ -12,8 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Image
 {
     use CreatedAtTrait;
-    use UpdatedAtTrait;
-    use SoftDeleteTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
