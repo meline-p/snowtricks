@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class RegistrationFormType extends AbstractType
 {
@@ -51,6 +52,9 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
                 'label' => "J'accepte les conditions d'utilisations",
+                'attr' => [
+                    'class' => 'form-check-input',
+                ],
             ])
             ->add('plainPassword', PasswordType::class, [
                 'mapped' => false,
@@ -59,7 +63,6 @@ class RegistrationFormType extends AbstractType
                     'class' => 'form-control',
                 ],
                 'label' => 'Mot de passe',
-                'data' => $options['data'] ?? null,
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez entrer un mot de passe',

@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Comment
 {
     use CreatedAtTrait;
-    use SoftDeleteTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

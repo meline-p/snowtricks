@@ -15,11 +15,32 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
+/**
+ * Controller class responsible for handling registration actions.
+ */
 class RegistrationController extends AbstractController
 {
+    private $slugger;
+
+    public function __construct(
+        SluggerInterface $slugger,
+    ) {
+        $this->slugger = $slugger;
+    }
+
     /**
-     * Handles user registration.
+     * Handles the user registration process.
+     *
+     * @param Request                     $request            the HTTP request object containing form data and other request information
+     * @param UserPasswordHasherInterface $userPasswordHasher the service used to hash the user's password
+     * @param Security                    $security           the security service used for user authentication
+     * @param EntityManagerInterface      $entityManager      the service used to manage database operations
+     * @param SendMailService             $mail               the service used for sending emails
+     * @param JWTService                  $jwt                the service used for generating JWT tokens
+     *
+     * @return Response a Response object that renders the registration form view or handles user login and redirection
      */
     #[Route('/inscription', name: 'app_register')]
     public function register(
@@ -47,7 +68,7 @@ class RegistrationController extends AbstractController
 
             $user->setLastName(strtoupper($user->getLastName()));
             $user->setFirstName(ucfirst(strtolower($user->getFirstName())));
-            $user->setUsername(strtolower($user->getUsername()));
+            $user->setUsername(strtolower($this->slugger->slug($user->getUsername())));
 
             $entityManager->persist($user);
             $entityManager->flush();
@@ -90,7 +111,14 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * Verifies user account using provided token.
+     * Verifies a user's account based on a JWT token.
+     *
+     * @param string                 $token          the JWT token used for verifying the user's account
+     * @param JWTService             $jwt            the service used for handling JWT operations such as validation and decoding
+     * @param UserRepository         $userRepository the repository used to fetch user data from the database
+     * @param EntityManagerInterface $em             the service used for managing database operations
+     *
+     * @return Response a Response object that redirects to the profile page or login page with a flash message
      */
     #[Route('/verification/{token}', name: 'app_verify_user')]
     public function verifyUser(string $token, JWTService $jwt, UserRepository $userRepository, EntityManagerInterface $em): Response
@@ -120,7 +148,13 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * Resends verification email to the current user.
+     * Resends the verification email to the currently logged-in user.
+     *
+     * @param JWTService      $jwt            the service used for handling JWT operations, such as token generation
+     * @param SendMailService $mail           the service used for sending emails
+     * @param UserRepository  $userRepository the repository used to fetch user data from the database
+     *
+     * @return Response a Response object that redirects the user to their profile page or login page with flash messages
      */
     #[Route('/renvoi-verification', name: 'app_resend_verif')]
     public function resendVerif(JWTService $jwt, SendMailService $mail, UserRepository $userRepository): Response

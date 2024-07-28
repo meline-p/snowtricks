@@ -35,7 +35,7 @@
                             <tbody>
                                 <tr>
                                     <th scope="row">Pseudo</th>
-                                    <td>{{user.username}}</td>
+                                    <td class="text-muted"><span >{{user.username}}</span><br><small><i>Votre pseudo ne peut pas être modifié</i></small></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Prénom</th>
@@ -65,7 +65,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{countTricksCreated}}</h5>
                             <p class="card-text">
-                                {{countTricksCreated > 2 ? 'Figures créées' : 'Figure créée'}}
+                                {{countTricksCreated > 1 ? 'Figures créées' : 'Figure créée'}}
                             </p>
                         </div>
                     </div> 
@@ -73,7 +73,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{countTricksUpdated}}</h5>
                             <p class="card-text">
-                                {{countTricksUpdated > 2 ? 'Figures misent à jour' : 'Figure mise à jour'}}
+                                {{countTricksUpdated > 1 ? 'Figures misent à jour' : 'Figure mise à jour'}}
                             </p>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{countComments}}</h5>
                             <p class="card-text">
-                                {{countComments > 2 ? 'commentaires' : 'commentaire'}}
+                                {{countComments > 1 ? 'commentaires' : 'commentaire'}}
                             </p>
                         </div>
                     </div>  

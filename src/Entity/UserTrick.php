@@ -25,7 +25,7 @@ class UserTrick
     #[ORM\Column(type: Types::DATETIME_MUTABLE, options: ['default' => 'CURRENT_TIMESTAMP'])]
     private ?\DateTimeInterface $date = null;
 
-    #[ORM\Column(type: 'string', columnDefinition: "ENUM('create', 'update', 'delete')")]
+    #[ORM\Column(type: 'string', columnDefinition: "ENUM('create', 'update')")]
     private $operation;
 
     public function getId(): ?int

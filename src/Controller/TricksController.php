@@ -27,6 +27,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
+/**
+ * Controller class responsible for handling the display of trick details, as well as adding, editing, and deleting tricks.
+ */
 #[Route('/tricks', name: 'app_tricks_')]
 class TricksController extends AbstractController
 {
@@ -57,7 +60,17 @@ class TricksController extends AbstractController
         $this->trickRepository = $trickRepository;
     }
 
-    #[Route('/categories/{category_slug}', name: 'index')]
+    /**
+     * Displays a paginated list of tricks for a specific category.
+     *
+     * @param ?string            $category_slug      The slug of the category to filter tricks by. If null, no category filtering is applied.
+     * @param CategoryRepository $categoryRepository the repository used to fetch category data
+     * @param TrickRepository    $trickRepository    the repository used to fetch tricks data
+     * @param Request            $request            the HTTP request object containing the pagination parameters
+     *
+     * @return Response a Response object that renders the view with the list of tricks, categories, and selected category slug
+     */
+    #[Route('/categories/{category_slug}', name: 'index', requirements: ['category_slug' => '[a-z0-9\-]+'])]
     public function index(
         ?string $category_slug,
         CategoryRepository $categoryRepository,
@@ -81,6 +94,15 @@ class TricksController extends AbstractController
         ]);
     }
 
+    /**
+     * Handles the creation of a new trick and displays the form for it.
+     *
+     * @param Request            $request            the HTTP request object containing form data
+     * @param CategoryRepository $categoryRepository the repository used to fetch categories
+     *
+     * @return Response a Response object that renders the form for creating a new trick or redirects
+     *                  to the trick details page upon successful form submission
+     */
     #[Route('/ajouter', name: 'add')]
     public function add(Request $request, CategoryRepository $categoryRepository): Response
     {
@@ -109,7 +131,17 @@ class TricksController extends AbstractController
         ]);
     }
 
-    #[Route('/modifier/{slug}', name: 'edit')]
+    /**
+     * Handles the editing of an existing trick and displays the form for it.
+     *
+     * @param Trick              $trick              the trick entity to be edited, retrieved by slug
+     * @param Request            $request            the HTTP request object containing form data
+     * @param CategoryRepository $categoryRepository the repository used to fetch categories
+     *
+     * @return Response a Response object that renders the form for editing the trick or redirects
+     *                  to the trick details page upon successful form submission
+     */
+    #[Route('/modifier/{slug}', name: 'edit', requirements: ['category_slug' => '[a-z0-9\-]+'])]
     public function edit(Trick $trick, Request $request, CategoryRepository $categoryRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
@@ -137,7 +169,16 @@ class TricksController extends AbstractController
         ]);
     }
 
-    #[Route('/supprimer/{slug}', name: 'delete')]
+    /**
+     * Deletes a specific trick and redirects the user to the list of tricks.
+     *
+     * @param Request $request the HTTP request object
+     * @param Trick   $trick   the trick entity to be deleted, retrieved by slug
+     *
+     * @return Response a Response object that redirects the user to the tricks index page after
+     *                  successful deletion
+     */
+    #[Route('/supprimer/{slug}', name: 'delete', requirements: ['category_slug' => '[a-z0-9\-]+'])]
     #[IsGranted('ROLE_USER')]
     public function delete(Request $request, Trick $trick): Response
     {
@@ -148,7 +189,15 @@ class TricksController extends AbstractController
         return $this->redirectToRoute('app_tricks_index', ['category_slug' => 'tout']);
     }
 
-    #[Route('/details/{slug}', name: 'details')]
+    /**
+     * Displays the details of a specific trick along with its associated images, videos, and comments.
+     *
+     * @param Trick   $trick   the trick entity to be displayed, identified by slug
+     * @param Request $request the HTTP request object containing query parameters for pagination
+     *
+     * @return Response a Response object that renders the trick details page
+     */
+    #[Route('/details/{slug}', name: 'details', requirements: ['category_slug' => '[a-z0-9\-]+'])]
     public function details(Trick $trick, Request $request): Response
     {
         $page = $request->query->getInt('page', 1);
@@ -172,6 +221,14 @@ class TricksController extends AbstractController
         ]);
     }
 
+    /**
+     * Retrieves tricks based on the specified category slug.
+     *
+     * @param ?string            $category_slug      the slug of the category to filter tricks by, or 'tout' to get all tricks
+     * @param CategoryRepository $categoryRepository the repository to access category data
+     *
+     * @return array an array where the first element is a collection of tricks and the second element is the category slug
+     */
     private function getTricksByCategory(
         ?string $category_slug,
         CategoryRepository $categoryRepository,
@@ -188,6 +245,17 @@ class TricksController extends AbstractController
         return [$tricks, $category_slug];
     }
 
+    /**
+     * Handles the form submission for a Trick entity, including category assignment, image processing, and user association.
+     *
+     * @param Trick              $trick              the Trick entity being processed
+     * @param User               $user               The user associated with the operation (e.g., the creator or updater).
+     * @param FormInterface      $trickForm          the form interface containing submitted data
+     * @param string             $operation          the type of operation being performed ('create' or 'update')
+     * @param CategoryRepository $categoryRepository the repository used to access category data
+     *
+     * @return Trick the updated or newly created Trick entity
+     */
     private function handleSubmittedForms(Trick $trick, User $user, FormInterface $trickForm, string $operation, CategoryRepository $categoryRepository): Trick
     {
         // ----- CATEGORIES -----
@@ -205,7 +273,8 @@ class TricksController extends AbstractController
 
         // ----- TRICK -------
         $slug = strtolower($this->slugger->slug($trick->getName()));
-        $trick->initOrUpdate($trick->getName(), $slug, $trick->getDescription());
+        $name = ucfirst($trick->getName());
+        $trick->initOrUpdate($name, $slug, $trick->getDescription());
         $trick->setCategory($category);
 
         // ----- IMAGES -------
@@ -235,6 +304,14 @@ class TricksController extends AbstractController
         return $trick;
     }
 
+    /**
+     * Processes an uploaded image file and associates it with a Trick entity.
+     *
+     * @param Trick        $trick     the Trick entity to which the image will be added
+     * @param UploadedFile $image     the uploaded image file to be processed
+     * @param string       $folder    the folder where the processed image will be stored
+     * @param string       $imageType The type of the image (e.g., 'Image' or 'Image à la une').
+     */
     private function processImageAndAddToTrick(Trick $trick, UploadedFile $image, string $folder, string $imageType): void
     {
         $processedImage = $this->pictureService->processImage($image, $folder);
@@ -251,6 +328,11 @@ class TricksController extends AbstractController
         }
     }
 
+    /**
+     * Handles the deletion of a Trick entity, including its associated images.
+     *
+     * @param Trick $trick the Trick entity to be deleted
+     */
     private function handleDeleteTrick(Trick $trick): void
     {
         $images = $trick->getImages();
@@ -271,11 +353,24 @@ class TricksController extends AbstractController
         $this->em->flush();
     }
 
+    /**
+     * Retrieves detailed information about a specific Trick entity.
+     *
+     * @param Trick $trick the Trick entity for which details are being retrieved
+     * @param int   $page  the current page number for paginated comments
+     *
+     * @return array An associative array containing the following details:
+     *               - 'images': Array of images associated with the Trick.
+     *               - 'videos': Array of videos associated with the Trick.
+     *               - 'comments': Array of paginated comments for the Trick.
+     *               - 'created_at': Date the Trick was created by the user, or null if not available.
+     *               - 'updated_at': Date the Trick was last updated by the user, or null if not available.
+     */
     private function getTrickDetails(Trick $trick, int $page): array
     {
         $images = $this->imageRepository->findBy(['trick' => $trick]);
         $videos = $this->videoRepository->findBy(['trick' => $trick]);
-        $comments = $this->commentRepository->findCommentsPaginated($page, $trick->getId(), 3);
+        $comments = $this->commentRepository->findCommentsPaginated($page, $trick->getId(), 10);
 
         $userTrickCreatedAt = $this->userTrickRepository->findOneBy(['trick' => $trick, 'operation' => 'create']);
         $created_at = $userTrickCreatedAt ? $userTrickCreatedAt->getDate() : null;

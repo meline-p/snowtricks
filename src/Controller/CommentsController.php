@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Controller class responsible for handling the addition of a new comment to a trick.
+ */
 #[Route('/commentaires', name: 'app_comments_')]
 class CommentsController extends AbstractController
 {
@@ -19,7 +22,17 @@ class CommentsController extends AbstractController
     {
     }
 
-    #[Route('/ajouter/{trick}', name: 'add')]
+    /**
+     * Handles the addition of a new comment to a trick.
+     *
+     * @param Request       $request the HTTP request object containing form data and headers
+     * @param Trick         $trick   the Trick entity to which the comment will be added
+     * @param UserInterface $user    the current authenticated user who is adding the comment
+     *
+     * @return Response a Response object which could be a redirect to the previous page with the comments section,
+     *                  or a rendered view with the comment form
+     */
+    #[Route('/ajouter/{trick}', name: 'add', requirements: ['trick' => '[a-z0-9\-]+'])]
     public function add(Request $request, Trick $trick, UserInterface $user): Response
     {
         $comment = new Comment();

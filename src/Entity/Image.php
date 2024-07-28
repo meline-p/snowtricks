@@ -12,8 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Image
 {
     use CreatedAtTrait;
-    use UpdatedAtTrait;
-    use SoftDeleteTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -42,11 +40,6 @@ class Image
 
     public function getName(): ?string
     {
-        // default image (empty entity image)
-        if (!$this->trick) {
-            return 'img.png';
-        }
-
         return $this->name;
     }
 
