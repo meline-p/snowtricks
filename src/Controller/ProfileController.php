@@ -173,7 +173,8 @@ class ProfileController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setUsername(strtolower($this->slugger->slug($user->getUsername())));
+            $user->setLastName(strtoupper($user->getLastName()));
+            $user->setFirstName(ucfirst(strtolower($user->getFirstName())));
             $this->em->persist($user);
             $this->em->flush();
 

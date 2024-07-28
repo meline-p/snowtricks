@@ -273,7 +273,8 @@ class TricksController extends AbstractController
 
         // ----- TRICK -------
         $slug = strtolower($this->slugger->slug($trick->getName()));
-        $trick->initOrUpdate($trick->getName(), $slug, $trick->getDescription());
+        $name = ucfirst($trick->getName());
+        $trick->initOrUpdate($name, $slug, $trick->getDescription());
         $trick->setCategory($category);
 
         // ----- IMAGES -------
