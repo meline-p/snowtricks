@@ -9,6 +9,7 @@ SnowTricks is a collaborative site aimed at raising public awareness about the s
 - [Description](#description)
 - [Installation](#installation)
 - [Configuration](#configuration)
+- [Database](#database)
 - [Usage](#usage)
 - [Documentation](#documentation)
 
@@ -21,7 +22,7 @@ SnowTricks is a collaborative site aimed at raising public awareness about the s
 
 2. Navigate to the project directory:
     ```bash
-    cd repository
+    cd snowtricks
     ```
 
 3. Install dependencies with Composer:
@@ -34,17 +35,7 @@ SnowTricks is a collaborative site aimed at raising public awareness about the s
     cp .env .env.local
     ```
 
-5. Update the database:
-    ```bash
-    php bin/console doctrine:migrations:migrate
-    ```
-
-6. (Optional) Load test data:
-    ```bash
-    php bin/console doctrine:fixtures:load
-    ```
-
-7. Install MailDev with npm:
+5. Install MailDev with npm:
     MailDev installation : https://github.com/maildev/maildev
     ```bash
     npm install -g maildev
@@ -52,10 +43,28 @@ SnowTricks is a collaborative site aimed at raising public awareness about the s
 
 ## Configuration
 
+- `APP_SECRET` : Generate a random secret key
+    ```bash
+    php bin/console secrets:generate-keys
+    ```
 - `DATABASE_URL` : Database connection URL.
 - `MAILER_DSN` : Mail service URL.
+- `JWT_SECRET` : Secret key for JWT Service
 
 Ensure these parameters are configured in the .env.local file.
+
+
+## Database
+
+1. Update the database:
+    ```bash
+    php bin/console doctrine:migrations:migrate
+    ```
+
+2. (Optional) Load test data:
+    ```bash
+    php bin/console doctrine:fixtures:load
+    ```
 
 
 ## Usage
