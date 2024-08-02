@@ -209,6 +209,20 @@ class TricksController extends AbstractController
 
         $comment = new Comment();
         $commentForm = $this->createForm(CommentsFormType::class, $comment);
+        $commentForm->handleRequest($request);
+
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+            $comment->setContent($comment->getContent());
+            $comment->setUser($user);
+            $comment->setTrick($trick);
+
+            $this->em->persist($comment);
+            $this->em->flush();
+
+            $route = $request->headers->get('referer');
+
+            return $this->redirect($route.'#comments');
+        }
 
         return $this->render('tricks/details.html.twig', [
             'trick' => $trick,
